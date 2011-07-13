@@ -38,9 +38,6 @@ void app::update()
 
 void app::draw()
 {	
-	if (!kinect.isConnected())
-		return;	
-	
 	if (debug_depth_texture)
 	{
 		camluc.render(kinect.getDepthTextureReference());
@@ -53,7 +50,7 @@ void app::draw()
 
 void app::exit()
 {
-	cout << "exit!" << endl;
+	ofLog(OF_LOG_VERBOSE, "exit!");
 	
 	ofRemoveListener(camluc.update_texture, this, &app::update_texture);
 	ofRemoveListener(camluc.render_texture, this, &app::render_texture);
@@ -87,8 +84,6 @@ void app::render_texture(ofEventArgs &args)
 
 bool app::init_kinect()
 {
-	// TODO update_calibration only when debugging depth_texture...
-	
 	kinect.update_calibration = debug_depth_texture;
 	kinect.enableDepthNearValueWhite(false);
 	
