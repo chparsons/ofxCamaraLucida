@@ -110,18 +110,20 @@ void CamaraLucida::_render()
 	gl_projection();	
 	gl_viewpoint();
 	
-	gl_scene_control();
-	
-	render_world_CS();
-	render_proj_CS();
-	render_rgb_CS();
+	if (_debug)
+	{
+		gl_scene_control();
+		render_world_CS();
+		render_proj_CS();
+		render_rgb_CS();
+	}
 	
 	render_mesh();
 }
 
 CamaraLucida::~CamaraLucida()
 {	
-	cout << "~CamaraLucida" << endl;
+	ofLog(OF_LOG_VERBOSE, "~CamaraLucida");
 	
 	dispose_events();
 	dispose_vbo();
@@ -137,13 +139,21 @@ CamaraLucida::~CamaraLucida()
 	cvReleaseMat(&proj_T);
 }
 
+void CamaraLucida::toggle_debug()
+{
+	_debug = !_debug;
+	if (!_debug)
+	{
+		reset_gl_scene_control();
+	}
+}
 
 void CamaraLucida::load_data(const char* kinect_calibration_filename, const char* proj_calibration_filename)
 {
 	//	rgb
 	
 	rgb_int = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "rgb_intrinsics");
-	cout << '\n' << "rgb_intrinsics opencv (kinect_calibration.yml)" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n rgb_intrinsics opencv (kinect_calibration.yml)");
 	printM(rgb_int);
 	
 	fx_rgb = (float)cvGetReal2D( rgb_int, 0, 0 );
@@ -157,14 +167,14 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	cvReleaseMat(&rgb_size);
 	
 	convertKKopencv2opengl(rgb_int, rgb_width, rgb_height, near, far, rgb_KK);
-	cout << '\n' << "rgb_intrinsics converted to opengl" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n rgb_intrinsics converted to opengl");
 	printM(rgb_KK, 4, 4);
 	
 	
 	//	depth
 	
 	depth_int = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "depth_intrinsics");
-	cout << '\n' << "depth_intrinsics opencv (kinect_calibration.yml)" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n depth_intrinsics opencv (kinect_calibration.yml)");
 	printM(depth_int);
 	
 	fx_d = (float)cvGetReal2D( depth_int, 0, 0 );
@@ -178,22 +188,22 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	cvReleaseMat(&d_size);
 	
 	convertKKopencv2opengl(depth_int, d_width, d_height, near, far, depth_KK);
-	cout << '\n' << "depth_intrinsics converted to opengl" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n depth_intrinsics converted to opengl");
 	printM(depth_KK, 4, 4);
 	
 	
 	//	depth/rgb RT
 	
 	drgb_R = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "R");
-	cout << '\n' << "drgb_R opencv (kinect_calibration.yml)" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n drgb_R opencv (kinect_calibration.yml)");
 	printM(drgb_R);
 	
 	drgb_T = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "T");
-	cout << '\n' << "drgb_T opencv (kinect_calibration.yml)" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n drgb_T opencv (kinect_calibration.yml)");
 	printM(drgb_T);
 	
 	convertRTopencv2opengl(drgb_R, drgb_T, drgb_RT);
-	cout << '\n' << "drgb_RT converted to opengl" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n drgb_RT converted to opengl");
 	printM(drgb_RT, 4, 4);
 	
 	//	T_rgb = ofVec3f(
@@ -210,7 +220,7 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	//	proyector
 	
 	proj_int = (CvMat*)cvLoad(proj_calibration_filename, NULL, "proj_intrinsics");
-	cout << '\n' << "proj_intrinsics opencv (projector_calibration.yml)" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n proj_intrinsics opencv (projector_calibration.yml)");
 	printM(proj_int);
 	
 	fx_p = (float)cvGetReal2D( proj_int, 0, 0 );
@@ -224,44 +234,20 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	cvReleaseMat(&d_size);
 	
 	convertKKopencv2opengl(proj_int, p_width, p_height, near, far, proj_KK);
-	cout << '\n' << "proj_intrinsics converted to opengl" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n proj_intrinsics converted to opengl");
 	printM(proj_KK, 4, 4);
 	
 	proj_R = (CvMat*)cvLoad(proj_calibration_filename, NULL, "R");
-	cout << '\n' << "proj_R opencv (projector_calibration.yml)" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n proj_R opencv (projector_calibration.yml)");
 	printM(proj_R);
 	
 	proj_T = (CvMat*)cvLoad(proj_calibration_filename, NULL, "T");
-	cout << '\n' << "proj_T opencv (projector_calibration.yml)" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n proj_T opencv (projector_calibration.yml)");
 	printM(proj_T);
 	
 	convertRTopencv2opengl(proj_R, proj_T, proj_RT);
-	cout << '\n' << "proj_RT converted to opengl" << endl;
+	ofLog(OF_LOG_VERBOSE, "\n proj_RT converted to opengl");
 	printM(proj_RT, 4, 4);
-}
-
-
-// gl scene control
-
-
-void CamaraLucida::init_gl_scene_control()
-{
-	rot_pivot = ofVec3f( proj_RT[12], proj_RT[13], proj_RT[14] );
-	
-	pmouse = ofVec2f();
-	
-	tZ_delta = -0.05;
-	rot_delta = -0.2;
-	
-	tZini = 0;
-	rotXini = 0;
-	rotYini = 0;
-	rotZini = 0;
-	
-	tZ = tZini;
-	rotX = rotXini;
-	rotY = rotYini;
-	rotZ = rotZini;
 }
 
 
@@ -313,14 +299,14 @@ void CamaraLucida::update_fbo(const ofTexture depth_texture)
 
 void CamaraLucida::init_cl(uint16_t *raw_depth_pix)
 {
-	cout << "Camara Lucida Open CL init" << endl;
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida Open CL init");
 	
 	opencl.setupFromOpenGL();
 	
 	opencl.loadProgramFromFile("vertex.cl");
 	kernel_vertex_update = opencl.loadKernel("update_vertex");
 	
-	cout << "Camara Lucida Open CL init buffers..." << " raw_depth_pix " << raw_depth_pix << endl;
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida Open CL init buffers... raw_depth_pix "+ofToString(raw_depth_pix));
 	
 	//	cl_buff_vbo_3d.initFromGLObject(vbo.getVertId());
 	//	cl_buff_ibo.initFromGLObject(vbo.getIndexId());
@@ -328,7 +314,7 @@ void CamaraLucida::init_cl(uint16_t *raw_depth_pix)
 	cl_buff_ibo.initBuffer(sizeof(uint) * ibo_length, CL_MEM_READ_WRITE, ibo);
 	cl_buff_raw_depth.initBuffer(sizeof(uint16_t) * d_width * d_height, CL_MEM_READ_ONLY, raw_depth_pix);
 	
-	cout << "Camara Lucida Open CL set args" << endl;
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida Open CL set args");
 	
 	kernel_vertex_update->setArg(0, cl_buff_vbo_3d.getCLMem());
 	kernel_vertex_update->setArg(1, cl_buff_ibo.getCLMem());
@@ -359,8 +345,6 @@ void CamaraLucida::update_cl(uint16_t *raw_depth_pix)
 
 void CamaraLucida::init_vbo()
 {
-	mesh_step = 1;
-	
 	mesh_w = d_width/mesh_step;
 	mesh_h = d_height/mesh_step;
 	
@@ -581,6 +565,31 @@ void CamaraLucida::gl_viewpoint()
 // gl debug
 
 
+void CamaraLucida::init_gl_scene_control()
+{
+	rot_pivot = ofVec3f( proj_RT[12], proj_RT[13], proj_RT[14] );
+	
+	pmouse = ofVec2f();
+	
+	tZ_delta = -0.05;
+	rot_delta = -0.2;
+	
+	tZini = 0;
+	rotXini = 0;
+	rotYini = 0;
+	rotZini = 0;
+	
+	reset_gl_scene_control();
+}
+
+void CamaraLucida::reset_gl_scene_control()
+{
+	tZ = tZini;
+	rotX = rotXini;
+	rotY = rotYini;
+	rotZ = rotZini;
+}
+
 void CamaraLucida::gl_scene_control()
 {
 	glTranslatef(0, 0, tZ);
@@ -642,9 +651,25 @@ void CamaraLucida::render_axis(float s)
 
 void CamaraLucida::render_screenlog()
 {
-	ofDrawBitmapString("fps: "+ofToString(ofGetFrameRate()), 10, ofGetHeight()-10);
+	if (!_debug) return;
+	ofDrawBitmapString(view_type_str()+" /fps: "+ofToString(ofGetFrameRate()), 10, ofGetHeight()-10);
 }
 
+string CamaraLucida::view_type_str()
+{
+	switch(view_type)
+	{
+		case V_WORLD:
+			return "world viewpoint";
+			break;
+		case V_PROJ:
+			return "projector viewpoint";
+			break;
+		case V_DEPTH:
+			return "depth camera viewpoint";
+			break;
+	}
+}
 
 
 // ui
@@ -681,7 +706,9 @@ void CamaraLucida::keyPressed(ofKeyEventArgs &args)
 {
 	pressed[args.key] = true;
 	
-	switch (args.key)
+	if (!_debug) return;
+	
+	switch(args.key)
 	{		
 		case 'v':
 			++view_type;
@@ -689,10 +716,7 @@ void CamaraLucida::keyPressed(ofKeyEventArgs &args)
 			break;
 			
 		case 'x':
-			rotX = rotXini;
-			rotY = rotYini;
-			rotZ = rotZini;
-			tZ = tZini;
+			reset_gl_scene_control();
 			break;
 	}
 }
@@ -704,6 +728,8 @@ void CamaraLucida::keyReleased(ofKeyEventArgs &args)
 
 void CamaraLucida::mouseDragged(ofMouseEventArgs &args)
 {
+	if (!_debug) return;
+	
 	ofVec2f m = ofVec2f(args.x, args.y);
 	ofVec2f dist = m - pmouse;
 	
@@ -873,6 +899,11 @@ void CamaraLucida::p3d_to_rgb(int x_d, int y_d, uint16_t raw_depth, float *rgb2d
 
 void CamaraLucida::printM(float* M, int rows, int cols, bool colmajor)
 {
+	if (ofGetLogLevel() != OF_LOG_VERBOSE)
+	{
+		return;
+	}
+		
 	if (colmajor)
 	{
 		for (int j = 0; j < cols; j++)
@@ -900,6 +931,11 @@ void CamaraLucida::printM(float* M, int rows, int cols, bool colmajor)
 
 void CamaraLucida::printM(CvMat* M, bool colmajor)
 {
+	if (ofGetLogLevel() != OF_LOG_VERBOSE)
+	{
+		return;
+	}
+	
 	int i,j;
 	if (colmajor)
 	{

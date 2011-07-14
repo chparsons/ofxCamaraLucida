@@ -1,3 +1,5 @@
+#define KINECT_W	640
+#define KINECT_H	480
 #define K1		0.1236
 #define K2		2842.5
 #define K3		1.1863
@@ -28,10 +30,8 @@ __kernel void update_vertex(__global float4* vbo_buff, __global uint* ibo_buff, 
 	int vbo_idx = get_global_id(0);
 
 
-	int kinect_w = 640;
-	int kinect_h = 480;
-	int mesh_w = kinect_w/mesh_step;
-	int mesh_h = kinect_h/mesh_step;
+	int mesh_w = KINECT_W/mesh_step;
+	int mesh_h = KINECT_H/mesh_step;
 	int vbo_length = mesh_w * mesh_h; 
 
 	
@@ -41,7 +41,7 @@ __kernel void update_vertex(__global float4* vbo_buff, __global uint* ibo_buff, 
 	int col = mcol * mesh_step;
 	int row = mrow * mesh_step;
 	
-	int depth_idx = row * kinect_w + col;
+	int depth_idx = row * KINECT_W + col;
 	
 	
 	// set VBO pts

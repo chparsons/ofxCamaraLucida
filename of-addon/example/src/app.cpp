@@ -135,7 +135,7 @@ void app::keyPressed(int key)
 	
 	if (key == 'd')
 	{
-		debug();
+		camluc.toggle_debug();
 	}
 }
 

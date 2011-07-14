@@ -8,13 +8,14 @@
 class app : public ofBaseApp 
 {
 public:
-	
+		
 	CamaraLucida camluc;
 		
 	void update_texture(ofEventArgs &args);
 	void render_texture(ofEventArgs &args);
 		
 	bool debug_depth_texture;
+	
 	
 	//	kinect
 	
@@ -24,6 +25,7 @@ public:
 	
 	bool init_kinect();
 	bool update_kinect();
+	
 	
 	//	ui
 	

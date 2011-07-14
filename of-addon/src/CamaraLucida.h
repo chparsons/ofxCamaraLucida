@@ -20,7 +20,7 @@
 #pragma once
 
 
-//#define CAMARA_LUCIDA_USING_OPENCL
+#define CAMARA_LUCIDA_USING_OPENCL
 
 
 #include <iostream.h>
@@ -39,6 +39,8 @@ public:
 		near = 0.08;
 		far = 12.0;
 		depth_xoff = 7;
+		mesh_step = 1;
+		_debug = false;
 	}
 	~CamaraLucida();
 		
@@ -64,8 +66,12 @@ public:
 	ofEvent<ofEventArgs> update_texture;
 	ofEvent<ofEventArgs> render_texture;
 	
+	void toggle_debug();
+	
 	
 private:
+	
+	bool _debug;
 	
 	// events
 	
@@ -93,7 +99,7 @@ private:
 	void render_rgb_CS();
 	void render_axis(float s = 0.1);
 	void render_screenlog();
-	
+	string view_type_str();
 	
 	//	vbo
 	
@@ -154,6 +160,8 @@ private:
 	//	scene control
 	
 	void init_gl_scene_control();
+	void reset_gl_scene_control();
+	
 	ofVec3f rot_pivot;
 	float tZ, rotX, rotY, rotZ;
 	float tZini, rotXini, rotYini, rotZini;
@@ -175,7 +183,7 @@ private:
 	int view_type;
 	
 	
-	// color util
+	// color utils
 	
 	void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v );
 	void HSVtoRGB( float h, float s, float v, float *r, float *g, float *b );
