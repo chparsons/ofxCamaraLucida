@@ -49,6 +49,11 @@ public:
 			   const char* proj_calibration_filename,
 			   uint16_t *raw_depth_pix, uint8_t *rgb_pix);
 	
+	void setup(const char* kinect_calibration_filename, 
+			   const char* proj_calibration_filename,
+			   uint16_t *raw_depth_pix, uint8_t *rgb_pix,
+			   ofFbo::Settings s);
+	
 	// updates FBO with custom render_texture
 	void update(uint16_t *raw_depth_pix, uint8_t *rgb_pix);
 	
@@ -126,7 +131,7 @@ private:
 	
 	ofFbo fbo;
 	ofTexture texture;
-	void init_fbo();
+	void init_fbo(ofFbo::Settings s);
 	void update_fbo();
 	void update_fbo(const ofTexture depth_texture);
 	

@@ -26,8 +26,22 @@
 
 void CamaraLucida::setup(const char* kinect_calibration_filename, 
 						 const char* proj_calibration_filename,
-						 uint16_t *raw_depth_pix, 
-						 uint8_t *rgb_pix)
+						 uint16_t *raw_depth_pix, uint8_t *rgb_pix)
+{
+	ofFbo::Settings s;
+	s.width				= ofGetWidth();
+	s.height			= ofGetHeight();
+	s.numSamples		= 0;
+	s.internalformat	= GL_RGBA;
+	
+	setup(kinect_calibration_filename, proj_calibration_filename,
+		  raw_depth_pix, rgb_pix, s);
+}
+
+void CamaraLucida::setup(const char* kinect_calibration_filename, 
+						 const char* proj_calibration_filename,
+						 uint16_t *raw_depth_pix, uint8_t *rgb_pix, 
+						 ofFbo::Settings s)
 {
 	load_data(kinect_calibration_filename, proj_calibration_filename);
 	init_z_lut();
@@ -48,7 +62,7 @@ void CamaraLucida::setup(const char* kinect_calibration_filename,
 	glEnable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT, GL_FILL);
 	
-	init_fbo();
+	init_fbo(s);
 	init_vbo();
 #ifdef CAMARA_LUCIDA_USING_OPENCL
 	init_cl(raw_depth_pix);
@@ -254,17 +268,12 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 // fbo
 
 
-void CamaraLucida::init_fbo()
+void CamaraLucida::init_fbo(ofFbo::Settings s)
 {
-	ofFbo::Settings s;
-	s.width				= d_width;
-	s.height			= d_height;
-	s.numSamples		= 0; //ofFbo::maxSamples()
-	s.internalformat	= GL_RGBA;	
-	//	s.textureTarget		= GL_TEXTURE_RECTANGLE_ARB; 
-	//	s.useDepth			= true;
-	//	s.useStencil		= true;
-	//	fbo.setup(s);
+	// TODO fix me: 
+	// why is setup(ofFbo::Settings s) not working?
+	// looks like there's a bug in ofFbo...
+	//fbo.setup(s);
 	fbo.setup(s.width, s.height, s.internalformat, s.numSamples);
 	
 	texture = fbo.getTexture(0);
