@@ -26,7 +26,8 @@
 
 void CamaraLucida::setup(const char* kinect_calibration_filename, 
 						 const char* proj_calibration_filename,
-						 uint16_t *raw_depth_pix, uint8_t *rgb_pix)
+						 uint16_t *raw_depth_pix, uint8_t *rgb_pix,
+						 MSA::OpenCL* opencl)
 {
 	ofFbo::Settings s;
 	s.width				= ofGetWidth();
@@ -35,13 +36,13 @@ void CamaraLucida::setup(const char* kinect_calibration_filename,
 	s.internalformat	= GL_RGBA;
 	
 	setup(kinect_calibration_filename, proj_calibration_filename,
-		  raw_depth_pix, rgb_pix, s);
+		  raw_depth_pix, rgb_pix, s, opencl);
 }
 
 void CamaraLucida::setup(const char* kinect_calibration_filename, 
 						 const char* proj_calibration_filename,
 						 uint16_t *raw_depth_pix, uint8_t *rgb_pix, 
-						 ofFbo::Settings s)
+						 ofFbo::Settings s, MSA::OpenCL* opencl)
 {
 	load_data(kinect_calibration_filename, proj_calibration_filename);
 	init_z_lut();
@@ -64,22 +65,18 @@ void CamaraLucida::setup(const char* kinect_calibration_filename,
 	
 	init_fbo(s);
 	init_vbo();
-#ifdef CAMARA_LUCIDA_USING_OPENCL
-	init_cl(raw_depth_pix);
-#endif	
+	
+	using_opencl = opencl != NULL;
+	if (using_opencl)
+	{
+		init_cl(raw_depth_pix, opencl);
+	}
 }
 
 void CamaraLucida::update(uint16_t *raw_depth_pix, 
 						  uint8_t *rgb_pix)
 {
-	update_keys();
-	
-#ifdef CAMARA_LUCIDA_USING_OPENCL
-	update_cl(raw_depth_pix);
-#else 
-	update_mesh(raw_depth_pix);	
-#endif
-	update_vbo();		
+	_update(raw_depth_pix);
 	update_fbo();	
 }
 
@@ -87,15 +84,23 @@ void CamaraLucida::update(uint16_t *raw_depth_pix,
 						  uint8_t *rgb_pix,
 						  const ofTexture tex)
 {
+	_update(raw_depth_pix);
+	update_fbo(tex);
+}
+
+void CamaraLucida::_update(uint16_t *raw_depth_pix)
+{
 	update_keys();
 	
-#ifdef CAMARA_LUCIDA_USING_OPENCL
-	update_cl(raw_depth_pix);
-#else 
-	update_mesh(raw_depth_pix);	
-#endif
+	if (using_opencl)
+	{
+		update_cl(raw_depth_pix);
+	}
+	else 
+	{
+		update_mesh(raw_depth_pix);	
+	}
 	update_vbo();		
-	update_fbo(tex);
 }
 
 void CamaraLucida::render()
@@ -290,16 +295,14 @@ void CamaraLucida::update_fbo(const ofTexture tex)
 // open cl
 
 
-#ifdef CAMARA_LUCIDA_USING_OPENCL
-
-void CamaraLucida::init_cl(uint16_t *raw_depth_pix)
+void CamaraLucida::init_cl(uint16_t *raw_depth_pix, MSA::OpenCL* opencl)
 {
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida Open CL init");
 	
-	opencl.setupFromOpenGL();
+	opencl->setupFromOpenGL();
 	
-	opencl.loadProgramFromFile("vertex.cl");
-	kernel_vertex_update = opencl.loadKernel("update_vertex");
+	opencl->loadProgramFromFile("vertex.cl");
+	kernel_vertex_update = opencl->loadKernel("update_vertex");
 	
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida Open CL init buffers... raw_depth_pix "+ofToString(raw_depth_pix));
 	
@@ -332,7 +335,6 @@ void CamaraLucida::update_cl(uint16_t *raw_depth_pix)
 	cl_buff_ibo.read(ibo, 0, sizeof(uint) * ibo_length);
 }
 
-#endif
 
 
 // vbo
@@ -407,9 +409,8 @@ void CamaraLucida::dispose_vbo()
 
 void CamaraLucida::render_mesh()
 {	
-	//#ifdef CAMARA_LUCIDA_USING_OPENCL
-	//	opencl.finish();
-	//#endif
+//	if (using_opencl)
+//		opencl.finish();
 	
 	if (!vbo.getIsAllocated())
 		return;

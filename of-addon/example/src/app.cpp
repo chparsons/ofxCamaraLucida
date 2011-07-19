@@ -12,7 +12,7 @@ void app::setup()
 	
 	camluc.setup(ofToDataPath("kinect_calibration.yml").c_str(),
 				 ofToDataPath("projector_calibration.yml").c_str(),
-				 raw_depth_pix, rgb_pix);
+				 raw_depth_pix, rgb_pix, &opencl);
 	
 	ofAddListener(camluc.update_texture, this, &app::update_texture);
 	ofAddListener(camluc.render_texture, this, &app::render_texture);

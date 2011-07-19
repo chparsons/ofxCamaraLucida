@@ -19,10 +19,6 @@
 
 #pragma once
 
-
-#define CAMARA_LUCIDA_USING_OPENCL
-
-
 #include <iostream.h>
 #include <algorithm>
 #include "ofMain.h"
@@ -47,12 +43,13 @@ public:
 	
 	void setup(const char* kinect_calibration_filename, 
 			   const char* proj_calibration_filename,
-			   uint16_t *raw_depth_pix, uint8_t *rgb_pix);
+			   uint16_t *raw_depth_pix, uint8_t *rgb_pix,
+			   MSA::OpenCL* opencl = NULL);
 	
 	void setup(const char* kinect_calibration_filename, 
 			   const char* proj_calibration_filename,
 			   uint16_t *raw_depth_pix, uint8_t *rgb_pix,
-			   ofFbo::Settings s);
+			   ofFbo::Settings s, MSA::OpenCL* opencl = NULL);
 	
 	// updates FBO with off-screen texture created by render_texture()
 	void update(uint16_t *raw_depth_pix, uint8_t *rgb_pix);
@@ -73,6 +70,7 @@ public:
 private:
 	
 	bool _debug;
+	void _update(uint16_t *raw_depth_pix);
 	
 	// events
 	
@@ -142,19 +140,16 @@ private:
 					   const float fx_d, const float fy_d, 
 					   const int xoffset);
 	
-#ifdef CAMARA_LUCIDA_USING_OPENCL
+	bool using_opencl;
 	
-	void init_cl(uint16_t *raw_depth_pix);
+	void init_cl(uint16_t *raw_depth_pix, MSA::OpenCL* opencl);
 	void update_cl(uint16_t *raw_depth_pix);
 	
-	MSA::OpenCL			opencl;
 	MSA::OpenCLKernel	*kernel_vertex_update;
 	
 	MSA::OpenCLBuffer	cl_buff_vbo_3d;
 	MSA::OpenCLBuffer	cl_buff_ibo;
 	MSA::OpenCLBuffer	cl_buff_raw_depth;
-	
-#endif	
 	
 	
 	//	scene control

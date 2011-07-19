@@ -4,6 +4,7 @@
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
 #include "CamaraLucida.h"
+#include "MSAOpenCL.h"
 
 class app : public ofBaseApp 
 {
@@ -15,6 +16,7 @@ public:
 	void render_texture(ofEventArgs &args);
 	void render_hud(ofEventArgs &args);
 		
+	MSA::OpenCL opencl;
 	bool debug_depth_texture;
 	
 	
