@@ -16,6 +16,7 @@ void app::setup()
 	
 	ofAddListener(camluc.update_texture, this, &app::update_texture);
 	ofAddListener(camluc.render_texture, this, &app::render_texture);
+	ofAddListener(camluc.render_hud, this, &app::render_hud);
 }
 
 void app::update()
@@ -38,14 +39,7 @@ void app::update()
 
 void app::draw()
 {	
-	if (debug_depth_texture)
-	{
-		camluc.render(kinect.getDepthTextureReference());
-	}
-	else 
-	{
-		camluc.render();
-	}
+	camluc.render();
 }
 
 void app::exit()
@@ -54,9 +48,17 @@ void app::exit()
 	
 	ofRemoveListener(camluc.update_texture, this, &app::update_texture);
 	ofRemoveListener(camluc.render_texture, this, &app::render_texture);
+	ofRemoveListener(camluc.render_hud, this, &app::render_hud);
 	
 	kinect.close();
 }
+
+void app::render_hud(ofEventArgs &args)
+{
+	if (debug_depth_texture)
+		kinect.getDepthTextureReference().draw(0, 0, 400, 300);
+}
+
 
 void app::update_texture(ofEventArgs &args)
 {

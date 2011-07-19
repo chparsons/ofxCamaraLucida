@@ -13,6 +13,7 @@ public:
 		
 	void update_texture(ofEventArgs &args);
 	void render_texture(ofEventArgs &args);
+	void render_hud(ofEventArgs &args);
 		
 	bool debug_depth_texture;
 	

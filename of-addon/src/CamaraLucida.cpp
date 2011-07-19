@@ -85,7 +85,7 @@ void CamaraLucida::update(uint16_t *raw_depth_pix,
 
 void CamaraLucida::update(uint16_t *raw_depth_pix, 
 						  uint8_t *rgb_pix,
-						  const ofTexture depth_texture)
+						  const ofTexture tex)
 {
 	update_keys();
 	
@@ -95,7 +95,7 @@ void CamaraLucida::update(uint16_t *raw_depth_pix,
 	update_mesh(raw_depth_pix);	
 #endif
 	update_vbo();		
-	update_fbo(depth_texture);
+	update_fbo(tex);
 }
 
 void CamaraLucida::render()
@@ -103,22 +103,8 @@ void CamaraLucida::render()
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColor3f(1, 1, 1);
-	_render();
-}
-
-void CamaraLucida::render(ofTexture depth_texture,
-						  int width, int height,
-						  int x, int y)
-{
-	glClearColor(0, 0, 0, 1);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glColor3f(1, 1, 1);
-	depth_texture.draw(x, y, width, height);
-	_render();
-}
-
-void CamaraLucida::_render()
-{
+	
+	ofNotifyEvent( render_hud, void_event_args );
 	render_screenlog();
 	
 	gl_projection();	
@@ -167,7 +153,7 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	//	rgb
 	
 	rgb_int = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "rgb_intrinsics");
-	ofLog(OF_LOG_VERBOSE, "\n rgb_intrinsics opencv (kinect_calibration.yml)");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n rgb_intrinsics opencv (kinect_calibration.yml)");
 	printM(rgb_int);
 	
 	fx_rgb = (float)cvGetReal2D( rgb_int, 0, 0 );
@@ -181,14 +167,14 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	cvReleaseMat(&rgb_size);
 	
 	convertKKopencv2opengl(rgb_int, rgb_width, rgb_height, near, far, rgb_KK);
-	ofLog(OF_LOG_VERBOSE, "\n rgb_intrinsics converted to opengl");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n rgb_intrinsics converted to opengl");
 	printM(rgb_KK, 4, 4);
 	
 	
 	//	depth
 	
 	depth_int = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "depth_intrinsics");
-	ofLog(OF_LOG_VERBOSE, "\n depth_intrinsics opencv (kinect_calibration.yml)");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n depth_intrinsics opencv (kinect_calibration.yml)");
 	printM(depth_int);
 	
 	fx_d = (float)cvGetReal2D( depth_int, 0, 0 );
@@ -202,22 +188,22 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	cvReleaseMat(&d_size);
 	
 	convertKKopencv2opengl(depth_int, d_width, d_height, near, far, depth_KK);
-	ofLog(OF_LOG_VERBOSE, "\n depth_intrinsics converted to opengl");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n depth_intrinsics converted to opengl");
 	printM(depth_KK, 4, 4);
 	
 	
 	//	depth/rgb RT
 	
 	drgb_R = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "R");
-	ofLog(OF_LOG_VERBOSE, "\n drgb_R opencv (kinect_calibration.yml)");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n drgb_R opencv (kinect_calibration.yml)");
 	printM(drgb_R);
 	
 	drgb_T = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "T");
-	ofLog(OF_LOG_VERBOSE, "\n drgb_T opencv (kinect_calibration.yml)");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n drgb_T opencv (kinect_calibration.yml)");
 	printM(drgb_T);
 	
 	convertRTopencv2opengl(drgb_R, drgb_T, drgb_RT);
-	ofLog(OF_LOG_VERBOSE, "\n drgb_RT converted to opengl");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n drgb_RT converted to opengl");
 	printM(drgb_RT, 4, 4);
 	
 	//	T_rgb = ofVec3f(
@@ -234,7 +220,7 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	//	proyector
 	
 	proj_int = (CvMat*)cvLoad(proj_calibration_filename, NULL, "proj_intrinsics");
-	ofLog(OF_LOG_VERBOSE, "\n proj_intrinsics opencv (projector_calibration.yml)");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_intrinsics opencv (projector_calibration.yml)");
 	printM(proj_int);
 	
 	fx_p = (float)cvGetReal2D( proj_int, 0, 0 );
@@ -248,19 +234,19 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	cvReleaseMat(&d_size);
 	
 	convertKKopencv2opengl(proj_int, p_width, p_height, near, far, proj_KK);
-	ofLog(OF_LOG_VERBOSE, "\n proj_intrinsics converted to opengl");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_intrinsics converted to opengl");
 	printM(proj_KK, 4, 4);
 	
 	proj_R = (CvMat*)cvLoad(proj_calibration_filename, NULL, "R");
-	ofLog(OF_LOG_VERBOSE, "\n proj_R opencv (projector_calibration.yml)");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_R opencv (projector_calibration.yml)");
 	printM(proj_R);
 	
 	proj_T = (CvMat*)cvLoad(proj_calibration_filename, NULL, "T");
-	ofLog(OF_LOG_VERBOSE, "\n proj_T opencv (projector_calibration.yml)");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_T opencv (projector_calibration.yml)");
 	printM(proj_T);
 	
 	convertRTopencv2opengl(proj_R, proj_T, proj_RT);
-	ofLog(OF_LOG_VERBOSE, "\n proj_RT converted to opengl");
+	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_RT converted to opengl");
 	printM(proj_RT, 4, 4);
 }
 
@@ -293,11 +279,11 @@ void CamaraLucida::update_fbo()
 	texture = fbo.getTexture(0);
 }
 
-void CamaraLucida::update_fbo(const ofTexture depth_texture)
+void CamaraLucida::update_fbo(const ofTexture tex)
 {
 	ofNotifyEvent( update_texture, void_event_args );
 	
-	texture = depth_texture;
+	texture = tex;
 }
 
 

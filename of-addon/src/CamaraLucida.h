@@ -41,7 +41,7 @@ public:
 		depth_xoff = 7;
 		mesh_step = 1;
 		_debug = false;
-	}
+	};
 	~CamaraLucida();
 		
 	
@@ -54,22 +54,18 @@ public:
 			   uint16_t *raw_depth_pix, uint8_t *rgb_pix,
 			   ofFbo::Settings s);
 	
-	// updates FBO with custom render_texture
+	// updates FBO with off-screen texture created by render_texture()
 	void update(uint16_t *raw_depth_pix, uint8_t *rgb_pix);
 	
-	// updates FBO with the depth texture for debugging
+	// updates FBO with a passed custom texture (usable for debugging)
 	void update(uint16_t *raw_depth_pix, uint8_t *rgb_pix,
-				const ofTexture depth_texture);
+				const ofTexture tex);
 	
 	void render();
 	
-	// renders the depth texture as 2d hud for debugging
-	void render(ofTexture depth_texture,
-				int width = 400, int height = 300,
-				int x = 0, int y = 0);
-	
 	ofEvent<ofEventArgs> update_texture;
 	ofEvent<ofEventArgs> render_texture;
+	ofEvent<ofEventArgs> render_hud;
 	
 	void toggle_debug();
 	
@@ -91,7 +87,6 @@ private:
 
 	// gl
 	
-	void _render();
 	void gl_projection();
 	void gl_viewpoint();
 	
@@ -133,7 +128,7 @@ private:
 	ofTexture texture;
 	void init_fbo(ofFbo::Settings s);
 	void update_fbo();
-	void update_fbo(const ofTexture depth_texture);
+	void update_fbo(const ofTexture tex);
 	
 	// open cl
 	
