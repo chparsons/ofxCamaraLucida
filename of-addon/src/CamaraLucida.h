@@ -131,7 +131,7 @@ private:
 	// open cl
 	
 	// kernel mockup
-	void update_vertex(int vbo_idx, float4* vbo_buff, uint* ibo_buff, 
+	void update_vertex(int vbo_idx, float4* vbo_buff, 
 					   const ushort* raw_depth_buff, 
 					   const int vbo_length, const int mesh_step, 
 					   const int mesh_w, const int mesh_h,
@@ -148,7 +148,7 @@ private:
 	MSA::OpenCLKernel	*kernel_vertex_update;
 	
 	MSA::OpenCLBuffer	cl_buff_vbo_3d;
-	MSA::OpenCLBuffer	cl_buff_ibo;
+	//MSA::OpenCLBuffer	cl_buff_ibo;
 	MSA::OpenCLBuffer	cl_buff_raw_depth;
 	
 	

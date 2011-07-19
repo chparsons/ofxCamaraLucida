@@ -67,6 +67,7 @@ void CamaraLucida::setup(const char* kinect_calibration_filename,
 	init_vbo();
 	
 	using_opencl = opencl != NULL;
+	
 	if (using_opencl)
 	{
 		init_cl(raw_depth_pix, opencl);
@@ -308,21 +309,22 @@ void CamaraLucida::init_cl(uint16_t *raw_depth_pix, MSA::OpenCL* opencl)
 	
 	//	cl_buff_vbo_3d.initFromGLObject(vbo.getVertId());
 	//	cl_buff_ibo.initFromGLObject(vbo.getIndexId());
+	//	cl_buff_ibo.initBuffer(sizeof(uint) * ibo_length, CL_MEM_READ_WRITE, ibo);
+	
 	cl_buff_vbo_3d.initBuffer(sizeof(float4) * vbo_length, CL_MEM_READ_WRITE, vbo_3d);
-	cl_buff_ibo.initBuffer(sizeof(uint) * ibo_length, CL_MEM_READ_WRITE, ibo);
 	cl_buff_raw_depth.initBuffer(sizeof(uint16_t) * d_width * d_height, CL_MEM_READ_ONLY, raw_depth_pix);
 	
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida Open CL set args");
 	
 	kernel_vertex_update->setArg(0, cl_buff_vbo_3d.getCLMem());
-	kernel_vertex_update->setArg(1, cl_buff_ibo.getCLMem());
-	kernel_vertex_update->setArg(2, cl_buff_raw_depth.getCLMem());
-	kernel_vertex_update->setArg(3, mesh_step);
-	kernel_vertex_update->setArg(4, cx_d);
-	kernel_vertex_update->setArg(5, cy_d);
-	kernel_vertex_update->setArg(6, fx_d);
-	kernel_vertex_update->setArg(7, fy_d);
-	kernel_vertex_update->setArg(8, depth_xoff);
+	//kernel_vertex_update->setArg(1, cl_buff_ibo.getCLMem());
+	kernel_vertex_update->setArg(1, cl_buff_raw_depth.getCLMem());
+	kernel_vertex_update->setArg(2, mesh_step);
+	kernel_vertex_update->setArg(3, cx_d);
+	kernel_vertex_update->setArg(4, cy_d);
+	kernel_vertex_update->setArg(5, fx_d);
+	kernel_vertex_update->setArg(6, fy_d);
+	kernel_vertex_update->setArg(7, depth_xoff);
 }
 
 void CamaraLucida::update_cl(uint16_t *raw_depth_pix)
@@ -332,7 +334,7 @@ void CamaraLucida::update_cl(uint16_t *raw_depth_pix)
 	kernel_vertex_update->run1D(vbo_length);
 	
 	cl_buff_vbo_3d.read(vbo_3d, 0, sizeof(float4) * vbo_length);
-	cl_buff_ibo.read(ibo, 0, sizeof(uint) * ibo_length);
+	//cl_buff_ibo.read(ibo, 0, sizeof(uint) * ibo_length);
 }
 
 
@@ -348,16 +350,27 @@ void CamaraLucida::init_vbo()
 	vbo_length = mesh_w * mesh_h; 
 	ibo_length = vbo_length * 4;
 	
-	ibo = new uint[ibo_length];
-	for (int i = 0; i < ibo_length; i++) 
-	{
-		ibo[i] = 0;
-	}
-	
 	vbo_3d = new float4[vbo_length];
 	for (int i = 0; i < vbo_length; i++) 
 	{
 		vbo_3d[i] = float4(0, 0, 0);
+	}
+	
+	ibo = new uint[ibo_length];
+	for (int i = 0; i < vbo_length; i++) 
+	{
+		int mcol = i % mesh_w;
+		int mrow = (i - mcol) / mesh_w;
+		
+		if ( ( mcol < mesh_w - 2 ) && ( mrow < mesh_h - 2 ) ) 
+		{
+			int ibo_idx = i * 4;
+			
+			ibo[ibo_idx+0] = (uint)( mrow * mesh_w + mcol );
+			ibo[ibo_idx+1] = (uint)( (mrow + mesh_step) * mesh_w + mcol );
+			ibo[ibo_idx+2] = (uint)( (mrow + mesh_step) * mesh_w + (mcol + mesh_step) );
+			ibo[ibo_idx+3] = (uint)( mrow * mesh_w + (mcol + mesh_step) );
+		}
 	}
 	
 	vbo_texcoords = new ofVec2f[vbo_length];
@@ -377,7 +390,7 @@ void CamaraLucida::init_vbo()
 	}
 	
 	vbo.setVertexData(&vbo_3d[0].x, 3, vbo_length, GL_DYNAMIC_DRAW, sizeof(float4));
-	vbo.setIndexData(ibo, ibo_length, GL_DYNAMIC_DRAW);
+	vbo.setIndexData(ibo, ibo_length, GL_STATIC_DRAW);
 	vbo.setColorData(vbo_color, vbo_length, GL_STATIC_DRAW);
 	vbo.setTexCoordData(vbo_texcoords, vbo_length, GL_STATIC_DRAW);
 }
@@ -385,7 +398,7 @@ void CamaraLucida::init_vbo()
 void CamaraLucida::update_vbo()
 {
 	vbo.updateVertexData(&vbo_3d[0].x, vbo_length);
-	vbo.updateIndexData(ibo, ibo_length);
+	//vbo.updateIndexData(ibo, ibo_length);
 	//vbo.updateColorData(vbo_color, vbo_length);
 	//vbo.updateTexCoordData(vbo_texcoords, vbo_length);
 }
@@ -428,15 +441,14 @@ void CamaraLucida::update_mesh(const uint16_t *raw_depth_pix)
 {
 	for (int i = 0; i < vbo_length; i++)
 	{
-		update_vertex(i, vbo_3d, ibo, raw_depth_pix, 
+		update_vertex(i, vbo_3d, raw_depth_pix, 
 					  vbo_length, mesh_step, mesh_w, mesh_h,
 					  d_width, d_height,
 					  cx_d, cy_d, fx_d, fy_d, depth_xoff);
 	}
 }
 
-void CamaraLucida::update_vertex(int vbo_idx, 
-						float4* vbo_buff, uint* ibo_buff, 
+void CamaraLucida::update_vertex(int vbo_idx, float4* vbo_buff, 
 						const ushort* raw_depth_buff, 
 						const int vbo_length, const int mesh_step, 
 						const int mesh_w, const int mesh_h,
@@ -496,19 +508,6 @@ void CamaraLucida::update_vertex(int vbo_idx,
 	// set color
 	
 	//vbo_color[vbo_idx].set(r,g,b);
-	
-	
-	// set IBO
-	
-	if ( ( mcol < mesh_w - 2 ) && ( mrow < mesh_h - 2 ) ) 
-	{
-		int ibo_idx = vbo_idx * 4;
-		
-		ibo_buff[ibo_idx+0] = (uint)( mrow * mesh_w + mcol );
-		ibo_buff[ibo_idx+1] = (uint)( (mrow + mesh_step) * mesh_w + mcol );
-		ibo_buff[ibo_idx+2] = (uint)( (mrow + mesh_step) * mesh_w + (mcol + mesh_step) );
-		ibo_buff[ibo_idx+3] = (uint)( mrow * mesh_w + (mcol + mesh_step) );
-	}	
 }
 
 

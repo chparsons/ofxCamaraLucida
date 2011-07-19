@@ -25,7 +25,7 @@ float ofMap(float value, float inputMin, float inputMax, float outputMin, float 
 	}
 }
 
-__kernel void update_vertex(__global float4* vbo_buff, __global uint* ibo_buff, __global const ushort* raw_depth_buff, const int mesh_step, const float cx_d, const float cy_d, const float fx_d, const float fy_d, const int xoffset)
+__kernel void update_vertex(__global float4* vbo_buff, __global const ushort* raw_depth_buff, const int mesh_step, const float cx_d, const float cy_d, const float fx_d, const float fy_d, const int xoffset)
 {
 	int vbo_idx = get_global_id(0);
 
@@ -70,22 +70,6 @@ __kernel void update_vertex(__global float4* vbo_buff, __global uint* ibo_buff, 
 	vbo_buff[vbo_idx].y = y;
 	vbo_buff[vbo_idx].z = z;
 	vbo_buff[vbo_idx].w = 0;
-	
-	
-	//vbo_color[vbo_idx].set(r,g,b);
-	
-	
-	// set IBO
-	
-	if ( ( mcol < mesh_w - 2 ) && ( mrow < mesh_h - 2 ) ) 
-	{
-		int ibo_idx = vbo_idx * 4;
-		
-		ibo_buff[ibo_idx+0] = (uint)( mrow * mesh_w + mcol );
-		ibo_buff[ibo_idx+1] = (uint)( (mrow + mesh_step) * mesh_w + mcol );
-		ibo_buff[ibo_idx+2] = (uint)( (mrow + mesh_step) * mesh_w + (mcol + mesh_step) );
-		ibo_buff[ibo_idx+3] = (uint)( mrow * mesh_w + (mcol + mesh_step) );
-	}
 }
 
 
