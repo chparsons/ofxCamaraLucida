@@ -12,7 +12,9 @@ void app::setup()
 	
 	camluc.setup(ofToDataPath("kinect_calibration.yml").c_str(),
 				 ofToDataPath("projector_calibration.yml").c_str(),
-				 raw_depth_pix, rgb_pix, &opencl);
+				 raw_depth_pix, rgb_pix, 
+				 ofGetWidth(), ofGetHeight(), 1,
+				 &opencl);
 	
 	ofAddListener(camluc.update_texture, this, &app::update_texture);
 	ofAddListener(camluc.render_texture, this, &app::render_texture);
@@ -26,15 +28,7 @@ void app::update()
 	if (!update_kinect())
 		return;
 	
-	if (debug_depth_texture)
-	{
-		camluc.update(raw_depth_pix, rgb_pix,
-					  kinect.getDepthTextureReference());
-	}
-	else 
-	{
-		camluc.update(raw_depth_pix, rgb_pix);
-	}
+	camluc.update(raw_depth_pix, rgb_pix);
 }
 
 void app::draw()
@@ -69,7 +63,7 @@ void app::render_texture(ofEventArgs &args)
 {
 	glClearColor(0.5, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
 	float w = 1024;
 	float h = 768;
 	
@@ -82,6 +76,12 @@ void app::render_texture(ofEventArgs &args)
 	
 	glColor3f(1, 1, 0);
 	ofCircle(200, 200, 100);
+	
+	if (debug_depth_texture)
+	{
+		glColor3f(1, 1, 1);
+		kinect.getDepthTextureReference().draw(0, 0, w, h);
+	}
 }
 
 bool app::init_kinect()

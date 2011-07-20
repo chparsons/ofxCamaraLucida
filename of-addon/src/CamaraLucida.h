@@ -26,6 +26,14 @@
 #include "MSAOpenCL.h"
 
 
+//	reserved user input for debugging:
+//		'x': reset view
+//		'v': switch view projector, depth cam, world
+//		'c': change depht_xoffset
+//		'z' + mouse_drag: rotate
+//		mouse_drag: zoom in/out
+
+
 class CamaraLucida
 {
 public:
@@ -34,7 +42,7 @@ public:
 	{
 		near = 0.08;
 		far = 12.0;
-		depth_xoff = 7;
+		depth_xoff = -7;
 		mesh_step = 1;
 		_debug = false;
 	};
@@ -44,19 +52,11 @@ public:
 	void setup(const char* kinect_calibration_filename, 
 			   const char* proj_calibration_filename,
 			   uint16_t *raw_depth_pix, uint8_t *rgb_pix,
+			   int tex_width, int tex_height, int tex_num_samples,
 			   MSA::OpenCL* opencl = NULL);
-	
-	void setup(const char* kinect_calibration_filename, 
-			   const char* proj_calibration_filename,
-			   uint16_t *raw_depth_pix, uint8_t *rgb_pix,
-			   ofFbo::Settings s, MSA::OpenCL* opencl = NULL);
 	
 	// updates FBO with off-screen texture created by render_texture()
 	void update(uint16_t *raw_depth_pix, uint8_t *rgb_pix);
-	
-	// updates FBO with a passed custom texture (usable for debugging)
-	void update(uint16_t *raw_depth_pix, uint8_t *rgb_pix,
-				const ofTexture tex);
 	
 	void render();
 	
@@ -70,7 +70,6 @@ public:
 private:
 	
 	bool _debug;
-	void _update(uint16_t *raw_depth_pix);
 	
 	// events
 	
@@ -122,11 +121,12 @@ private:
 	
 	// fbo
 	
+	// XXX should use ofFbo version after commit
+	// https://github.com/openframeworks/openFrameworks/commit/bbb55436d33734cf01da63f3385096d6956d257d#libs/openFrameworks/gl/ofFbo.cpp
+	
 	ofFbo fbo;
-	ofTexture texture;
-	void init_fbo(ofFbo::Settings s);
+	void init_fbo(int tex_width, int tex_height, int tex_num_samples);
 	void update_fbo();
-	void update_fbo(const ofTexture tex);
 	
 	// open cl
 	

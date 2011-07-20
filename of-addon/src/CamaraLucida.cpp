@@ -26,23 +26,9 @@
 
 void CamaraLucida::setup(const char* kinect_calibration_filename, 
 						 const char* proj_calibration_filename,
-						 uint16_t *raw_depth_pix, uint8_t *rgb_pix,
-						 MSA::OpenCL* opencl)
-{
-	ofFbo::Settings s;
-	s.width				= ofGetWidth();
-	s.height			= ofGetHeight();
-	s.numSamples		= 0;
-	s.internalformat	= GL_RGBA;
-	
-	setup(kinect_calibration_filename, proj_calibration_filename,
-		  raw_depth_pix, rgb_pix, s, opencl);
-}
-
-void CamaraLucida::setup(const char* kinect_calibration_filename, 
-						 const char* proj_calibration_filename,
 						 uint16_t *raw_depth_pix, uint8_t *rgb_pix, 
-						 ofFbo::Settings s, MSA::OpenCL* opencl)
+						 int tex_width, int tex_height, int tex_num_samples,
+						 MSA::OpenCL* opencl)
 {
 	load_data(kinect_calibration_filename, proj_calibration_filename);
 	init_z_lut();
@@ -63,7 +49,7 @@ void CamaraLucida::setup(const char* kinect_calibration_filename,
 	glEnable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT, GL_FILL);
 	
-	init_fbo(s);
+	init_fbo(tex_width, tex_height, tex_num_samples);
 	init_vbo();
 	
 	using_opencl = opencl != NULL;
@@ -77,20 +63,6 @@ void CamaraLucida::setup(const char* kinect_calibration_filename,
 void CamaraLucida::update(uint16_t *raw_depth_pix, 
 						  uint8_t *rgb_pix)
 {
-	_update(raw_depth_pix);
-	update_fbo();	
-}
-
-void CamaraLucida::update(uint16_t *raw_depth_pix, 
-						  uint8_t *rgb_pix,
-						  const ofTexture tex)
-{
-	_update(raw_depth_pix);
-	update_fbo(tex);
-}
-
-void CamaraLucida::_update(uint16_t *raw_depth_pix)
-{
 	update_keys();
 	
 	if (using_opencl)
@@ -101,7 +73,8 @@ void CamaraLucida::_update(uint16_t *raw_depth_pix)
 	{
 		update_mesh(raw_depth_pix);	
 	}
-	update_vbo();		
+	update_vbo();
+	update_fbo();
 }
 
 void CamaraLucida::render()
@@ -260,17 +233,17 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 // fbo
 
 
-void CamaraLucida::init_fbo(ofFbo::Settings s)
+void CamaraLucida::init_fbo(int tex_width, int tex_height, int tex_num_samples)
 {
-	// TODO fix me: 
-	// why is setup(ofFbo::Settings s) not working?
-	// looks like there's a bug in ofFbo...
-	//fbo.setup(s);
-	fbo.setup(s.width, s.height, s.internalformat, s.numSamples);
+	ofFbo::Settings s;
+	s.width				= tex_width;
+	s.height			= tex_height;
+	s.numSamples		= tex_num_samples;
+	s.numColorbuffers	= 1;
+	s.internalformat	= GL_RGBA;
 	
-	texture = fbo.getTexture(0);
-	//ofLoadImage(texture, ofToDataPath("texture1.tga"));
-	//texture = kinect.getDepthTextureReference();
+	fbo.setup(s);
+	//fbo.setup(s.width, s.height, s.internalformat, s.numSamples);
 }
 
 void CamaraLucida::update_fbo()
@@ -278,18 +251,10 @@ void CamaraLucida::update_fbo()
 	ofNotifyEvent( update_texture, void_event_args );
 	
 	fbo.bind();
-		
+	
 	ofNotifyEvent( render_texture, void_event_args );
 		
 	fbo.unbind();
-	texture = fbo.getTexture(0);
-}
-
-void CamaraLucida::update_fbo(const ofTexture tex)
-{
-	ofNotifyEvent( update_texture, void_event_args );
-	
-	texture = tex;
 }
 
 
@@ -378,8 +343,8 @@ void CamaraLucida::init_vbo()
 	{
 		int mcol = i % mesh_w;
 		int mrow = (i - mcol) / mesh_w;
-		float t = ((float)mcol/mesh_w) * texture.getWidth();
-		float u = ((float)mrow/mesh_h) * texture.getHeight();
+		float t = ((float)mcol/mesh_w) * fbo.getWidth();
+		float u = ((float)mrow/mesh_h) * fbo.getHeight();
 		vbo_texcoords[i] = ofVec2f(t, u);
 	}
 	
@@ -428,12 +393,12 @@ void CamaraLucida::render_mesh()
 	if (!vbo.getIsAllocated())
 		return;
 	
-	texture.bind();
+	fbo.getTexture(0).bind();
 	vbo.bind();
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.getIndexId());
 	glDrawElements(GL_QUADS, ibo_length, GL_UNSIGNED_INT, NULL);
-	vbo.unbind();
-	texture.unbind();
+	vbo.unbind();	
+	fbo.getTexture(0).unbind();
 }
 
 
@@ -713,6 +678,20 @@ void CamaraLucida::keyPressed(ofKeyEventArgs &args)
 		case 'x':
 			reset_gl_scene_control();
 			break;
+	}
+	
+	if (pressed['c'])
+	{
+		if (args.key == OF_KEY_UP)
+		{
+			depth_xoff++;
+			kernel_vertex_update->setArg(7, depth_xoff);
+		}
+		else if (args.key == OF_KEY_DOWN)
+		{
+			depth_xoff--;
+			kernel_vertex_update->setArg(7, depth_xoff);
+		}
 	}
 }
 
