@@ -10,6 +10,8 @@ void app::setup()
 	if (!init_kinect())
 		return;
 	
+	opencl.setupFromOpenGL();
+	
 	camluc.setup(ofToDataPath("kinect_calibration.yml").c_str(),
 				 ofToDataPath("projector_calibration.yml").c_str(),
 				 raw_depth_pix, rgb_pix, 
@@ -86,7 +88,7 @@ void app::render_texture(ofEventArgs &args)
 
 bool app::init_kinect()
 {
-	kinect.update_calibration = debug_depth_texture;
+	//kinect.update_calibration = debug_depth_texture;
 	kinect.enableDepthNearValueWhite(false);
 	
 	kinect.init(false, true, true);
@@ -131,7 +133,7 @@ void app::keyPressed(int key)
 						
 		case 'o':
 			debug_depth_texture = !debug_depth_texture;
-			kinect.update_calibration = debug_depth_texture;
+			//kinect.update_calibration = debug_depth_texture;
 			break;
 	}
 	

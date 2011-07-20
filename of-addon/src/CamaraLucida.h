@@ -29,7 +29,7 @@
 //	reserved user input for debugging:
 //		'x': reset view
 //		'v': switch view projector, depth cam, world
-//		'c': change depht_xoffset
+//		'c' + key up/down: change depht_xoffset
 //		'z' + mouse_drag: rotate
 //		mouse_drag: zoom in/out
 
@@ -148,8 +148,8 @@ private:
 	MSA::OpenCLKernel	*kernel_vertex_update;
 	
 	MSA::OpenCLBuffer	cl_buff_vbo_3d;
-	//MSA::OpenCLBuffer	cl_buff_ibo;
 	MSA::OpenCLBuffer	cl_buff_raw_depth;
+	//MSA::OpenCLBuffer	cl_buff_ibo;
 	
 	
 	//	scene control
