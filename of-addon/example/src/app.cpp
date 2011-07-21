@@ -18,7 +18,6 @@ void app::setup()
 				 ofGetWidth(), ofGetHeight(), 1,
 				 &opencl);
 	
-	ofAddListener(camluc.update_texture, this, &app::update_texture);
 	ofAddListener(camluc.render_texture, this, &app::render_texture);
 	ofAddListener(camluc.render_hud, this, &app::render_hud);
 }
@@ -30,7 +29,8 @@ void app::update()
 	if (!update_kinect())
 		return;
 	
-	camluc.update(raw_depth_pix, rgb_pix);
+	if (kinect.isFrameNew())
+		camluc.update(raw_depth_pix, rgb_pix);
 }
 
 void app::draw()
@@ -42,7 +42,6 @@ void app::exit()
 {
 	ofLog(OF_LOG_VERBOSE, "exit!");
 	
-	ofRemoveListener(camluc.update_texture, this, &app::update_texture);
 	ofRemoveListener(camluc.render_texture, this, &app::render_texture);
 	ofRemoveListener(camluc.render_hud, this, &app::render_hud);
 	
@@ -53,12 +52,6 @@ void app::render_hud(ofEventArgs &args)
 {
 	if (debug_depth_texture)
 		kinect.getDepthTextureReference().draw(0, 0, 400, 300);
-}
-
-
-void app::update_texture(ofEventArgs &args)
-{
-	
 }
 
 void app::render_texture(ofEventArgs &args)
@@ -88,7 +81,7 @@ void app::render_texture(ofEventArgs &args)
 
 bool app::init_kinect()
 {
-	//kinect.update_calibration = debug_depth_texture;
+	//kinect.enableCalibrationUpdate(false);
 	kinect.enableDepthNearValueWhite(false);
 	
 	kinect.init(false, true, true);
@@ -133,7 +126,7 @@ void app::keyPressed(int key)
 						
 		case 'o':
 			debug_depth_texture = !debug_depth_texture;
-			//kinect.update_calibration = debug_depth_texture;
+			//kinect.toggleCalibrationUpdate();
 			break;
 	}
 	

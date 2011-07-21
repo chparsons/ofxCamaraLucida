@@ -12,7 +12,6 @@ public:
 		
 	CamaraLucida camluc;
 		
-	void update_texture(ofEventArgs &args);
 	void render_texture(ofEventArgs &args);
 	void render_hud(ofEventArgs &args);
 		

@@ -25,10 +25,14 @@
 #include "cv.h"
 #include "MSAOpenCL.h"
 
+#ifndef ARRAY_LEN
+#define ARRAY_LEN(a) (sizeof(a)/sizeof(a[0]))
+#endif
 
-//	reserved user input for debugging:
-//		'x': reset view
-//		'v': switch view projector, depth cam, world
+
+//	reserved user input on debug mode (toggle_debug)
+//		'x' reset view
+//		'v' switch view projector, depth cam, world
 //		'c' + key up/down: change depht_xoffset
 //		'z' + mouse_drag: rotate
 //		mouse_drag: zoom in/out
@@ -60,12 +64,17 @@ public:
 	
 	void render();
 	
-	ofEvent<ofEventArgs> update_texture;
 	ofEvent<ofEventArgs> render_texture;
 	ofEvent<ofEventArgs> render_hud;
 	
 	void toggle_debug();
+	float* z_lut();
 	
+	int depth_width();
+	int depth_height();	
+	
+	static void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v );
+	static void HSVtoRGB( float h, float s, float v, float *r, float *g, float *b );
 	
 private:
 	
@@ -84,6 +93,7 @@ private:
 
 	// gl
 	
+	void gl_ortho();
 	void gl_projection();
 	void gl_viewpoint();
 	
@@ -107,7 +117,6 @@ private:
 	void render_mesh();
 	
 	void init_vbo();
-	void update_vbo();
 	void dispose_vbo();
 	
 	ofVbo vbo;
@@ -126,7 +135,6 @@ private:
 	
 	ofFbo fbo;
 	void init_fbo(int tex_width, int tex_height, int tex_num_samples);
-	void update_fbo();
 	
 	// open cl
 	
@@ -178,11 +186,6 @@ private:
 	int view_type;
 	
 	
-	// color utils
-	
-	void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v );
-	void HSVtoRGB( float h, float s, float v, float *r, float *g, float *b );
-	
 	
 	// camara lucida
 	
@@ -219,8 +222,8 @@ private:
 	int depth_xoff;
 	float near, far;
 	
-	void init_z_lut();
-	float z_lut[2048];
+	void init_zlut();
+	float zlut[2048];
 	
 	void printM(float* M, int rows, int cols, bool colmajor = true);
 	void printM(CvMat* M, bool colmajor = true);

@@ -31,7 +31,7 @@ void CamaraLucida::setup(const char* kinect_calibration_filename,
 						 MSA::OpenCL* opencl)
 {
 	load_data(kinect_calibration_filename, proj_calibration_filename);
-	init_z_lut();
+	init_zlut();
 	
 	proj_loc = ofVec3f(	proj_RT[12], proj_RT[13], proj_RT[14] );	
 	proj_fwd = ofVec3f(	proj_RT[8], proj_RT[9], proj_RT[10] );
@@ -72,17 +72,26 @@ void CamaraLucida::update(uint16_t *raw_depth_pix, uint8_t *rgb_pix)
 	{
 		update_mesh(raw_depth_pix);	
 	}
-	update_vbo();
-	update_fbo();
+	
+	vbo.updateVertexData(&vbo_3d[0].x, vbo_length);
 }
 
 void CamaraLucida::render()
 {
+	fbo.bind();
+	ofNotifyEvent( render_texture, void_event_args );
+	fbo.unbind();
+	
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glColor3f(1, 1, 1);
+	glViewport(0, 0, ofGetWidth(), ofGetHeight());
+	
+	gl_ortho();
 	
 	ofNotifyEvent( render_hud, void_event_args );
+	
 	render_screenlog();
 	
 	gl_projection();	
@@ -141,17 +150,6 @@ void CamaraLucida::init_fbo(int tex_width, int tex_height, int tex_num_samples)
 	
 	fbo.setup(s);
 	//fbo.setup(s.width, s.height, s.internalformat, s.numSamples);
-}
-
-void CamaraLucida::update_fbo()
-{
-	ofNotifyEvent( update_texture, void_event_args );
-	
-	fbo.bind();
-	
-	ofNotifyEvent( render_texture, void_event_args );
-		
-	fbo.unbind();
 }
 
 
@@ -258,14 +256,6 @@ void CamaraLucida::init_vbo()
 	vbo.setTexCoordData(vbo_texcoords, vbo_length, GL_STATIC_DRAW);
 }
 
-void CamaraLucida::update_vbo()
-{
-	vbo.updateVertexData(&vbo_3d[0].x, vbo_length);
-	//vbo.updateIndexData(ibo, ibo_length);
-	//vbo.updateColorData(vbo_color, vbo_length);
-	//vbo.updateTexCoordData(vbo_texcoords, vbo_length);
-}
-
 void CamaraLucida::dispose_vbo()
 {
 	vbo.clear();
@@ -352,7 +342,7 @@ void CamaraLucida::update_vertex(int vbo_idx, float4* vbo_buff,
 	{
 		//float a = (float)raw_depth / K2;
 		//z = K1 * tan( (float)(a + K3) ) - K4; // calculate in meters
-		z = z_lut[raw_depth];
+		z = zlut[raw_depth];
 		
 		//float hue = ofMap(z, 1.0f, 2.5f, 0.0f, 1.0f, 1);
 		//HSVtoRGB(hue*360, 1, 1, &r, &g, &b);
@@ -376,6 +366,16 @@ void CamaraLucida::update_vertex(int vbo_idx, float4* vbo_buff,
 
 // gl
 
+
+void CamaraLucida::gl_ortho()
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, ofGetWidth(), ofGetHeight(), 0, -1, 1);
+	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
 
 void CamaraLucida::gl_projection()
 {
@@ -627,6 +627,16 @@ void CamaraLucida::mousePressed(ofMouseEventArgs &args)
 // data / conversion
 
 
+int CamaraLucida::depth_width()
+{
+	return d_width;
+}
+
+int CamaraLucida::depth_height()
+{
+	return d_height;
+}
+
 void CamaraLucida::load_data(const char* kinect_calibration_filename, const char* proj_calibration_filename)
 {
 	//	rgb
@@ -785,12 +795,17 @@ void CamaraLucida::convertKKopencv2opengl(CvMat* opencvKK, float width, float he
 }
 
 
-void CamaraLucida::init_z_lut()
+void CamaraLucida::init_zlut()
 {
 	for (int i = 0; i < 2048; i++) 
 	{
-		z_lut[i] = raw_depth_to_meters(i);
+		zlut[i] = raw_depth_to_meters(i);
 	}
+}
+
+float* CamaraLucida::z_lut()
+{
+	return zlut;
 }
 
 
@@ -799,7 +814,7 @@ void CamaraLucida::init_z_lut()
 
 void CamaraLucida::raw_depth_to_p3d(uint16_t raw_depth, int x_d, int y_d, float* vec3)
 {
-	vec3[2] = z_lut[raw_depth];
+	vec3[2] = zlut[raw_depth];
 	vec3[0] = (x_d + depth_xoff - cx_d) * vec3[2] / fx_d;
 	vec3[1] = (y_d - cy_d) * vec3[2] / fy_d;
 }		
