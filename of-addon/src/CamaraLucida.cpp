@@ -24,6 +24,9 @@
 #define K3		1.1863
 #define K4		0.0370
 
+namespace camaralucida 
+{
+	
 void CamaraLucida::setup(const char* kinect_calibration_filename, 
 						 const char* proj_calibration_filename,
 						 uint16_t *raw_depth_pix, uint8_t *rgb_pix, 
@@ -533,17 +536,6 @@ string CamaraLucida::view_type_str()
 // ui
 
 
-void CamaraLucida::init_keys()
-{
-	for (int i = 0; i < 512; i++) 
-		pressed[i] = false;
-}
-
-void CamaraLucida::update_keys()
-{
-	
-}
-
 void CamaraLucida::init_events()
 {
 	ofAddListener(ofEvents.keyPressed, this, &CamaraLucida::keyPressed);
@@ -560,6 +552,17 @@ void CamaraLucida::dispose_events()
 	ofRemoveListener(ofEvents.mousePressed, this, &CamaraLucida::mousePressed);
 }
 
+void CamaraLucida::init_keys()
+{
+	for (int i = 0; i < 512; i++) 
+		pressed[i] = false;
+}
+
+void CamaraLucida::update_keys()
+{
+	
+}
+
 void CamaraLucida::keyPressed(ofKeyEventArgs &args)
 {
 	pressed[args.key] = true;
@@ -568,17 +571,17 @@ void CamaraLucida::keyPressed(ofKeyEventArgs &args)
 	
 	switch(args.key)
 	{		
-		case 'v':
+		case camaralucida::key::view_type:
 			++view_type;
 			view_type = view_type == V_TYPE_LENGTH ? 0 : view_type;
 			break;
 			
-		case 'x':
+		case camaralucida::key::reset_view:
 			reset_gl_scene_control();
 			break;
 	}
 	
-	if (pressed['c'])
+	if (pressed[camaralucida::key::change_depth_xoff])
 	{
 		if (args.key == OF_KEY_UP)
 		{
@@ -605,7 +608,7 @@ void CamaraLucida::mouseDragged(ofMouseEventArgs &args)
 	ofVec2f m = ofVec2f(args.x, args.y);
 	ofVec2f dist = m - pmouse;
 	
-	if (pressed['z'])
+	if (pressed[camaralucida::key::zoom])
 	{
 		tZ += -dist.y * tZ_delta;	
 	}
@@ -1064,4 +1067,6 @@ void CamaraLucida::HSVtoRGB( float h, float s, float v,
 			*b = q;
 			break;
 	}
+}
+	
 }

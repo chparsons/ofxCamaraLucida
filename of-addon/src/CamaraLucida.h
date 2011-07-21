@@ -21,22 +21,14 @@
 
 #include <iostream.h>
 #include <algorithm>
+#include "CamaraLucidaKeyboard.h"
 #include "ofMain.h"
 #include "cv.h"
 #include "MSAOpenCL.h"
 
-#ifndef ARRAY_LEN
-#define ARRAY_LEN(a) (sizeof(a)/sizeof(a[0]))
-#endif
 
-
-//	reserved user input on debug mode (toggle_debug)
-//		'x' reset view
-//		'v' switch view projector, depth cam, world
-//		'c' + key up/down: change depht_xoffset
-//		'z' + mouse_drag: rotate
-//		mouse_drag: zoom in/out
-
+namespace camaralucida 
+{
 
 class CamaraLucida
 {
@@ -240,3 +232,5 @@ private:
 	CvMat* proj_R;
 	CvMat* proj_T;
 }; 
+	
+}
