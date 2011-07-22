@@ -19,11 +19,6 @@
 
 #include "CamaraLucida.h"
 
-#define K1		0.1236
-#define K2		2842.5
-#define K3		1.1863
-#define K4		0.0370
-
 namespace camaralucida 
 {
 	
@@ -341,10 +336,10 @@ void CamaraLucida::update_vertex(int vbo_idx, float4* vbo_buff,
 	float g = 1.0f; 
 	float b = 1.0f; 
 	
-	if (raw_depth < 1024)
+	if (raw_depth < raw_depth_max_valid)
 	{
-		//float a = (float)raw_depth / K2;
-		//z = K1 * tan( (float)(a + K3) ) - K4; // calculate in meters
+		//float a = (float)raw_depth / k2;
+		//z = k1 * tan( (float)(a + k3) ) - k4; // calculate in meters
 		z = zlut[raw_depth];
 		
 		//float hue = ofMap(z, 1.0f, 2.5f, 0.0f, 1.0f, 1);
@@ -800,7 +795,7 @@ void CamaraLucida::convertKKopencv2opengl(CvMat* opencvKK, float width, float he
 
 void CamaraLucida::init_zlut()
 {
-	for (int i = 0; i < 2048; i++) 
+	for (int i = 0; i < raw_depth_max; i++) 
 	{
 		zlut[i] = raw_depth_to_meters(i);
 	}
@@ -827,7 +822,7 @@ float CamaraLucida::raw_depth_to_meters(uint16_t raw_depth)
 	if (raw_depth < 2047)
 	{
 //		return 1.0 / (raw_depth * -0.0030711016 + 3.3309495161);
-		return K1 * tanf((raw_depth / K2) + K3) - K4; // calculate in meters
+		return k1 * tanf((raw_depth / k2) + k3) - k4; // calculate in meters
 	}
 	return 0;
 }
@@ -975,98 +970,6 @@ void CamaraLucida::printM(CvMat* M, bool colmajor)
 		}
 	}
 	printf("\n");
-}
-
-
-//http://www.cs.rit.edu/~ncs/color/t_convert.html
-//
-// r,g,b values are from 0 to 1
-// h = [0,360], s = [0,1], v = [0,1]
-//		if s == 0, then h = -1 (undefined)
-//
-// s = saturation = level of white (0=white, 1=no white)
-// v = value or brightness = level of black (0=black, 1=no black)
-
-void CamaraLucida::RGBtoHSV( float r, float g, float b, 
-							float *h, float *s, float *v )
-{
-	float min, max, delta;
-	
-//	min = MIN( r, g, b );
-//	max = MAX( r, g, b );
-	float rgb[3] = { r, g, b };
-	max = *std::max_element(rgb, rgb+3);
-	min = *std::min_element(rgb, rgb+3);
-	
-	*v = max;				// v
-	delta = max - min;
-	if( max != 0 )
-		*s = delta / max;		// s
-	else {
-		// r = g = b = 0		// s = 0, v is undefined
-		*s = 0;
-		*h = -1;
-		return;
-	}
-	if( r == max )
-		*h = ( g - b ) / delta;		// between yellow & magenta
-	else if( g == max )
-		*h = 2 + ( b - r ) / delta;	// between cyan & yellow
-	else
-		*h = 4 + ( r - g ) / delta;	// between magenta & cyan
-	*h *= 60;				// degrees
-	if( *h < 0 )
-		*h += 360;
-}
-
-void CamaraLucida::HSVtoRGB( float h, float s, float v,
-							float *r, float *g, float *b)
-{
-	int i;
-	float f, p, q, t;
-	if( s == 0 ) {
-		// achromatic (grey)
-		*r = *g = *b = v;
-		return;
-	}
-	h /= 60;			// sector 0 to 5
-	i = floor( h );
-	f = h - i;			// factorial part of h
-	p = v * ( 1 - s );
-	q = v * ( 1 - s * f );
-	t = v * ( 1 - s * ( 1 - f ) );
-	switch( i ) {
-		case 0:
-			*r = v;
-			*g = t;
-			*b = p;
-			break;
-		case 1:
-			*r = q;
-			*g = v;
-			*b = p;
-			break;
-		case 2:
-			*r = p;
-			*g = v;
-			*b = t;
-			break;
-		case 3:
-			*r = p;
-			*g = q;
-			*b = v;
-			break;
-		case 4:
-			*r = t;
-			*g = p;
-			*b = v;
-			break;
-		default:		// case 5:
-			*r = v;
-			*g = p;
-			*b = q;
-			break;
-	}
 }
 	
 }

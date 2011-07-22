@@ -34,8 +34,7 @@ void app::setup()
 	camluc.setup(ofToDataPath("kinect_calibration.yml").c_str(),
 				 ofToDataPath("projector_calibration.yml").c_str(),
 				 raw_depth_pix, rgb_pix, 
-				 ofGetWidth(), ofGetHeight(), 1,
-				 &opencl);
+				 ofGetWidth(), ofGetHeight(), 1, &opencl);
 	
 	ofAddListener(camluc.render_texture, this, &app::render_texture);
 	ofAddListener(camluc.render_hud, this, &app::render_hud);

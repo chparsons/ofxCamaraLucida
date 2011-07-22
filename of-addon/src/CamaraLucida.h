@@ -29,7 +29,14 @@
 
 namespace camaralucida 
 {
-
+	
+static const uint16_t raw_depth_max = 2048; //11bits
+static const uint16_t raw_depth_max_valid = 1024; //5mts~
+static const float k1 = 0.1236;
+static const float k2 = 2842.5;
+static const float k3 = 1.1863;
+static const float k4 = 0.0370;
+	
 class CamaraLucida
 {
 public:
@@ -64,9 +71,6 @@ public:
 	
 	int depth_width();
 	int depth_height();	
-	
-	static void RGBtoHSV( float r, float g, float b, float *h, float *s, float *v );
-	static void HSVtoRGB( float h, float s, float v, float *r, float *g, float *b );
 	
 private:
 	
