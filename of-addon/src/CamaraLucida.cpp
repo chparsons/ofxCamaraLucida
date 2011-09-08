@@ -19,16 +19,27 @@
 
 #include "CamaraLucida.h"
 
-namespace camaralucida 
+void CamaraLucida::init(string kinect_calibration_filename,
+						string proj_calibration_filename,
+						string config_filename,
+						uint16_t *raw_depth_pix, uint8_t *rgb_pix, 
+						int tex_width, int tex_height, int tex_num_samples, 
+						MSA::OpenCL* opencl)
 {
+	_inited = true;
 	
-void CamaraLucida::setup(const char* kinect_calibration_filename, 
-						 const char* proj_calibration_filename,
-						 uint16_t *raw_depth_pix, uint8_t *rgb_pix, 
-						 int tex_width, int tex_height, int tex_num_samples,
-						 MSA::OpenCL* opencl)
-{
+	config.loadFile(config_filename);
+	config.pushTag("camaralucida");
+	depth_xoff = config.getValue("depth_xoff", -7); 
+	mesh_step = config.getValue("mesh_step", 2);
+	near = config.getValue("near", 0.1);
+	far = config.getValue("far", 20.0);
+	
 	load_data(kinect_calibration_filename, proj_calibration_filename);
+	
+	_base_depth_raw = 1024.; //5mts~
+	_base_depth_mts = k1 * tanf((_base_depth_raw / k2) + k3) - k4;
+	
 	init_zlut();
 	
 	proj_loc = ofVec3f(	proj_RT[12], proj_RT[13], proj_RT[14] );	
@@ -43,7 +54,6 @@ void CamaraLucida::setup(const char* kinect_calibration_filename,
 	
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
 	glEnable(GL_DEPTH_TEST);
 	glPolygonMode(GL_FRONT, GL_FILL);
 	
@@ -58,8 +68,46 @@ void CamaraLucida::setup(const char* kinect_calibration_filename,
 	}
 }
 
+bool CamaraLucida::inited()
+{
+	if (!_inited)
+	{
+		if (!_not_init_alert)
+		{
+			ofLog(OF_LOG_ERROR, "Camara Lucida not inited");
+			_not_init_alert = true;
+		}
+		return false;
+	}
+	return true;
+}
+
+CamaraLucida::~CamaraLucida()
+{	
+	ofLog(OF_LOG_VERBOSE, "~CamaraLucida");
+	
+	if (!inited())
+		return;
+	
+	dispose_events();
+	dispose_vbo();
+	
+	cvReleaseMat(&rgb_int);	
+	cvReleaseMat(&depth_int);
+	
+	cvReleaseMat(&drgb_R);
+	cvReleaseMat(&drgb_T);
+	
+	cvReleaseMat(&proj_int);	
+	cvReleaseMat(&proj_R);
+	cvReleaseMat(&proj_T);
+}
+
 void CamaraLucida::update(uint16_t *raw_depth_pix, uint8_t *rgb_pix)
 {
+	if (!inited())
+		return;
+	
 	update_keys();
 	
 	if (using_opencl)
@@ -76,12 +124,24 @@ void CamaraLucida::update(uint16_t *raw_depth_pix, uint8_t *rgb_pix)
 
 void CamaraLucida::render()
 {
+	if (!inited())
+		return;
+	
 	fbo.bind();
+	//ofEnableAlphaBlending();  
+	//glEnable(GL_BLEND);  
+	//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA); 
+	
 	ofNotifyEvent( render_texture, void_event_args );
+	
 	fbo.unbind();
+	//ofDisableAlphaBlending(); 
+	//glDisable(GL_BLEND);  
 	
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+	glPolygonMode(GL_FRONT, GL_FILL);
 	
 	glColor3f(1, 1, 1);
 	glViewport(0, 0, ofGetWidth(), ofGetHeight());
@@ -106,24 +166,6 @@ void CamaraLucida::render()
 	render_mesh();
 }
 
-CamaraLucida::~CamaraLucida()
-{	
-	ofLog(OF_LOG_VERBOSE, "~CamaraLucida");
-	
-	dispose_events();
-	dispose_vbo();
-	
-	cvReleaseMat(&rgb_int);	
-	cvReleaseMat(&depth_int);
-	
-	cvReleaseMat(&drgb_R);
-	cvReleaseMat(&drgb_T);
-	
-	cvReleaseMat(&proj_int);	
-	cvReleaseMat(&proj_R);
-	cvReleaseMat(&proj_T);
-}
-
 void CamaraLucida::toggle_debug()
 {
 	_debug = !_debug;
@@ -131,6 +173,77 @@ void CamaraLucida::toggle_debug()
 	{
 		reset_gl_scene_control();
 	}
+}
+
+
+// utils
+
+
+float CamaraLucida::z_mts(uint16_t raw_depth)
+{
+	return _zlut[raw_depth];
+}
+
+float CamaraLucida::z_mts(uint16_t *raw_depth_pix, int x, int y, bool tex_coords)
+{
+	if (tex_coords)
+	{
+		x = (int) ( (float)x / fbo.getWidth() * d_width );
+		y = (int) ( (float)y / fbo.getHeight() * d_height );
+	}
+	
+	int depth_idx = y * d_width + x;
+	uint16_t raw_depth = raw_depth_pix[depth_idx];
+	
+	return _zlut[raw_depth];
+}
+
+ofVec3f CamaraLucida::raw_depth_to_p3d(uint16_t *raw_depth_pix, int x_depth, int y_depth)
+{
+	ofVec3f p3d;
+	p3d.z = z_mts(raw_depth_pix, x_depth, y_depth);
+	p3d.x = (x_depth + depth_xoff - cx_d) * p3d.z / fx_d;
+	p3d.y = (y_depth - cy_d) * p3d.z / fy_d;
+	return p3d;
+}
+
+ofVec3f CamaraLucida::raw_depth_to_p3d(uint16_t raw_depth, int x_depth, int y_depth)
+{
+	ofVec3f p3d;
+	p3d.z = _zlut[raw_depth];
+	p3d.x = (x_depth + depth_xoff - cx_d) * p3d.z / fx_d;
+	p3d.y = (y_depth - cy_d) * p3d.z / fy_d;
+	return p3d;
+}
+
+ofVec2f CamaraLucida::p3d_to_depth(const ofVec3f& p3d)
+{
+	ofVec2f d2d;
+	d2d.x = (p3d.x * fx_d / p3d.z) + cx_d - depth_xoff;
+	d2d.y = (p3d.y * fy_d / p3d.z) + cy_d;
+	return d2d;
+}
+	
+ofVec2f CamaraLucida::raw_depth_to_rgb(uint16_t raw_depth, int x_depth, int y_depth)
+{
+	//	P3D' = R.P3D + T
+	//	P2D_rgb.x = (P3D'.x * fx_rgb / P3D'.z) + cx_rgb
+	//	P2D_rgb.y = (P3D'.y * fy_rgb / P3D'.z) + cy_rgb
+
+	ofVec2f rgb2d;
+	
+	float xoff = -8;
+	ofVec3f p3d = raw_depth_to_p3d(raw_depth, x_depth, y_depth);
+	
+	ofVec3f p3d_rgb = RT_rgb * p3d;
+	
+	rgb2d.x = (p3d_rgb.x * fx_rgb / p3d_rgb.z) + cx_rgb;
+	rgb2d.y = (p3d_rgb.y * fy_rgb / p3d_rgb.z) + cy_rgb;
+	
+	CLAMP(rgb2d.x, 0, rgb_width-1);
+	CLAMP(rgb2d.y, 0, rgb_height-1);
+	
+	return rgb2d;
 }
 
 
@@ -197,14 +310,13 @@ void CamaraLucida::update_cl(uint16_t *raw_depth_pix)
 }
 
 
-
 // vbo
 
 
 void CamaraLucida::init_vbo()
 {
-	mesh_w = d_width/mesh_step;
-	mesh_h = d_height/mesh_step;
+	mesh_w = (float)d_width/mesh_step;
+	mesh_h = (float)d_height/mesh_step;
 	
 	vbo_length = mesh_w * mesh_h; 
 	ibo_length = vbo_length * 4;
@@ -221,7 +333,7 @@ void CamaraLucida::init_vbo()
 		int mcol = i % mesh_w;
 		int mrow = (i - mcol) / mesh_w;
 		
-		if ( ( mcol < mesh_w - 2 ) && ( mrow < mesh_h - 2 ) ) 
+		if ( ( mcol < mesh_w - mesh_step ) && ( mrow < mesh_h - mesh_step ) ) 
 		{
 			int ibo_idx = i * 4;
 			
@@ -237,8 +349,10 @@ void CamaraLucida::init_vbo()
 	{
 		int mcol = i % mesh_w;
 		int mrow = (i - mcol) / mesh_w;
+		
 		float t = ((float)mcol/mesh_w) * fbo.getWidth();
 		float u = ((float)mrow/mesh_h) * fbo.getHeight();
+		
 		vbo_texcoords[i] = ofVec2f(t, u);
 	}
 	
@@ -279,12 +393,22 @@ void CamaraLucida::render_mesh()
 	if (!vbo.getIsAllocated())
 		return;
 	
+	//glEnable(GL_BLEND);  
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	//glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
+	//glBlendFuncSeparate(GL_ONE, GL_SRC_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+	//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
+	//ofEnableAlphaBlending();
+	
 	fbo.getTexture(0).bind();
 	vbo.bind();
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.getIndexId());
 	glDrawElements(GL_QUADS, ibo_length, GL_UNSIGNED_INT, NULL);
 	vbo.unbind();	
 	fbo.getTexture(0).unbind();
+	
+	//glDisable(GL_BLEND);
+	//ofDisableAlphaBlending();  
 }
 
 
@@ -303,20 +427,16 @@ void CamaraLucida::update_vertex(int vbo_idx, float4* vbo_buff,
 						const ushort* raw_depth_buff, 
 						const int vbo_length, const int mesh_step, 
 						const int mesh_w, const int mesh_h,
-						const int kinect_w, const int kinect_h,
+						const int d_width, const int d_height,
 						const float cx_d, const float cy_d, 
 						const float fx_d, const float fy_d, 
-						const int xoffset)
+						const int depth_xoff)
 {
 	//	int vbo_idx = get_global_id(0);
 	//	
-	//	
-	//	int kinect_w = 640;
-	//	int kinect_h = 480;
-	//	int mesh_w = kinect_w/mesh_step;
-	//	int mesh_h = kinect_h/mesh_step;
+	//	int mesh_w = d_width/mesh_step;
+	//	int mesh_h = d_height/mesh_step;
 	//	int vbo_length = mesh_w * mesh_h; 
-	
 	
 	int mcol = vbo_idx % mesh_w;
 	int mrow = (vbo_idx - mcol) / mesh_w;
@@ -324,40 +444,23 @@ void CamaraLucida::update_vertex(int vbo_idx, float4* vbo_buff,
 	int col = mcol * mesh_step;
 	int row = mrow * mesh_step;
 	
-	int depth_idx = row * kinect_w + col;
+	int depth_idx = row * d_width + col;
 	
 	
 	// set VBO pts
 	
 	ushort raw_depth = raw_depth_buff[depth_idx];
 	
-	float z = 5.0f; //base depth mts
-	float r = 1.0f; 
-	float g = 1.0f; 
-	float b = 1.0f; 
-	
-	if (raw_depth < raw_depth_max_valid)
-	{
-		//float a = (float)raw_depth / k2;
-		//z = k1 * tan( (float)(a + k3) ) - k4; // calculate in meters
-		z = zlut[raw_depth];
-		
-		//float hue = ofMap(z, 1.0f, 2.5f, 0.0f, 1.0f, 1);
-		//HSVtoRGB(hue*360, 1, 1, &r, &g, &b);
-	}
-	
-	float x = (col + xoffset - cx_d) * z / fx_d;
+	float z = _zlut[raw_depth];
+	float x = (col + depth_xoff - cx_d) * z / fx_d;
 	float y = (row - cy_d) * z / fy_d;
-	
 	
 	vbo_buff[vbo_idx].x = x;
 	vbo_buff[vbo_idx].y = y;
 	vbo_buff[vbo_idx].z = z;
-	//	vbo_buff[vbo_idx][3] = 0;
-	
+	//vbo_buff[vbo_idx].w = 0;
 	
 	// set color
-	
 	//vbo_color[vbo_idx].set(r,g,b);
 }
 
@@ -382,7 +485,6 @@ void CamaraLucida::gl_projection()
 	
 	switch(view_type)
 	{
-		case V_WORLD:
 		case V_PROJ:
 			glMultMatrixf(proj_KK);
 			break;
@@ -397,11 +499,10 @@ void CamaraLucida::gl_viewpoint()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	glScalef(-1., -1., 1.);
+	glScalef(1., -1., 1.);
 	
 	switch(view_type)
 	{
-		case V_WORLD:
 		case V_DEPTH:			
 			gluLookAt(0., 0., 0,		//loc
 					  0., 0., 1.,		//target
@@ -508,16 +609,13 @@ void CamaraLucida::render_axis(float s)
 void CamaraLucida::render_screenlog()
 {
 	if (!_debug) return;
-	ofDrawBitmapString(view_type_str()+" /fps: "+ofToString(ofGetFrameRate()), 10, ofGetHeight()-10);
+	ofDrawBitmapString(view_type_str()+" /depth_xoff: "+ofToString(depth_xoff)+" /fps: "+ofToString(ofGetFrameRate()), 10, ofGetHeight()-10);
 }
 
 string CamaraLucida::view_type_str()
 {
 	switch(view_type)
 	{
-		case V_WORLD:
-			return "world viewpoint";
-			break;
 		case V_PROJ:
 			return "projector viewpoint";
 			break;
@@ -566,27 +664,33 @@ void CamaraLucida::keyPressed(ofKeyEventArgs &args)
 	
 	switch(args.key)
 	{		
-		case camaralucida::key::view_type:
+		case key_view_type:
 			++view_type;
 			view_type = view_type == V_TYPE_LENGTH ? 0 : view_type;
 			break;
 			
-		case camaralucida::key::reset_view:
+		case key_reset_view:
 			reset_gl_scene_control();
 			break;
 	}
 	
-	if (pressed[camaralucida::key::change_depth_xoff])
+	if (pressed[key_change_depth_xoff])
 	{
 		if (args.key == OF_KEY_UP)
 		{
 			depth_xoff++;
-			kernel_vertex_update->setArg(7, depth_xoff);
+			if (using_opencl)
+			{
+				kernel_vertex_update->setArg(7, depth_xoff);
+			}
 		}
 		else if (args.key == OF_KEY_DOWN)
 		{
 			depth_xoff--;
-			kernel_vertex_update->setArg(7, depth_xoff);
+			if (using_opencl)
+			{
+				kernel_vertex_update->setArg(7, depth_xoff);
+			}
 		}
 	}
 }
@@ -603,14 +707,14 @@ void CamaraLucida::mouseDragged(ofMouseEventArgs &args)
 	ofVec2f m = ofVec2f(args.x, args.y);
 	ofVec2f dist = m - pmouse;
 	
-	if (pressed[camaralucida::key::zoom])
+	if (pressed[key_zoom])
 	{
 		tZ += -dist.y * tZ_delta;	
 	}
 	else
 	{
 		rotX += -dist.y * rot_delta;
-		rotY += dist.x * rot_delta;
+		rotY += -dist.x * rot_delta;
 	}
 	pmouse.set(args.x, args.y);
 }
@@ -625,21 +729,15 @@ void CamaraLucida::mousePressed(ofMouseEventArgs &args)
 // data / conversion
 
 
-int CamaraLucida::depth_width()
+	
+void CamaraLucida::load_data(string kinect_calibration_filename, string proj_calibration_filename)
 {
-	return d_width;
-}
-
-int CamaraLucida::depth_height()
-{
-	return d_height;
-}
-
-void CamaraLucida::load_data(const char* kinect_calibration_filename, const char* proj_calibration_filename)
-{
+	const char* kinect_calibration_filename_str = kinect_calibration_filename.c_str();
+	const char* proj_calibration_filename_str = proj_calibration_filename.c_str();
+	
 	//	rgb
 	
-	rgb_int = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "rgb_intrinsics");
+	rgb_int = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "rgb_intrinsics");
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n rgb_intrinsics opencv (kinect_calibration.yml)");
 	printM(rgb_int);
 	
@@ -648,7 +746,7 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	cx_rgb = (float)cvGetReal2D( rgb_int, 0, 2 );
 	cy_rgb = (float)cvGetReal2D( rgb_int, 1, 2 );
 	
-	CvMat* rgb_size = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "rgb_size");
+	CvMat* rgb_size = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "rgb_size");
 	rgb_width = (int)cvGetReal2D( rgb_size, 0, 0 );
 	rgb_height = (int)cvGetReal2D( rgb_size, 0, 1 );
 	cvReleaseMat(&rgb_size);
@@ -660,7 +758,7 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	
 	//	depth
 	
-	depth_int = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "depth_intrinsics");
+	depth_int = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "depth_intrinsics");
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n depth_intrinsics opencv (kinect_calibration.yml)");
 	printM(depth_int);
 	
@@ -669,7 +767,7 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	cx_d = (float)cvGetReal2D( depth_int, 0, 2 );
 	cy_d = (float)cvGetReal2D( depth_int, 1, 2 );
 	
-	CvMat* d_size = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "depth_size");
+	CvMat* d_size = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "depth_size");
 	d_width = (int)cvGetReal2D( d_size, 0, 0 );
 	d_height = (int)cvGetReal2D( d_size, 0, 1 );
 	cvReleaseMat(&d_size);
@@ -681,11 +779,11 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	
 	//	depth/rgb RT
 	
-	drgb_R = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "R");
+	drgb_R = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "R");
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n drgb_R opencv (kinect_calibration.yml)");
 	printM(drgb_R);
 	
-	drgb_T = (CvMat*)cvLoad(kinect_calibration_filename, NULL, "T");
+	drgb_T = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "T");
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n drgb_T opencv (kinect_calibration.yml)");
 	printM(drgb_T);
 	
@@ -706,7 +804,7 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	
 	//	proyector
 	
-	proj_int = (CvMat*)cvLoad(proj_calibration_filename, NULL, "proj_intrinsics");
+	proj_int = (CvMat*)cvLoad(proj_calibration_filename_str, NULL, "proj_intrinsics");
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_intrinsics opencv (projector_calibration.yml)");
 	printM(proj_int);
 	
@@ -715,7 +813,7 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	cx_p = (float)cvGetReal2D( proj_int, 0, 2 );
 	cy_p = (float)cvGetReal2D( proj_int, 1, 2 );
 	
-	CvMat* p_size = (CvMat*)cvLoad(proj_calibration_filename, NULL, "proj_size");
+	CvMat* p_size = (CvMat*)cvLoad(proj_calibration_filename_str, NULL, "proj_size");
 	p_width = (int)cvGetReal2D( p_size, 0, 0 );
 	p_height = (int)cvGetReal2D( p_size, 0, 1 );
 	cvReleaseMat(&d_size);
@@ -724,11 +822,11 @@ void CamaraLucida::load_data(const char* kinect_calibration_filename, const char
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_intrinsics converted to opengl");
 	printM(proj_KK, 4, 4);
 	
-	proj_R = (CvMat*)cvLoad(proj_calibration_filename, NULL, "R");
+	proj_R = (CvMat*)cvLoad(proj_calibration_filename_str, NULL, "R");
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_R opencv (projector_calibration.yml)");
 	printM(proj_R);
 	
-	proj_T = (CvMat*)cvLoad(proj_calibration_filename, NULL, "T");
+	proj_T = (CvMat*)cvLoad(proj_calibration_filename_str, NULL, "T");
 	ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_T opencv (projector_calibration.yml)");
 	printM(proj_T);
 	
@@ -795,92 +893,34 @@ void CamaraLucida::convertKKopencv2opengl(CvMat* opencvKK, float width, float he
 
 void CamaraLucida::init_zlut()
 {
-	for (int i = 0; i < raw_depth_max; i++) 
+	for (int i = 0; i < raw_depth_size; i++) 
 	{
-		zlut[i] = raw_depth_to_meters(i);
+		_zlut[i] = raw_depth_to_meters(i);
 	}
-}
-
-float* CamaraLucida::z_lut()
-{
-	return zlut;
 }
 
 
 //http://openkinect.org/wiki/Imaging_Information
 //http://nicolas.burrus.name/index.php/Research/KinectCalibration
 
-void CamaraLucida::raw_depth_to_p3d(uint16_t raw_depth, int x_d, int y_d, float* vec3)
-{
-	vec3[2] = zlut[raw_depth];
-	vec3[0] = (x_d + depth_xoff - cx_d) * vec3[2] / fx_d;
-	vec3[1] = (y_d - cy_d) * vec3[2] / fy_d;
-}		
-	
 float CamaraLucida::raw_depth_to_meters(uint16_t raw_depth)
 {
-	if (raw_depth < 2047)
+	if (raw_depth < _base_depth_raw)
 	{
-//		return 1.0 / (raw_depth * -0.0030711016 + 3.3309495161);
 		return k1 * tanf((raw_depth / k2) + k3) - k4; // calculate in meters
 	}
-	return 0;
+	return _base_depth_mts;
 }
 
-void CamaraLucida::p3d_to_rgb(int x_d, int y_d, uint16_t raw_depth, float *rgb2d)
+uint16_t CamaraLucida::get_base_depth_raw()
 {
-	//	P3D' = R.P3D + T
-	//	P2D_rgb.x = (P3D'.x * fx_rgb / P3D'.z) + cx_rgb
-	//	P2D_rgb.y = (P3D'.y * fy_rgb / P3D'.z) + cy_rgb
-	
-	//	float d2d[2];
-	//	d2d[0] = (mts[0] * fx_d /mts[2]) + cx_d;
-	//	d2d[1] = (mts[1] * fy_d /mts[2]) + cy_d;
-	float mts1[3];
-	float xoff = -8;
-	raw_depth_to_p3d(raw_depth, x_d, y_d, mts1);
-	
-	ofVec3f _p3d = ofVec3f(mts1[0],mts1[1],mts1[2]);
-	ofVec3f p3d_rgb = RT_rgb * _p3d;
-	
-	rgb2d[0] = (p3d_rgb.x * fx_rgb /p3d_rgb.z) + cx_rgb;
-	rgb2d[1] = (p3d_rgb.y * fy_rgb /p3d_rgb.z) + cy_rgb;
-	
-	if (rgb2d[0] > rgb_width) rgb2d[0] = rgb_width;
-	if (rgb2d[1] > rgb_height) rgb2d[1] = rgb_height;
+	return _base_depth_raw;
 }
 
-//see Burrus RGBDProcessor::computeKinectDepthBaseline()
-//float CamaraLucida::raw_depth_baseline(uint16_t raw_depth)
-//{
-//	float depth = 0;
-//	if (raw_depth < 2047)
-//	{
-//		depth = 540.0 * 8.0 * depth_baseline / (depth_offset - raw_depth);
-//	}
-//	if (depth < 0)
-//		depth = 0;
-//	else if (depth > 10)
-//		depth = 10;
-//	return depth;
-//}
-//
-//see Burrus RGBDProcessor::fixDepthGeometry()
-//float CamaraLucida::fix_depth_geometry(uint16_t orig_depth, int x_d, int y_d)
-//{
-//	double dx = x_d - cx_d;
-//	double dy = y_d - cy_d;
-//	
-//	ofVec3f v(dx/fx_d, dy/fy_d, 1);
-//	double norm = sqrt(v.dot(v));
-//	v = v * (1.0/norm);
-//	v *= orig_depth;
-//	
-//	double depth_z = v.z;
-//	return depth_z;
-//}
-
-
+float CamaraLucida::get_base_depth_mts()
+{
+	return _base_depth_mts;
+}
 
 // debugging
 
@@ -970,6 +1010,4 @@ void CamaraLucida::printM(CvMat* M, bool colmajor)
 		}
 	}
 	printf("\n");
-}
-	
 }

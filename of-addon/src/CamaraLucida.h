@@ -17,64 +17,86 @@
 //	You should have received a copy of the GNU General Public License
 //	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+//	reserved user input on debug mode (toggle_debug)
+//		'x' reset view
+//		'v' switch view projector, depth cam, world
+//		'c' + key up/down: change depht_xoffset
+//		'z' + mouse_drag: zoom in/out
+//		mouse_drag: rotate
+
 #pragma once
 
 #include <iostream.h>
 #include <algorithm>
-#include "CamaraLucidaKeyboard.h"
 #include "ofMain.h"
+#include "ofxXmlSettings.h"
 #include "cv.h"
 #include "MSAOpenCL.h"
 
-
-namespace camaralucida 
-{
-	
-static const uint16_t raw_depth_max = 2048; //11bits
-static const uint16_t raw_depth_max_valid = 1024; //5mts~
-static const float k1 = 0.1236;
-static const float k2 = 2842.5;
-static const float k3 = 1.1863;
-static const float k4 = 0.0370;
-	
 class CamaraLucida
 {
 public:
 		
 	CamaraLucida()
 	{
-		near = 0.08;
-		far = 12.0;
-		depth_xoff = -7;
-		mesh_step = 1;
 		_debug = false;
+		_inited = false;
+		_not_init_alert = false;
 	};
 	~CamaraLucida();
-		
 	
-	void setup(const char* kinect_calibration_filename, 
-			   const char* proj_calibration_filename,
-			   uint16_t *raw_depth_pix, uint8_t *rgb_pix,
-			   int tex_width, int tex_height, int tex_num_samples,
-			   MSA::OpenCL* opencl = NULL);
+	void init(string kinect_calibration_filename, 
+			  string proj_calibration_filename,
+			  string config_filename,
+			  uint16_t *raw_depth_pix, uint8_t *rgb_pix,
+			  int tex_width, int tex_height, int tex_num_samples, 
+			  MSA::OpenCL* opencl = NULL);
 	
 	// updates FBO with off-screen texture created by render_texture()
 	void update(uint16_t *raw_depth_pix, uint8_t *rgb_pix);
 	
 	void render();
 	
+	float z_mts(uint16_t raw_depth);
+	float z_mts(uint16_t *raw_depth_pix, int x, int y, bool tex_coords = false);
+	
+	ofVec3f raw_depth_to_p3d(uint16_t raw_depth, int x_depth, int y_depth);
+	ofVec3f raw_depth_to_p3d(uint16_t *raw_depth_pix, int x_depth, int y_depth);
+	ofVec2f p3d_to_depth(const ofVec3f& p3d);
+	ofVec2f raw_depth_to_rgb(uint16_t raw_depth, int x_depth, int y_depth);
+	
 	ofEvent<ofEventArgs> render_texture;
 	ofEvent<ofEventArgs> render_hud;
 	
 	void toggle_debug();
-	float* z_lut();
 	
-	int depth_width();
-	int depth_height();	
+	//void set_base_depth(uint16_t raw_depth);
+	uint16_t get_base_depth_raw();
+	float get_base_depth_mts();
+	
+	static const float k1 = 0.1236;
+	static const float k2 = 2842.5;
+	static const float k3 = 1.1863;
+	static const float k4 = 0.0370;
+	static const uint16_t raw_depth_size = 2048; //11bits
 	
 private:
 	
+	static const char key_view_type = 'v';
+	static const char key_reset_view = 'x';
+	static const char key_change_depth_xoff = 'c'; // + key up/down
+	static const char key_zoom = 'z';
+	
+	uint16_t _base_depth_raw;
+	float _base_depth_mts;
+	
 	bool _debug;
+	bool _inited;
+	bool _not_init_alert;
+	bool inited();
+	
+	ofxXmlSettings config;
 	
 	// events
 	
@@ -126,7 +148,7 @@ private:
 	
 	// fbo
 	
-	// XXX should use ofFbo version after commit
+	// XXX should use ofFbo version after this commit
 	// https://github.com/openframeworks/openFrameworks/commit/bbb55436d33734cf01da63f3385096d6956d257d#libs/openFrameworks/gl/ofFbo.cpp
 	
 	ofFbo fbo;
@@ -177,7 +199,7 @@ private:
 	
 	enum ViewpointType
 	{
-		V_WORLD, V_PROJ, V_DEPTH, V_TYPE_LENGTH //RGB,
+		V_DEPTH, V_PROJ, V_TYPE_LENGTH //RGB,
 	};
 	int view_type;
 	
@@ -188,15 +210,10 @@ private:
 	
 	ofVec3f proj_loc, proj_fwd, proj_up, proj_trg;
 	
-	void load_data(const char* kinect_calibration_filename, 
-				   const char* proj_calibration_filename);
-		
-	void raw_depth_to_p3d(uint16_t raw_depth, int row, int col, float *vec3);
-	void p3d_to_rgb(int x_d, int y_d, uint16_t raw_depth, float *rgb2d);
+	void load_data(string kinect_calibration_filename, 
+				   string proj_calibration_filename);
 		
 	float raw_depth_to_meters(uint16_t raw_depth);
-	//float raw_depth_baseline(uint16_t raw_depht);
-	//float fix_depth_geometry(uint16_t orig_depth, int x_d, int y_d);
 	
 	void convertKKopencv2opengl(CvMat* opencvKK, float width, float height, float near, float far, float *openglKK);
 	void convertRTopencv2opengl(CvMat* opencvR, CvMat* opencvT, float *openglRT);
@@ -219,7 +236,7 @@ private:
 	float near, far;
 	
 	void init_zlut();
-	float zlut[2048];
+	float _zlut[raw_depth_size];
 	
 	void printM(float* M, int rows, int cols, bool colmajor = true);
 	void printM(CvMat* M, bool colmajor = true);
@@ -236,5 +253,3 @@ private:
 	CvMat* proj_R;
 	CvMat* proj_T;
 }; 
-	
-}

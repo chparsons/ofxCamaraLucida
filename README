@@ -1,2 +1,1 @@
-Camara Lucida is a toolkit to make ludic interfaces and digital artifacts for tangible interaction and spatial augmented reality. It uses a Camera-Projector system with a Kinect device to make a 3d reconstruction of a scene and project graphics on top of physical objects. 
-
+Camara Lucida is an toolkit that allows artists, programmers and designers to make ludic interfaces and digital artifacts based on real-time projection mapping on physical objects. It uses a camera-projector system with a kinect device to reconstruct the scene.
