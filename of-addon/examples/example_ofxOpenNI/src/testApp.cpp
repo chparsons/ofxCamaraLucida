@@ -1,4 +1,4 @@
-//	CÃ¡mara LÃºcida
+//	C‡mara Lœcida
 //	www.camara-lucida.com.ar
 //
 //	Copyright (C) 2011  Christian Parsons
@@ -26,18 +26,14 @@ void testApp::setup()
 	init_keys();
 	debug_depth_texture = false;
 	
-	if (!init_kinect())
-		return;
+	init_kinect();
 	
-	opencl.setupFromOpenGL();
+	mesh = new cml::Mesh_openni(&depth_generator);
 	
-	camluc.init(ofToDataPath("kinect_calibration.yml"),
-				ofToDataPath("projector_calibration.yml"),
-				ofToDataPath("camaralucida_config.xml"),
-				raw_depth_pix, rgb_pix, 
-				ofGetWidth(), ofGetHeight(), 1, 
-				&opencl);				
-				//NULL);
+	camluc.init(ofToDataPath("camara_lucida/kinect_calibration.yml"),
+				ofToDataPath("camara_lucida/projector_calibration.yml"),
+				ofToDataPath("camara_lucida/camara_lucida_config.xml"),
+				mesh, ofGetWidth(), ofGetHeight(), 1);
 	
 	ofAddListener(camluc.render_texture, this, &testApp::render_texture);
 	ofAddListener(camluc.render_hud, this, &testApp::render_hud);
@@ -45,17 +41,13 @@ void testApp::setup()
 
 void testApp::update()
 {
-	update_keys();
-	
-	if (!update_kinect())
-		return;
-	
-	if (kinect.isFrameNew())
-		camluc.update(raw_depth_pix, rgb_pix);
+	update_kinect();
+	camluc.update();
 }
 
 void testApp::draw()
 {	
+	depth.draw(0, 0, 400, 300);
 	camluc.render();
 }
 
@@ -66,16 +58,19 @@ void testApp::exit()
 	ofRemoveListener(camluc.render_texture, this, &testApp::render_texture);
 	ofRemoveListener(camluc.render_hud, this, &testApp::render_hud);
 	
-	kinect.close();
+	camluc.dispose();
+	
+	delete mesh;
+	mesh = NULL;
 }
 
 void testApp::render_hud(ofEventArgs &args)
 {
-	ofDrawBitmapString("press 'o' to debug camera as a texture \n 'd' to toggle camara lucida debug, then use 'v' to change viewpoint between camera and projector \n mousedrag to rotate for debug, 'z'+mousedrag to zoom, 'x' to reset the debug transforms \n and 'c'+keyup/down to change depth xoffset", 0, 10);
+	ofDrawBitmapString("press 'o' to debug camera as a texture \n 'd' to toggle camara lucida debug, then use 'v' to change viewpoint between camera and projector \n mousedrag to rotate, 'z'+mousedrag to zoom, 'x' to reset the debug transformations", 10, 10);
 	
 	if (debug_depth_texture)
 	{
-		kinect.getDepthTextureReference().draw(0, 0, 400, 300);
+		depth.draw(0, 0, 400, 300);
 	}
 }
 
@@ -83,7 +78,7 @@ void testApp::render_texture(ofEventArgs &args)
 {
 	glClearColor(0.5, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	
 	float w = 1024;
 	float h = 768;
 	
@@ -94,40 +89,30 @@ void testApp::render_texture(ofEventArgs &args)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	glColor3f(1, 1, 0);
-	ofCircle(200, 200, 100);
-	
 	if (debug_depth_texture)
 	{
 		glColor3f(1, 1, 1);
-		kinect.getDepthTextureReference().draw(0, 0, w, h);
+		depth.draw(0, 0, w, h);
 	}
+	
+	glColor3f(1, 1, 0);
+	ofCircle(200, 200, 100);
 }
 
-bool testApp::init_kinect()
+void testApp::init_kinect()
 {
-	//kinect.enableCalibrationUpdate(false);
-	kinect.enableDepthNearValueWhite(false);
+	context.setupUsingXMLFile("");
+	depth.setup(&context);	
+	//user.setup(&context, &depth);
 	
-	kinect.init(false, true, true);
-	kinect.setVerbose(false);
-	kinect.open();
-	//	ktilt = 0;
-	//	kinect.setCameraTiltAngle(ktilt);
-	
-	return update_kinect();
+	depth_generator = depth.getXnDepthGenerator();
 }
 
-bool testApp::update_kinect()
+void testApp::update_kinect()
 {
-	if (!kinect.isConnected())
-		return false;
-	
-	kinect.update();
-	raw_depth_pix = kinect.getRawDepthPixels();
-	rgb_pix = kinect.getPixels();
-	
-	return true;
+	context.update();
+	depth.update();
+	//user.update();
 }
 
 void testApp::keyPressed(int key)
@@ -148,16 +133,19 @@ void testApp::keyPressed(int key)
 				ofSetFullscreen(false);
 			}
 			break;		
-						
+			
 		case 'o':
 			debug_depth_texture = !debug_depth_texture;
-			//kinect.toggleCalibrationUpdate();
 			break;
 	}
 	
 	if (key == 'd')
 	{
 		camluc.toggle_debug();
+	}
+	if (key == 'f')
+	{
+		mesh->print();
 	}
 }
 
@@ -170,11 +158,6 @@ void testApp::init_keys()
 {
 	for (int i = 0; i < 512; i++) 
 		pressed[i] = false;
-}
-
-void testApp::update_keys()
-{
-	
 }
 
 void testApp::mouseMoved(int x, int y )

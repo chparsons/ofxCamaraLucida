@@ -19,9 +19,6 @@ opencl kernel
 
 RGB to Depth: p3d_to_rgb()
 
-split funcionlaity into classes
-	data mng, vbo, fbo, opencl, kinect feed
-
 reduce ofMain.h includes
 
 distorsions:
@@ -30,17 +27,4 @@ distorsions:
 	compute depth projection 2d->3d 
 		with undistorted depth image
 		see nburrus RGBDProcessor::undistortImages()
-		
-		
-check deletion error:
-	OF_VERBOSE: OpenCLMemoryObject::~OpenCLMemoryObject
-	OF_VERBOSE: OpenCLMemoryObject::~OpenCLMemoryObject
-	Program received signal:  “EXC_BAD_ACCESS”.
-	sharedlibrary apply-load-rules all
-	Data Formatters temporarily unavailable, will re-try after a 'continue'. (Not safe to call dlopen at this time.)
-	warning: Could not find object file "/Users/theo/Documents/CODE/__OPENFRAMEWORKS/gitOF/openFrameworks/apps/devApps/macDragDropExample/buildGlutFrameworkHackedWindowLevel10.4/libForeground.a(macx_foreground.o)" - no debug information available for "/Users/mcast/Code/GLUT-ToPost/macx_foreground.m".
-
-	kill
-	quit
-
 
