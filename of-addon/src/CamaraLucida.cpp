@@ -45,6 +45,11 @@ namespace cml
 		proj_up = ofVec3f( proj_RT[4], proj_RT[5], proj_RT[6] );
 		proj_trg = proj_loc + proj_fwd;
 		
+		rgb_loc = ofVec3f( rgb_RT[12], rgb_RT[13], rgb_RT[14] );	
+		rgb_fwd = ofVec3f( rgb_RT[8], rgb_RT[9], rgb_RT[10] );
+		rgb_up = ofVec3f( rgb_RT[4], rgb_RT[5], rgb_RT[6] );
+		rgb_trg = rgb_loc + rgb_fwd;
+		
 		init_keys();
 		init_events();
 		init_gl_scene_control();
@@ -73,8 +78,8 @@ namespace cml
 		cvReleaseMat(&rgb_int);	
 		cvReleaseMat(&depth_int);
 		
-		cvReleaseMat(&drgb_R);
-		cvReleaseMat(&drgb_T);
+		cvReleaseMat(&rgb_R);
+		cvReleaseMat(&rgb_T);
 		
 		cvReleaseMat(&proj_int);	
 		cvReleaseMat(&proj_R);
@@ -195,6 +200,9 @@ namespace cml
 			case V_DEPTH:
 				glMultMatrixf(depth_KK);
 				break;
+			case V_RGB:
+				glMultMatrixf(rgb_KK);
+				break;
 		}
 	}
 
@@ -213,12 +221,17 @@ namespace cml
 						  0., 0., 1.,		//target
 						  0., 1., 0.);		//up			
 				break;
-				
+			
 			case V_PROJ:
 				gluLookAt(proj_loc.x, proj_loc.y, proj_loc.z,	//loc
 						  proj_trg.x, proj_trg.y, proj_trg.z,	//target
 						  proj_up.x, proj_up.y, proj_up.z);		//up
+				break;
 				
+			case V_RGB:
+				gluLookAt(rgb_loc.x, rgb_loc.y, rgb_loc.z,	//loc
+						  rgb_trg.x, rgb_trg.y, rgb_trg.z,		//target
+						  rgb_up.x, rgb_up.y, rgb_up.z);		//up
 				break;
 		}
 	}
@@ -287,7 +300,7 @@ namespace cml
 	void CamaraLucida::render_rgb_CS()
 	{
 		glPushMatrix();
-		glMultMatrixf(drgb_RT);
+		glMultMatrixf(rgb_RT);
 		render_axis();
 		glPopMatrix();
 	}
@@ -328,6 +341,9 @@ namespace cml
 				break;
 			case V_DEPTH:
 				return "depth camera viewpoint";
+				break;
+			case V_RGB:
+				return "rgb camera viewpoint";
 				break;
 		}
 	}
@@ -465,24 +481,24 @@ namespace cml
 		
 		//	depth/rgb RT
 		
-		drgb_R = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "R");
-		ofLog(OF_LOG_VERBOSE, "Camara Lucida \n drgb_R opencv (kinect_calibration.yml)");
-		printM(drgb_R);
+		rgb_R = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "R");
+		ofLog(OF_LOG_VERBOSE, "Camara Lucida \n rgb_R opencv (kinect_calibration.yml)");
+		printM(rgb_R);
 		
-		drgb_T = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "T");
-		ofLog(OF_LOG_VERBOSE, "Camara Lucida \n drgb_T opencv (kinect_calibration.yml)");
-		printM(drgb_T);
+		rgb_T = (CvMat*)cvLoad(kinect_calibration_filename_str, NULL, "T");
+		ofLog(OF_LOG_VERBOSE, "Camara Lucida \n rgb_T opencv (kinect_calibration.yml)");
+		printM(rgb_T);
 		
-		convertRTopencv2opengl(drgb_R, drgb_T, drgb_RT);
-		ofLog(OF_LOG_VERBOSE, "Camara Lucida \n drgb_RT converted to opengl");
-		printM(drgb_RT, 4, 4);
+		convertRTopencv2opengl(rgb_R, rgb_T, rgb_RT);
+		ofLog(OF_LOG_VERBOSE, "Camara Lucida \n rgb_RT converted to opengl");
+		printM(rgb_RT, 4, 4);
 		
 		//	T_rgb = ofVec3f(
-		//		drgb_RT[12],	drgb_RT[13], drgb_RT[14] );
+		//		rgb_RT[12],	rgb_RT[13], rgb_RT[14] );
 		calib.RT_rgb = ofMatrix4x4(
-			 drgb_RT[0],	drgb_RT[1], drgb_RT[2],		drgb_RT[12],
-			 drgb_RT[4],	drgb_RT[5], drgb_RT[6],		drgb_RT[13],
-			 drgb_RT[8],	drgb_RT[9], drgb_RT[10],	drgb_RT[14],
+			 rgb_RT[0],	rgb_RT[1], rgb_RT[2],		rgb_RT[12],
+			 rgb_RT[4],	rgb_RT[5], rgb_RT[6],		rgb_RT[13],
+			 rgb_RT[8],	rgb_RT[9], rgb_RT[10],		rgb_RT[14],
 			 0.,			0.,			0.,				1);
 		//	R_rgb.preMultTranslate(-T_rgb);
 		//	R_rgb = ofMatrix4x4::getTransposedOf(R_rgb);
@@ -502,7 +518,7 @@ namespace cml
 		CvMat* p_size = (CvMat*)cvLoad(proj_calibration_filename_str, NULL, "proj_size");
 		calib.proj_width = (int)cvGetReal2D( p_size, 0, 0 );
 		calib.proj_height = (int)cvGetReal2D( p_size, 0, 1 );
-		cvReleaseMat(&d_size);
+		cvReleaseMat(&p_size);
 		
 		convertKKopencv2opengl(proj_int, calib.proj_width, calib.proj_height, calib.near, calib.far, proj_KK);
 		ofLog(OF_LOG_VERBOSE, "Camara Lucida \n proj_intrinsics converted to opengl");

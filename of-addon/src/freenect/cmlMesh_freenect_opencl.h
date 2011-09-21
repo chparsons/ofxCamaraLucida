@@ -17,19 +17,14 @@
 //	You should have received a copy of the GNU General Public License
 //	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-//	reserved user input on debug mode (toggle_debug)
-//		'c' + key up/down: change depht_xoffset
-
-
 #pragma once
 
-#include "cmlMesh.h"
+#include "cmlMesh_freenect.h"
 #include "MSAOpenCL.h"
 
 namespace cml 
 {
-	class Mesh_freenect_opencl : public Mesh
+	class Mesh_freenect_opencl : public Mesh_freenect
 	{
 	public:
 		
@@ -37,15 +32,11 @@ namespace cml
 							  MSA::OpenCL *opencl = NULL);
 		~Mesh_freenect_opencl();
 		
-		ofVec3f coord_sys();
-		
-		void print();
+		void keyPressed(ofKeyEventArgs &args);
 		
 	protected:
 		
-		// implementation stuff...
-		
-		typedef Mesh super;
+		// Mesh implementation...
 		
 		void init_pts();
 		void dispose_pts();
@@ -54,61 +45,22 @@ namespace cml
 		float* pts0x();
 		int sizeof_pts();
 		
-		float4* pts3d;
-		
 		//
 		
 	private:
 		
-		uint16_t *raw_depth_pix;
+		typedef Mesh_freenect super;
 		
-		static const char key_change_depth_xoff = 'c'; // + key up/down
-		
-		static const float k1 = 0.1236;
-		static const float k2 = 2842.5;
-		static const float k3 = 1.1863;
-		static const float k4 = 0.0370;
-		static const uint16_t raw_depth_size = 2048; //11bits
-		
-		int depth_xoff;
-		
-		uint16_t _base_depth_raw;
-		float _base_depth_mts;
-		float _zlut[raw_depth_size];
-		
-		//
-		
-		void init_zlut();
-		
-		float z_mts(uint16_t raw_depth);
-		float z_mts(int x, int y, bool tex_coords = false);
-		
-		float raw_depth_to_meters(uint16_t raw_depth);
-		
-		ofVec3f raw_depth_to_p3d(uint16_t raw_depth, int x_depth, int y_depth);
-		ofVec3f raw_depth_to_p3d(int x_depth, int y_depth);
-		ofVec2f p3d_to_depth(const ofVec3f& p3d);
-		ofVec2f raw_depth_to_rgb(uint16_t raw_depth, int x_depth, int y_depth);
-		
-		uint16_t get_base_depth_raw();
-		float get_base_depth_mts();
-		
+		float4* pts3d_cl;
 		
 		// open cl
 		
 		void init_cl();
 		void update_cl();
 		
-		bool using_opencl;
-		
 		MSA::OpenCL			*opencl;
 		MSA::OpenCLKernel	*kernel_vertex_update;
 		MSA::OpenCLBuffer	cl_buff_pts3d;
 		MSA::OpenCLBuffer	cl_buff_raw_depth;
-		
-		
-		// ui
-		
-		void keyPressed(ofKeyEventArgs &args);
 	};
 };

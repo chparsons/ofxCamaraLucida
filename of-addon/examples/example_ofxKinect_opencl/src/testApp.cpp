@@ -29,7 +29,9 @@ void testApp::setup()
 	if (!init_kinect())
 		return;
 	
-	mesh = new cml::Mesh_freenect(raw_depth_pix);
+	opencl.setupFromOpenGL();
+	
+	mesh = new cml::Mesh_freenect_opencl(raw_depth_pix, &opencl);
 												 
 	camluc.init(ofToDataPath("camara_lucida/kinect_calibration.yml"),
 				ofToDataPath("camara_lucida/projector_calibration.yml"),

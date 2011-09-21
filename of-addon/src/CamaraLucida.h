@@ -85,6 +85,7 @@ namespace cml
 		
 		
 		ofVec3f proj_loc, proj_fwd, proj_up, proj_trg;
+		ofVec3f rgb_loc, rgb_fwd, rgb_up, rgb_trg;
 		
 		void load_data(string kinect_calibration_filename, 
 					   string proj_calibration_filename);
@@ -94,20 +95,22 @@ namespace cml
 		
 		cml::Calibration calib;
 		
-		float proj_RT[16];
 		float proj_KK[16];
-		float rgb_KK[16];
+		float proj_RT[16];
+		
 		float depth_KK[16];
-		float drgb_RT[16];
+		float rgb_KK[16];
+		float rgb_RT[16];
 		
 		void printM(float* M, int rows, int cols, bool colmajor = true);
 		void printM(CvMat* M, bool colmajor = true);
 		
-		CvMat* rgb_int;
+		//depth is @ origin
 		CvMat* depth_int;
 		
-		CvMat* drgb_R;
-		CvMat* drgb_T;
+		CvMat* rgb_int;
+		CvMat* rgb_R;
+		CvMat* rgb_T;
 		
 		CvMat* proj_int;
 		CvMat* proj_R;
@@ -170,7 +173,7 @@ namespace cml
 		
 		enum ViewpointType
 		{
-			V_DEPTH, V_PROJ, V_TYPE_LENGTH //RGB,
+			V_DEPTH, V_PROJ, V_RGB, V_TYPE_LENGTH
 		};
 		int view_type;
 	}; 

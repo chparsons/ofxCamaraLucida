@@ -11,6 +11,9 @@ ofxKinect
 stable 007
 https://github.com/ofTheo/ofxKinect/zipball/007
 
+
+example_ofxKinect_opencl:
+
 msalibs
 https://github.com/memo/msalibs/commit/8faff7ab35b76d341e9012350dcaafac500a0cd2
 

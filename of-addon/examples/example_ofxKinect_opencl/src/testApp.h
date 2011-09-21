@@ -23,7 +23,8 @@
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
 #include "CamaraLucida.h"
-#include "cmlMesh_freenect.h"
+#include "cmlMesh_freenect_opencl.h"
+#include "MSAOpenCL.h"
 #include <GLUT/glut.h>
 
 class testApp : public ofBaseApp 
@@ -32,6 +33,7 @@ public:
 		
 	cml::CamaraLucida camluc;
 	cml::Mesh_freenect *mesh;
+	MSA::OpenCL opencl;
 	
 	void render_texture(ofEventArgs &args);
 	void render_hud(ofEventArgs &args);

@@ -229,8 +229,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -278,13 +276,16 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
-									<integer>1</integer>
+									<integer>11</integer>
+									<integer>9</integer>
+									<integer>8</integer>
+									<integer>7</integer>
+									<integer>6</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {225, 708}}</string>
+							<string>{{0, 0}, {225, 764}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -296,14 +297,14 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {242, 726}}</string>
+						<string>{{0, 0}, {242, 782}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
 							<string>MainColumn</string>
 							<real>225</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>50 111 903 767 0 0 1440 878 </string>
+						<string>4 55 1436 823 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -314,12 +315,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>testApp.cpp</string>
+								<string>cmlMesh_openni.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -331,18 +334,35 @@
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>124A9FF31428D26E0023B1B9</string>
+										<string>124AA2A3142A45F20023B1B9</string>
 										<key>history</key>
 										<array>
 											<string>12F5E71C141BD78300F81FD0</string>
 											<string>12070F81141E1C5A00523CB1</string>
 											<string>124A9FF11428D26E0023B1B9</string>
 											<string>124A9FF21428D26E0023B1B9</string>
-											<string>12070F82141E1C5A00523CB1</string>
+											<string>124A9FF31428D26E0023B1B9</string>
+										</array>
+									</dict>
+									<key>Split1</key>
+									<dict>
+										<key>PBXProjectModuleGUID</key>
+										<string>124AA2A4142A45F20023B1B9</string>
+										<key>PBXProjectModuleLabel</key>
+										<string>cmlMesh_openni.h</string>
+										<key>_historyCapacity</key>
+										<integer>40</integer>
+										<key>bookmark</key>
+										<string>124AA2A8142A45F20023B1B9</string>
+										<key>history</key>
+										<array>
+											<string>124AA2A5142A45F20023B1B9</string>
+											<string>124AA2A6142A45F20023B1B9</string>
+											<string>124AA2A7142A45F20023B1B9</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
-									<string>1</string>
+									<string>2</string>
 								</dict>
 								<key>StatusBarVisibility</key>
 								<true/>
@@ -350,14 +370,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {656, 721}}</string>
+								<string>{{0, 0}, {1189, 777}}</string>
 								<key>RubberWindowFrame</key>
-								<string>50 111 903 767 0 0 1440 878 </string>
+								<string>4 55 1436 823 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>721pt</string>
+							<string>777pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -370,9 +390,9 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 726}, {656, 0}}</string>
+								<string>{{0, 782}, {1189, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>50 111 903 767 0 0 1440 878 </string>
+								<string>4 55 1436 823 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -381,7 +401,7 @@
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>656pt</string>
+					<string>1189pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -396,9 +416,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>124A9FF41428D26E0023B1B9</string>
+				<string>124AA2A9142A45F20023B1B9</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>124A9FF51428D26E0023B1B9</string>
+				<string>124AA2AA142A45F20023B1B9</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -536,11 +556,15 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>124AA2B3142A45F20023B1B9</string>
+		<string>124AA2B4142A45F20023B1B9</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>12F5E723141BD78300F81FD0</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/chparsons/programacion/openframeworks/of-007-0-gd6183cd/apps/camara_lucida/example_ofxOpenNI/example_ofxOpenNI.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>50 111 903 767 0 0 1440 878 </string>
+	<string>4 55 1436 823 0 0 1440 878 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -617,7 +641,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>12F5E723141BD78300F81FD0</string>
-				<string>124A9FF61428D26E0023B1B9</string>
+				<string>124AA2AB142A45F20023B1B9</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -739,13 +763,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>12070F8D141E1C5A00523CB1</string>
+				<string>124AA2AC142A45F20023B1B9</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>12070F8E141E1C5A00523CB1</string>
-				<string>12070F8F141E1C5A00523CB1</string>
-				<string>12070F90141E1C5A00523CB1</string>
-				<string>12070F91141E1C5A00523CB1</string>
-				<string>12070F92141E1C5A00523CB1</string>
+				<string>124AA2AD142A45F20023B1B9</string>
+				<string>124AA2AE142A45F20023B1B9</string>
+				<string>124AA2AF142A45F20023B1B9</string>
+				<string>124AA2B0142A45F20023B1B9</string>
+				<string>124AA2B1142A45F20023B1B9</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -909,7 +933,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>12070F93141E1C5A00523CB1</string>
+				<string>124AA2B2142A45F20023B1B9</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

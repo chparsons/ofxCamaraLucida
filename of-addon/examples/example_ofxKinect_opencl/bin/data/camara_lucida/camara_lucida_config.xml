@@ -1,0 +1,9 @@
+<camaralucida>
+	
+	<opencl_kernel>camara_lucida/vertex.cl</opencl_kernel>
+	<depth_xoff>7</depth_xoff>
+	<mesh_step>1</mesh_step>
+	<near>0.1</near>
+	<far>20.0</far>
+
+</camaralucida>

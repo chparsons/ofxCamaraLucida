@@ -37,9 +37,7 @@ namespace cml
 		
 	protected:
 		
-		// implementation stuff...
-		
-		typedef Mesh super;
+		// Mesh implementation...
 		
 		void init_pts();
 		void dispose_pts();
@@ -48,11 +46,13 @@ namespace cml
 		float* pts0x();
 		int sizeof_pts();
 		
-		ofVec3f* pts3d;
-		
 		//
 		
 	private:
+		
+		typedef Mesh super;
+
+		ofVec3f* pts3d;
 		
 		xn::DepthGenerator *depth_generator;
 		
