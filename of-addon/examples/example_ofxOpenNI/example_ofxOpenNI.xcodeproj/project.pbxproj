@@ -10,6 +10,20 @@
 		12070EEB141D085000523CB1 /* CamaraLucida.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070EDD141D085000523CB1 /* CamaraLucida.cpp */; };
 		12070EEC141D085000523CB1 /* cmlMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070EE0141D085000523CB1 /* cmlMesh.cpp */; };
 		12070EEE141D085000523CB1 /* cmlMesh_openni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070EE8141D085000523CB1 /* cmlMesh_openni.cpp */; };
+		1227BB95149A08E100CF7664 /* libnimCodecs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB86149A08E100CF7664 /* libnimCodecs.dylib */; };
+		1227BB96149A08E100CF7664 /* libnimMockNodes.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB87149A08E100CF7664 /* libnimMockNodes.dylib */; };
+		1227BB97149A08E100CF7664 /* libnimRecorder.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB88149A08E100CF7664 /* libnimRecorder.dylib */; };
+		1227BB98149A08E100CF7664 /* libOpenNI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB89149A08E100CF7664 /* libOpenNI.dylib */; };
+		1227BB99149A08E100CF7664 /* libusb-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB8A149A08E100CF7664 /* libusb-1.0.0.dylib */; };
+		1227BB9A149A08E100CF7664 /* libXnCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB8B149A08E100CF7664 /* libXnCore.dylib */; };
+		1227BB9B149A08E100CF7664 /* libXnDDK.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB8C149A08E100CF7664 /* libXnDDK.dylib */; };
+		1227BB9C149A08E100CF7664 /* libXnDeviceFile.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB8D149A08E100CF7664 /* libXnDeviceFile.dylib */; };
+		1227BB9D149A08E100CF7664 /* libXnDeviceSensorV2KM.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB8E149A08E100CF7664 /* libXnDeviceSensorV2KM.dylib */; };
+		1227BB9E149A08E100CF7664 /* libXnFormats.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB8F149A08E100CF7664 /* libXnFormats.dylib */; };
+		1227BB9F149A08E100CF7664 /* libXnVCNITE_1_3_1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB90149A08E100CF7664 /* libXnVCNITE_1_3_1.dylib */; };
+		1227BBA0149A08E100CF7664 /* libXnVFeatures_1_3_1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB91149A08E100CF7664 /* libXnVFeatures_1_3_1.dylib */; };
+		1227BBA1149A08E200CF7664 /* libXnVHandGenerator_1_3_1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB92149A08E100CF7664 /* libXnVHandGenerator_1_3_1.dylib */; };
+		1227BBA2149A08E200CF7664 /* libXnVNite_1_3_1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1227BB93149A08E100CF7664 /* libXnVNite_1_3_1.dylib */; };
 		12F5EB53141BEECF00F81FD0 /* ofxDepthGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F5EB3B141BEECF00F81FD0 /* ofxDepthGenerator.cpp */; };
 		12F5EB54141BEECF00F81FD0 /* ofxGestureGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F5EB3D141BEECF00F81FD0 /* ofxGestureGenerator.cpp */; };
 		12F5EB55141BEECF00F81FD0 /* ofxHandGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F5EB3F141BEECF00F81FD0 /* ofxHandGenerator.cpp */; };
@@ -210,7 +224,33 @@
 		12070EE6141D085000523CB1 /* ofxPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPlane.h; sourceTree = "<group>"; };
 		12070EE8141D085000523CB1 /* cmlMesh_openni.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh_openni.cpp; sourceTree = "<group>"; };
 		12070EE9141D085000523CB1 /* cmlMesh_openni.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh_openni.h; sourceTree = "<group>"; };
-		12070EEA141D085000523CB1 /* todo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo; sourceTree = "<group>"; };
+		1227BB77149A08E100CF7664 /* camara_lucida_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = camara_lucida_config.xml; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/camara_lucida/camara_lucida_config.xml"; sourceTree = "<absolute>"; };
+		1227BB78149A08E100CF7664 /* kinect_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = kinect_calibration.yml; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/camara_lucida/kinect_calibration.yml"; sourceTree = "<absolute>"; };
+		1227BB79149A08E100CF7664 /* openni_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = openni_calibration.yml; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/camara_lucida/openni_calibration.yml"; sourceTree = "<absolute>"; };
+		1227BB7A149A08E100CF7664 /* projector_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = projector_calibration.yml; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/camara_lucida/projector_calibration.yml"; sourceTree = "<absolute>"; };
+		1227BB7D149A08E100CF7664 /* FeatureExtraction.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = FeatureExtraction.ini; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/config/FeatureExtraction.ini"; sourceTree = "<absolute>"; };
+		1227BB7E149A08E100CF7664 /* GlobalDefaults.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GlobalDefaults.ini; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/config/GlobalDefaults.ini"; sourceTree = "<absolute>"; };
+		1227BB7F149A08E100CF7664 /* h.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = h.dat; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/config/h.dat"; sourceTree = "<absolute>"; };
+		1227BB80149A08E100CF7664 /* modules.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = modules.xml; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/config/modules.xml"; sourceTree = "<absolute>"; };
+		1227BB81149A08E100CF7664 /* Nite.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Nite.ini; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/config/Nite.ini"; sourceTree = "<absolute>"; };
+		1227BB82149A08E100CF7664 /* ofxopenni_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = ofxopenni_config.xml; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/config/ofxopenni_config.xml"; sourceTree = "<absolute>"; };
+		1227BB83149A08E100CF7664 /* s.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = s.dat; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/config/s.dat"; sourceTree = "<absolute>"; };
+		1227BB85149A08E100CF7664 /* change_exec_paths.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = change_exec_paths.sh; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/change_exec_paths.sh"; sourceTree = "<absolute>"; };
+		1227BB86149A08E100CF7664 /* libnimCodecs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnimCodecs.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libnimCodecs.dylib"; sourceTree = "<absolute>"; };
+		1227BB87149A08E100CF7664 /* libnimMockNodes.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnimMockNodes.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libnimMockNodes.dylib"; sourceTree = "<absolute>"; };
+		1227BB88149A08E100CF7664 /* libnimRecorder.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnimRecorder.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libnimRecorder.dylib"; sourceTree = "<absolute>"; };
+		1227BB89149A08E100CF7664 /* libOpenNI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenNI.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libOpenNI.dylib"; sourceTree = "<absolute>"; };
+		1227BB8A149A08E100CF7664 /* libusb-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libusb-1.0.0.dylib"; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libusb-1.0.0.dylib"; sourceTree = "<absolute>"; };
+		1227BB8B149A08E100CF7664 /* libXnCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnCore.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libXnCore.dylib"; sourceTree = "<absolute>"; };
+		1227BB8C149A08E100CF7664 /* libXnDDK.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDDK.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libXnDDK.dylib"; sourceTree = "<absolute>"; };
+		1227BB8D149A08E100CF7664 /* libXnDeviceFile.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDeviceFile.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libXnDeviceFile.dylib"; sourceTree = "<absolute>"; };
+		1227BB8E149A08E100CF7664 /* libXnDeviceSensorV2KM.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDeviceSensorV2KM.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libXnDeviceSensorV2KM.dylib"; sourceTree = "<absolute>"; };
+		1227BB8F149A08E100CF7664 /* libXnFormats.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnFormats.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libXnFormats.dylib"; sourceTree = "<absolute>"; };
+		1227BB90149A08E100CF7664 /* libXnVCNITE_1_3_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVCNITE_1_3_1.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libXnVCNITE_1_3_1.dylib"; sourceTree = "<absolute>"; };
+		1227BB91149A08E100CF7664 /* libXnVFeatures_1_3_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVFeatures_1_3_1.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libXnVFeatures_1_3_1.dylib"; sourceTree = "<absolute>"; };
+		1227BB92149A08E100CF7664 /* libXnVHandGenerator_1_3_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVHandGenerator_1_3_1.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libXnVHandGenerator_1_3_1.dylib"; sourceTree = "<absolute>"; };
+		1227BB93149A08E100CF7664 /* libXnVNite_1_3_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVNite_1_3_1.dylib; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/libXnVNite_1_3_1.dylib"; sourceTree = "<absolute>"; };
+		1227BB94149A08E100CF7664 /* XnVNite.net_1_3_1.dll */ = {isa = PBXFileReference; lastKnownFileType = file; name = XnVNite.net_1_3_1.dll; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/XnVNite.net_1_3_1.dll"; sourceTree = "<absolute>"; };
 		12F5EAB8141BEECF00F81FD0 /* libusb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libusb.h; sourceTree = "<group>"; };
 		12F5EABA141BEECF00F81FD0 /* XnCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XnCommon.h; sourceTree = "<group>"; };
 		12F5EABB141BEECF00F81FD0 /* XnV3DVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XnV3DVector.h; sourceTree = "<group>"; };
@@ -737,6 +777,20 @@
 				12F5ECEC141BF40E00F81FD0 /* libopencv_objdetect220.a in Frameworks */,
 				12F5ECED141BF40E00F81FD0 /* libopencv_video220.a in Frameworks */,
 				12F5ECEE141BF40E00F81FD0 /* libzlib.a in Frameworks */,
+				1227BB95149A08E100CF7664 /* libnimCodecs.dylib in Frameworks */,
+				1227BB96149A08E100CF7664 /* libnimMockNodes.dylib in Frameworks */,
+				1227BB97149A08E100CF7664 /* libnimRecorder.dylib in Frameworks */,
+				1227BB98149A08E100CF7664 /* libOpenNI.dylib in Frameworks */,
+				1227BB99149A08E100CF7664 /* libusb-1.0.0.dylib in Frameworks */,
+				1227BB9A149A08E100CF7664 /* libXnCore.dylib in Frameworks */,
+				1227BB9B149A08E100CF7664 /* libXnDDK.dylib in Frameworks */,
+				1227BB9C149A08E100CF7664 /* libXnDeviceFile.dylib in Frameworks */,
+				1227BB9D149A08E100CF7664 /* libXnDeviceSensorV2KM.dylib in Frameworks */,
+				1227BB9E149A08E100CF7664 /* libXnFormats.dylib in Frameworks */,
+				1227BB9F149A08E100CF7664 /* libXnVCNITE_1_3_1.dylib in Frameworks */,
+				1227BBA0149A08E100CF7664 /* libXnVFeatures_1_3_1.dylib in Frameworks */,
+				1227BBA1149A08E200CF7664 /* libXnVHandGenerator_1_3_1.dylib in Frameworks */,
+				1227BBA2149A08E200CF7664 /* libXnVNite_1_3_1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,7 +817,6 @@
 				12070EE1141D085000523CB1 /* cmlMesh.h */,
 				12070EE2141D085000523CB1 /* cmlUtils.h */,
 				12070EE6141D085000523CB1 /* ofxPlane.h */,
-				12070EEA141D085000523CB1 /* todo */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -776,6 +829,77 @@
 			);
 			path = openni;
 			sourceTree = "<group>";
+		};
+		1227BB75149A08E100CF7664 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				1227BB76149A08E100CF7664 /* camara_lucida */,
+				1227BB7B149A08E100CF7664 /* openni */,
+			);
+			name = data;
+			path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data";
+			sourceTree = "<absolute>";
+		};
+		1227BB76149A08E100CF7664 /* camara_lucida */ = {
+			isa = PBXGroup;
+			children = (
+				1227BB77149A08E100CF7664 /* camara_lucida_config.xml */,
+				1227BB78149A08E100CF7664 /* kinect_calibration.yml */,
+				1227BB79149A08E100CF7664 /* openni_calibration.yml */,
+				1227BB7A149A08E100CF7664 /* projector_calibration.yml */,
+			);
+			name = camara_lucida;
+			path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/camara_lucida";
+			sourceTree = "<absolute>";
+		};
+		1227BB7B149A08E100CF7664 /* openni */ = {
+			isa = PBXGroup;
+			children = (
+				1227BB7C149A08E100CF7664 /* config */,
+				1227BB84149A08E100CF7664 /* lib */,
+			);
+			name = openni;
+			path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni";
+			sourceTree = "<absolute>";
+		};
+		1227BB7C149A08E100CF7664 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				1227BB7D149A08E100CF7664 /* FeatureExtraction.ini */,
+				1227BB7E149A08E100CF7664 /* GlobalDefaults.ini */,
+				1227BB7F149A08E100CF7664 /* h.dat */,
+				1227BB80149A08E100CF7664 /* modules.xml */,
+				1227BB81149A08E100CF7664 /* Nite.ini */,
+				1227BB82149A08E100CF7664 /* ofxopenni_config.xml */,
+				1227BB83149A08E100CF7664 /* s.dat */,
+			);
+			name = config;
+			path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/config";
+			sourceTree = "<absolute>";
+		};
+		1227BB84149A08E100CF7664 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				1227BB85149A08E100CF7664 /* change_exec_paths.sh */,
+				1227BB86149A08E100CF7664 /* libnimCodecs.dylib */,
+				1227BB87149A08E100CF7664 /* libnimMockNodes.dylib */,
+				1227BB88149A08E100CF7664 /* libnimRecorder.dylib */,
+				1227BB89149A08E100CF7664 /* libOpenNI.dylib */,
+				1227BB8A149A08E100CF7664 /* libusb-1.0.0.dylib */,
+				1227BB8B149A08E100CF7664 /* libXnCore.dylib */,
+				1227BB8C149A08E100CF7664 /* libXnDDK.dylib */,
+				1227BB8D149A08E100CF7664 /* libXnDeviceFile.dylib */,
+				1227BB8E149A08E100CF7664 /* libXnDeviceSensorV2KM.dylib */,
+				1227BB8F149A08E100CF7664 /* libXnFormats.dylib */,
+				1227BB90149A08E100CF7664 /* libXnVCNITE_1_3_1.dylib */,
+				1227BB91149A08E100CF7664 /* libXnVFeatures_1_3_1.dylib */,
+				1227BB92149A08E100CF7664 /* libXnVHandGenerator_1_3_1.dylib */,
+				1227BB93149A08E100CF7664 /* libXnVNite_1_3_1.dylib */,
+				1227BB94149A08E100CF7664 /* XnVNite.net_1_3_1.dll */,
+			);
+			name = lib;
+			path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib";
+			sourceTree = "<absolute>";
 		};
 		12F5EAB5141BEEA800F81FD0 /* ofxOpenNI */ = {
 			isa = PBXGroup;
@@ -1554,6 +1678,7 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				1227BB75149A08E100CF7664 /* data */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
@@ -1862,6 +1987,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_16)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_17)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_18)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_19)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/android/armeabi\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/bin/data/openni/lib\"";
@@ -1873,6 +1999,7 @@
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_16 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/osx\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_17 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/vs2010\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_18 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/win_cb\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_19 = "\"/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/android/armeabi-v7a\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/iphone\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/linux\"";
@@ -1984,8 +2111,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_15)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_16)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_17)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_2)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/bin/data/openni/lib\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_2 = "\"/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/android/armeabi\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_10 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/android/armeabi\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_11 = "\"$(SRCROOT)/../../../addons/ofxOpenCv/libs/opencv/lib/android/armeabi-v7a\"";

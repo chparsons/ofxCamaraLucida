@@ -1,4 +1,4 @@
-//	Cámara Lúcida
+//	Camara Lucida
 //	www.camara-lucida.com.ar
 //
 //	Copyright (C) 2011  Christian Parsons
@@ -21,6 +21,11 @@
 
 namespace cml 
 {
+	Mesh::Mesh()
+	{
+		_render_enabled = true;
+	}
+	
 	Mesh::~Mesh()
 	{
 		vbo.clear();
@@ -95,10 +100,14 @@ namespace cml
 		
 		init_pts();
 		
-		vbo.setVertexData(pts0x(), 3, vbo_length, GL_DYNAMIC_DRAW, sizeof_pts());
-		vbo.setIndexData(ibo, ibo_length, GL_STATIC_DRAW);
-		vbo.setColorData(vbo_color, vbo_length, GL_STATIC_DRAW);
-		vbo.setTexCoordData(vbo_texcoords, vbo_length, GL_STATIC_DRAW);
+		if (is_render_enabled())
+		{
+			//replace by ofMesh.add %Vertices %Indices %Colors %TexCoords
+			vbo.setVertexData(pts0x(), 3, vbo_length, GL_DYNAMIC_DRAW, sizeof_pts());
+			vbo.setIndexData(ibo, ibo_length, GL_STATIC_DRAW);
+			vbo.setColorData(vbo_color, vbo_length, GL_STATIC_DRAW);
+			vbo.setTexCoordData(vbo_texcoords, vbo_length, GL_STATIC_DRAW);
+		}
 	}
 
 	void Mesh::update()
@@ -110,15 +119,53 @@ namespace cml
 
 	void Mesh::render()
 	{
+		//@see ofVbo.draw()
 		vbo.bind();
+		//replace by ofMesh.draw()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo.getIndexId());
 		glDrawElements(GL_QUADS, ibo_length, GL_UNSIGNED_INT, NULL);
 		vbo.unbind();		
 	}
 	
+	int Mesh::get_raw_depth_idx(int vbo_idx, int& x, int& y)
+	{
+		// TODO performance: do this better
+		// instead of 1 loop through vbo_idx and calc x2d,y2d
+		// make 2 nested loops through x2d,y2d and calc vbo_idx...
+		
+		int col = vbo_idx % mesh_w;
+		int row = (vbo_idx - col) / mesh_w;
+		
+		x = col * mesh_step;
+		y = row * mesh_step;
+		
+		return y * calib->depth_width + x;
+	}
+	
+	int Mesh::get_raw_depth_idx(int vbo_idx)
+	{
+		if (mesh_step == 1)
+			return vbo_idx;
+		int x, y;
+		return get_raw_depth_idx(vbo_idx, x, y);
+	}
+	
+	void Mesh::enable_render(bool val)
+	{
+		_render_enabled = val;
+	}
+	
+	bool Mesh::is_render_enabled()
+	{
+		return _render_enabled;
+	}
 	
 	// ui
 	
+	string Mesh::get_keyboard_help()
+	{
+		return "";
+	}
 	
 	void Mesh::init_keys()
 	{

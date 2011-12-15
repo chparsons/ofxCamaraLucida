@@ -1,4 +1,4 @@
-//	Cámara Lúcida
+//	Camara Lucida
 //	www.camara-lucida.com.ar
 //
 //	Copyright (C) 2011  Christian Parsons
@@ -22,21 +22,28 @@
 void testApp::setup()
 {
 	ofSetLogLevel(OF_LOG_VERBOSE);
-	
-	init_keys();
-	debug_depth_texture = false;
+	ofSetWindowPosition(0,0);
 	
 	if (!init_kinect())
 		return;
 	
-	opencl.setupFromOpenGL();
+	init_keys();
 	
+	debug_depth_texture = true;
+	debug_hue_texture = true;
+	
+	tex_width = 1024;
+	tex_height = 768;
+	
+	opencl.setupFromOpenGL();
 	mesh = new cml::Mesh_freenect_opencl(raw_depth_pix, &opencl);
-												 
+							
 	camluc.init(ofToDataPath("camara_lucida/kinect_calibration.yml"),
 				ofToDataPath("camara_lucida/projector_calibration.yml"),
 				ofToDataPath("camara_lucida/camara_lucida_config.xml"),
-				mesh, ofGetWidth(), ofGetHeight(), 1);
+				mesh, tex_width, tex_height, 1);
+	
+	//mesh->set_hue_lut(0.8, 1.0, 0.95, 0.15, true);
 	
 	ofAddListener(camluc.render_texture, this, &testApp::render_texture);
 	ofAddListener(camluc.render_hud, this, &testApp::render_hud);
@@ -57,7 +64,8 @@ void testApp::draw()
 	
 	glScalef(1, -1, 1);
 	glTranslatef(-0.3, 0.3, 1);
-	glutWireTeapot(0.1);
+//	glColor3f(1, 1, 1);
+//	glutWireTeapot(0.1);
 }
 
 void testApp::exit()
@@ -76,11 +84,23 @@ void testApp::exit()
 
 void testApp::render_hud(ofEventArgs &args)
 {
-	ofDrawBitmapString("press 'o' to debug camera as a texture \n 'd' to toggle camara lucida debug, then use 'v' to change viewpoint between camera and projector \n mousedrag to rotate, 'z'+mousedrag to zoom, 'x' to reset the debug transformations \n and 'c'+keyup/down to change depth xoffset", 10, 10);
-	
+	if (pressed[key::keyboard_help])
+	{
+		int roff = 200;
+		int toff = roff+50;
+		
+		glColor3f(1, 1, 1);
+		ofDrawBitmapString(key::get_help()+"\n\n"+camluc.get_keyboard_help()+"\n"+mesh->get_keyboard_help(), 
+						   toff, toff+12);	
+		
+		glColor4f(0, 0, 0, 0.1);
+		ofRect(roff, roff, ofGetWidth()-roff*2, ofGetHeight()-roff*2);
+		
+		glColor3f(1, 1, 1);
+	}	
 	if (debug_depth_texture)
 	{
-		kinect.getDepthTextureReference().draw(0, 0, 400, 300);
+		//kinect.getDepthTextureReference().draw(0, 0, 400, 300);
 	}
 }
 
@@ -89,24 +109,25 @@ void testApp::render_texture(ofEventArgs &args)
 	glClearColor(0.5, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	float w = 1024;
-	float h = 768;
-	
-	glViewport(0, 0, w, h);
+	glViewport(0, 0, tex_width, tex_height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, w, 0, h, -1, 1);
+	glOrtho(0, tex_width, 0, tex_height, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	if (debug_depth_texture)
+	if (debug_hue_texture)
+	{
+		mesh->debug_hue_texture(0, 0, tex_width, tex_height);
+	}
+	else if (debug_depth_texture)
 	{
 		glColor3f(1, 1, 1);
-		kinect.getDepthTextureReference().draw(0, 0, w, h);
+		kinect.getDepthTextureReference().draw(0, 0, tex_width, tex_height);
 	}
 	
-	glColor3f(1, 1, 0);
-	ofCircle(800, 200, 100);
+//	glColor3f(1, 1, 0);
+//	ofCircle(800, 200, 100);
 }
 
 bool testApp::init_kinect()
@@ -117,8 +138,6 @@ bool testApp::init_kinect()
 	kinect.init(false, true, true);
 	kinect.setVerbose(false);
 	kinect.open();
-	//	ktilt = 0;
-	//	kinect.setCameraTiltAngle(ktilt);
 	
 	return update_kinect();
 }
@@ -139,32 +158,35 @@ void testApp::keyPressed(int key)
 {
 	pressed[key] = true;
 	
-	switch (key)
-	{		
-		case 'm':
-			if (ofGetWindowPositionX() == 0)
-			{
-				ofSetWindowPosition(1440,0);
-				ofSetFullscreen(true);
-			}
-			else
-			{
-				ofSetWindowPosition(0,0);
-				ofSetFullscreen(false);
-			}
-			break;		
-						
-		case 'o':
-			debug_depth_texture = !debug_depth_texture;
-			//kinect.toggleCalibrationUpdate();
-			break;
+	if (key == key::fullscreen)
+	{
+		ofToggleFullscreen();
 	}
-	
-	if (key == 'd')
+	else if (key == key::projector)
+	{
+		if (ofGetWindowPositionX() == 0)
+		{
+			ofSetWindowPosition(1440,0);
+		}
+		else
+		{
+			ofSetWindowPosition(0,0);
+		}
+	}
+	else if (key == key::debug_camaralucida)
 	{
 		camluc.toggle_debug();
 	}
-	if (key == 'f')
+	else if (key == key::debug_depth_texture)
+	{
+		debug_depth_texture = !debug_depth_texture;
+		//kinect.toggleCalibrationUpdate();
+	}
+	else if (key == key::debug_hue_texture)
+	{
+		debug_hue_texture = !debug_hue_texture;
+	}
+	else if (key == key::print_mesh)
 	{
 		mesh->print();
 	}

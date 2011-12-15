@@ -144,8 +144,8 @@
 		12070D81141CF77A00523CB1 /* ofxKinectPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070D61141CF77A00523CB1 /* ofxKinectPlayer.cpp */; };
 		12070D82141CF77A00523CB1 /* ofxKinectRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070D63141CF77A00523CB1 /* ofxKinectRecorder.cpp */; };
 		12070DF2141D008800523CB1 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12070DF1141D008800523CB1 /* OpenCL.framework */; };
+		1227BC02149A0B0000CF7664 /* cmlMesh_freenect_opencl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1227BC00149A0B0000CF7664 /* cmlMesh_freenect_opencl.cpp */; };
 		124AA18C142A37370023B1B9 /* cmlMesh_freenect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 124AA18A142A37370023B1B9 /* cmlMesh_freenect.cpp */; };
-		124AA18F142A37610023B1B9 /* cmlMesh_freenect_opencl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 124AA18D142A37610023B1B9 /* cmlMesh_freenect_opencl.cpp */; };
 		124AA274142A43CA0023B1B9 /* vertex.cl in Sources */ = {isa = PBXBuildFile; fileRef = 124AA273142A43CA0023B1B9 /* vertex.cl */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -441,7 +441,6 @@
 		12070CBE141CF74900523CB1 /* cmlMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh.h; sourceTree = "<group>"; };
 		12070CC3141CF74900523CB1 /* cmlUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlUtils.h; sourceTree = "<group>"; };
 		12070CC4141CF74900523CB1 /* ofxPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPlane.h; sourceTree = "<group>"; };
-		12070CC5141CF74900523CB1 /* todo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = todo; sourceTree = "<group>"; };
 		12070D14141CF77A00523CB1 /* cameras.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cameras.c; sourceTree = "<group>"; };
 		12070D15141CF77A00523CB1 /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = core.c; sourceTree = "<group>"; };
 		12070D16141CF77A00523CB1 /* freenect_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = freenect_internal.h; sourceTree = "<group>"; };
@@ -496,14 +495,15 @@
 		12070D63141CF77A00523CB1 /* ofxKinectRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxKinectRecorder.cpp; sourceTree = "<group>"; };
 		12070D64141CF77A00523CB1 /* ofxKinectRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxKinectRecorder.h; sourceTree = "<group>"; };
 		12070DF1141D008800523CB1 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = /System/Library/Frameworks/OpenCL.framework; sourceTree = "<absolute>"; };
+		1227BC00149A0B0000CF7664 /* cmlMesh_freenect_opencl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cmlMesh_freenect_opencl.cpp; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/addons/camara_lucida/src/freenect_opencl/cmlMesh_freenect_opencl.cpp"; sourceTree = "<absolute>"; };
+		1227BC01149A0B0000CF7664 /* cmlMesh_freenect_opencl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cmlMesh_freenect_opencl.h; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/addons/camara_lucida/src/freenect_opencl/cmlMesh_freenect_opencl.h"; sourceTree = "<absolute>"; };
 		124AA18A142A37370023B1B9 /* cmlMesh_freenect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh_freenect.cpp; sourceTree = "<group>"; };
 		124AA18B142A37370023B1B9 /* cmlMesh_freenect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh_freenect.h; sourceTree = "<group>"; };
-		124AA18D142A37610023B1B9 /* cmlMesh_freenect_opencl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh_freenect_opencl.cpp; sourceTree = "<group>"; };
-		124AA18E142A37610023B1B9 /* cmlMesh_freenect_opencl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh_freenect_opencl.h; sourceTree = "<group>"; };
 		124AA270142A43CA0023B1B9 /* camara_lucida_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = camara_lucida_config.xml; sourceTree = "<group>"; };
 		124AA271142A43CA0023B1B9 /* kinect_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kinect_calibration.yml; sourceTree = "<group>"; };
 		124AA272142A43CA0023B1B9 /* projector_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = projector_calibration.yml; sourceTree = "<group>"; };
 		124AA273142A43CA0023B1B9 /* vertex.cl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.opencl; path = vertex.cl; sourceTree = "<group>"; };
+		12A04C4E146B0FCD002BFB57 /* keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -1253,6 +1253,7 @@
 		12070CB9141CF74900523CB1 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				1227BBFF149A0B0000CF7664 /* freenect_opencl */,
 				124AA189142A37370023B1B9 /* freenect */,
 				12070CBA141CF74900523CB1 /* CamaraLucida.cpp */,
 				12070CBB141CF74900523CB1 /* CamaraLucida.h */,
@@ -1261,7 +1262,6 @@
 				12070CBE141CF74900523CB1 /* cmlMesh.h */,
 				12070CC3141CF74900523CB1 /* cmlUtils.h */,
 				12070CC4141CF74900523CB1 /* ofxPlane.h */,
-				12070CC5141CF74900523CB1 /* todo */,
 			);
 			name = "\U001bsrc";
 			path = src;
@@ -1568,13 +1568,21 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		1227BBFF149A0B0000CF7664 /* freenect_opencl */ = {
+			isa = PBXGroup;
+			children = (
+				1227BC00149A0B0000CF7664 /* cmlMesh_freenect_opencl.cpp */,
+				1227BC01149A0B0000CF7664 /* cmlMesh_freenect_opencl.h */,
+			);
+			name = freenect_opencl;
+			path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/addons/camara_lucida/src/freenect_opencl";
+			sourceTree = "<absolute>";
+		};
 		124AA189142A37370023B1B9 /* freenect */ = {
 			isa = PBXGroup;
 			children = (
 				124AA18A142A37370023B1B9 /* cmlMesh_freenect.cpp */,
 				124AA18B142A37370023B1B9 /* cmlMesh_freenect.h */,
-				124AA18D142A37610023B1B9 /* cmlMesh_freenect_opencl.cpp */,
-				124AA18E142A37610023B1B9 /* cmlMesh_freenect_opencl.h */,
 			);
 			path = freenect;
 			sourceTree = "<group>";
@@ -1680,6 +1688,7 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
+				12A04C4E146B0FCD002BFB57 /* keyboard.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1809,8 +1818,8 @@
 				12070D81141CF77A00523CB1 /* ofxKinectPlayer.cpp in Sources */,
 				12070D82141CF77A00523CB1 /* ofxKinectRecorder.cpp in Sources */,
 				124AA18C142A37370023B1B9 /* cmlMesh_freenect.cpp in Sources */,
-				124AA18F142A37610023B1B9 /* cmlMesh_freenect_opencl.cpp in Sources */,
 				124AA274142A43CA0023B1B9 /* vertex.cl in Sources */,
+				1227BC02149A0B0000CF7664 /* cmlMesh_freenect_opencl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

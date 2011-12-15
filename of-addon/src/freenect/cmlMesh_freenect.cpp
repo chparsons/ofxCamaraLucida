@@ -1,4 +1,4 @@
-//	Cámara Lúcida
+//	Camara Lucida
 //	www.camara-lucida.com.ar
 //
 //	Copyright (C) 2011  Christian Parsons
@@ -17,14 +17,16 @@
 //	You should have received a copy of the GNU General Public License
 //	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 #include "cmlMesh_freenect.h"
 
 namespace cml 
 {
-	Mesh_freenect::Mesh_freenect(uint16_t *raw_depth_pix)
+	Mesh_freenect::Mesh_freenect(uint16_t *raw_depth_pix) 
+	: Mesh()
 	{
 		this->raw_depth_pix = raw_depth_pix;
+		
+		_coord_sys = ofVec3f(-1., -1., 1.);
 	};
 	
 	Mesh_freenect::Mesh_freenect()
@@ -33,18 +35,23 @@ namespace cml
 	
 	Mesh_freenect::~Mesh_freenect()
 	{
+		delete[] _zlut;
+		
+		delete[] hue_px;
+		delete[] hue_lut;
+		hue_tex.clear();
+		
 		dispose_pts();
 	};
 	
 	ofVec3f Mesh_freenect::coord_sys()
 	{
-		return ofVec3f(-1., -1., 1.);	
+		return _coord_sys;
 	}
 	
 	void Mesh_freenect::init_pts()
 	{
 		init_data();
-		init_zlut();
 		
 		pts3d = new ofVec3f[vbo_length];
 		for (int i = 0; i < vbo_length; i++) 
@@ -57,7 +64,6 @@ namespace cml
 	{
 		delete[] pts3d;
 		pts3d = NULL;
-		
 		raw_depth_pix = NULL;
 	}
 
@@ -65,19 +71,13 @@ namespace cml
 	{
 		for (int i = 0; i < vbo_length; i++)
 		{
-			int mcol = i % mesh_w;
-			int mrow = (i - mcol) / mesh_w;
-			
-			int col = mcol * mesh_step;
-			int row = mrow * mesh_step;
-			
-			int depth_idx = row * calib->depth_width + col;
-			
+			int x2d, y2d;
+			int depth_idx = get_raw_depth_idx(i, x2d, y2d);
 			ushort raw_depth = raw_depth_pix[depth_idx];
 			
 			float z = _zlut[raw_depth];
-			float x = (col + depth_xoff - calib->cx_d) * z / calib->fx_d;
-			float y = (row - calib->cy_d) * z / calib->fy_d;
+			float x = (x2d + depth_xoff - calib->cx_d) * z / calib->fx_d;
+			float y = (y2d - calib->cy_d) * z / calib->fy_d;
 			
 			pts3d[i].x = x;
 			pts3d[i].y = y;
@@ -99,20 +99,30 @@ namespace cml
 	
 	void Mesh_freenect::init_data()
 	{
+		_raw_depth_size = 2048; //11bits
 		_base_depth_raw = 1024.; //5mts~
-		_base_depth_mts = k1 * tanf((_base_depth_raw / k2) + k3) - k4;
+		_base_depth_mts = k1 * tanf(( (float)_base_depth_raw / k2) + k3) - k4;
 		
 		depth_xoff = xml_config->getValue("depth_xoff", 7); 
-	}
-
-	void Mesh_freenect::init_zlut()
-	{
-		for (int i = 0; i < raw_depth_size; i++) 
+		
+		xml_config->pushTag("debug_keys");
+			xml_config->pushTag("depth_xoff");
+				key_depth_xoff_inc = xml_config->getValue("inc", "b")[0]; 
+				key_depth_xoff_dec = xml_config->getValue("dec", "n")[0]; 
+			xml_config->popTag();
+		xml_config->popTag();		
+		
+		_zlut = new float[_raw_depth_size];
+		for (int i = 0; i < _raw_depth_size; i++) 
 		{
 			_zlut[i] = raw_depth_to_meters(i);
 		}
+		
+		hue_px = new uint8_t[ calib->depth_width * calib->depth_height * 3 ];
+		hue_lut = new ofFloatColor[_raw_depth_size];
+		set_hue_lut();
 	}
-
+	
 	//http://openkinect.org/wiki/Imaging_Information
 	//http://nicolas.burrus.name/index.php/Research/KinectCalibration
 
@@ -120,11 +130,16 @@ namespace cml
 	{
 		if (raw_depth < _base_depth_raw)
 		{
-			return k1 * tanf((raw_depth / k2) + k3) - k4; // calculate in meters
+			return k1 * tanf(( (float)raw_depth / k2) + k3) - k4; // calculate in meters
 		}
 		return _base_depth_mts;
 	}
 
+	uint16_t Mesh_freenect::get_raw_depth_size()
+	{
+		return _raw_depth_size;
+	}
+	
 	uint16_t Mesh_freenect::get_base_depth_raw()
 	{
 		return _base_depth_raw;
@@ -154,6 +169,8 @@ namespace cml
 		return _zlut[raw_depth];
 	}
 
+	// TODO return vecs by ref
+	
 	ofVec3f Mesh_freenect::raw_depth_to_p3d(int x_depth, int y_depth)
 	{
 		ofVec3f p3d;
@@ -201,10 +218,63 @@ namespace cml
 		
 		return rgb2d;
 	}
+	
+	void Mesh_freenect::debug_hue_texture(int x, int y, int width, int height)
+	{
+		if ( ! hue_tex.isAllocated() )
+		{
+			hue_tex.allocate(tex_width, tex_height, GL_RGB);
+		}
+		
+		for (int i = 0; i < vbo_length; i++)
+		{
+			int depth_idx = get_raw_depth_idx(i);
+			ushort raw_depth = raw_depth_pix[depth_idx];
+			
+			ofFloatColor hue = hue_lut[raw_depth];
+			
+			hue_px[depth_idx * 3 + 0] = hue.r;
+			hue_px[depth_idx * 3 + 1] = hue.g;
+			hue_px[depth_idx * 3 + 2] = hue.b;
+		}
+		
+		hue_tex.loadData(hue_px, 
+						 calib->depth_width, calib->depth_height, 
+						 GL_RGB);
+		
+		glColor3f(1, 1, 1);
+		hue_tex.draw(x, y, width, height);
+	}
+	
+	void Mesh_freenect::set_hue_lut(float depth_near, float depth_far,
+									float hue_near, float hue_far, 
+									bool clamp)
+	{
+		for (int i = 0; i < _raw_depth_size; i++) 
+		{
+			if (_zlut[i] < _base_depth_mts)
+			{
+				float hue = ofMap(_zlut[i], depth_near, depth_far, 
+								  hue_near, hue_far, clamp);
+
+				hue_lut[i] = ofFloatColor::fromHsb(hue * 255., 
+												   255., 255., 255.);
+			}
+			else
+			{
+				hue_lut[i] = ofFloatColor(0, 0, 0);
+			}
+		}
+	}
 
 	
 	//
 	
+	
+	string Mesh_freenect::get_keyboard_help()
+	{
+		return super::get_keyboard_help() + " \n mesh freenect keys for debug mode: \n "+string(1, key_depth_xoff_inc)+" increment depth_xoff \n "+string(1, key_depth_xoff_dec)+" decrement depth_xoff";
+	}
 	
 	void Mesh_freenect::print()
 	{
@@ -212,21 +282,15 @@ namespace cml
 		
 		for (int i = 0; i < vbo_length; i++)
 		{
-			int mcol = i % mesh_w;
-			int mrow = (i - mcol) / mesh_w;
-			
-			int col = mcol * mesh_step;
-			int row = mrow * mesh_step;
-			
-			int depth_idx = row * calib->depth_width + col;
-			
+			int x2d, y2d;
+			int depth_idx = get_raw_depth_idx(i, x2d, y2d);
 			ushort raw_depth = raw_depth_pix[depth_idx];
 			
 			float z = _zlut[raw_depth];
-			float x = (col + depth_xoff - calib->cx_d) * z / calib->fx_d;
-			float y = (row - calib->cy_d) * z / calib->fy_d;
+			float x = (x2d + depth_xoff - calib->cx_d) * z / calib->fx_d;
+			float y = (y2d - calib->cy_d) * z / calib->fy_d;
 			
-			cout << "### \t 2d " << col << ", " << row << ", depth " << raw_depth << "\t 3d: " << x << ", " << y << ", " << z << endl;
+			cout << "### \t 2d " << x2d << ", " << y2d << ", depth " << raw_depth << "\t 3d: " << x << ", " << y << ", " << z << endl;
 		}
 	}
 	
@@ -234,18 +298,15 @@ namespace cml
 	{		
 		super::keyPressed(args);
 		
-		if (pressed[key_change_depth_xoff])
+		if (args.key == key_depth_xoff_inc)
 		{
-			if (args.key == OF_KEY_UP)
-			{
-				depth_xoff++;
-				ofLog(OF_LOG_VERBOSE, "cml::Mesh_freenect.depth_xoff = "+ofToString(depth_xoff));
-			}
-			else if (args.key == OF_KEY_DOWN)
-			{
-				depth_xoff--;
-				ofLog(OF_LOG_VERBOSE, "cml::Mesh_freenect.depth_xoff = "+ofToString(depth_xoff));
-			}
+			depth_xoff++;
+			ofLog(OF_LOG_VERBOSE, "cml::Mesh_freenect.depth_xoff = "+ofToString(depth_xoff));
+		}
+		else if (args.key == key_depth_xoff_dec)
+		{
+			depth_xoff--;
+			ofLog(OF_LOG_VERBOSE, "cml::Mesh_freenect.depth_xoff = "+ofToString(depth_xoff));
 		}
 	}
 };

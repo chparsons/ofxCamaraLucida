@@ -24,6 +24,7 @@
 #include "ofxKinect.h"
 #include "CamaraLucida.h"
 #include "cmlMesh_freenect.h"
+#include "keyboard.h"
 #include <GLUT/glut.h>
 
 class testApp : public ofBaseApp 
@@ -37,6 +38,10 @@ public:
 	void render_hud(ofEventArgs &args);
 		
 	bool debug_depth_texture;
+	bool debug_hue_texture;
+	
+	float tex_width;
+	float tex_height;
 	
 	
 	//	kinect

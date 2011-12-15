@@ -1,4 +1,4 @@
-//	Cámara Lúcida
+//	Camara Lucida
 //	www.camara-lucida.com.ar
 //
 //	Copyright (C) 2011  Christian Parsons
@@ -25,20 +25,27 @@
 #include "CamaraLucida.h"
 #include "cmlMesh_freenect_opencl.h"
 #include "MSAOpenCL.h"
+#include "keyboard.h"
 #include <GLUT/glut.h>
 
 class testApp : public ofBaseApp 
 {
 public:
-		
+	
 	cml::CamaraLucida camluc;
 	cml::Mesh_freenect *mesh;
+	
 	MSA::OpenCL opencl;
 	
 	void render_texture(ofEventArgs &args);
 	void render_hud(ofEventArgs &args);
 		
 	bool debug_depth_texture;
+	bool debug_hue_texture;
+	bool debug_wireframe;
+	
+	float tex_width;
+	float tex_height;
 	
 	
 	//	kinect

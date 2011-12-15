@@ -1,4 +1,4 @@
-//	Cámara Lúcida
+//	Camara Lucida
 //	www.camara-lucida.com.ar
 //
 //	Copyright (C) 2011  Christian Parsons
@@ -17,14 +17,6 @@
 //	You should have received a copy of the GNU General Public License
 //	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-//	reserved user input on debug mode (toggle_debug)
-//		'x' reset view
-//		'v' switch view projector, depth cam, world
-//		'z' + mouse_drag: zoom in/out
-//		mouse_drag: rotate
-
-
 #pragma once
 
 #include <iostream.h>
@@ -33,6 +25,7 @@
 #include "ofxXmlSettings.h"
 #include "cv.h"
 #include "cmlCalibration.h"
+#include "cmlUtils.h"
 #include "cmlMesh.h"
 
 namespace cml 
@@ -65,19 +58,21 @@ namespace cml
 		ofEvent<ofEventArgs> render_hud;
 		
 		void toggle_debug();
+		string get_keyboard_help();
 		
 	private:
+		
+		void init_cml(string kinect_calibration_filename,
+					  string proj_calibration_filename,
+					  string xml_config_filename);
 		
 		cml::Mesh *mesh;
 		ofxXmlSettings xml_config;
 		
-		static const char key_view_type = 'v';
-		static const char key_reset_view = 'x';
-		static const char key_zoom = 'z';
-		
 		bool _debug;
 		bool _inited;
 		bool _not_init_alert;
+		
 		bool inited();
 		
 		
@@ -94,6 +89,7 @@ namespace cml
 		void convertRTopencv2opengl(CvMat* opencvR, CvMat* opencvT, float *openglRT);
 		
 		cml::Calibration calib;
+		ofVec3f coord_sys;
 		
 		float proj_KK[16];
 		float proj_RT[16];
@@ -126,19 +122,16 @@ namespace cml
 		// gl debug
 		
 		void gl_scene_control();
-		void render_ppal_point();
+		void render_proj_ppal_point();
 		void render_world_CS();
 		void render_proj_CS();
 		void render_rgb_CS();
-		void render_axis(float s = 0.1);
+		void render_axis(float s);
 		void render_screenlog();
-		string view_type_str();
+		string _viewpoint_str();
 		
 		
 		// fbo
-		
-		// XXX should use ofFbo version after this commit
-		// https://github.com/openframeworks/openFrameworks/commit/bbb55436d33734cf01da63f3385096d6956d257d#libs/openFrameworks/gl/ofFbo.cpp
 		
 		ofFbo fbo;
 		void init_fbo(int tex_width, int tex_height, int tex_num_samples);
@@ -157,7 +150,7 @@ namespace cml
 		
 		// ui
 		
-		ofEventArgs void_event_args;	
+		ofEventArgs void_event_args;
 		
 		void init_keys();
 		void init_events();
@@ -171,10 +164,15 @@ namespace cml
 		bool pressed[512];
 		ofVec2f pmouse;
 		
+		char key_viewpoint_next;
+		char key_viewpoint_prev;
+		char key_scene_ctrl_reset;
+		char key_scene_ctrl_zoom;
+		
 		enum ViewpointType
 		{
-			V_DEPTH, V_PROJ, V_RGB, V_TYPE_LENGTH
+			V_DEPTH, V_PROJ, V_RGB, V_LENGTH
 		};
-		int view_type;
+		int _viewpoint;
 	}; 
 };

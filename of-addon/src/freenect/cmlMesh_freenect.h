@@ -1,4 +1,4 @@
-//	Cámara Lúcida
+//	Camara Lucida
 //	www.camara-lucida.com.ar
 //
 //	Copyright (C) 2011  Christian Parsons
@@ -17,11 +17,6 @@
 //	You should have received a copy of the GNU General Public License
 //	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-//	reserved user input on debug mode (toggle_debug)
-//		'c' + key up/down: change depht_xoffset
-
-
 #pragma once
 
 #include "cmlMesh.h"
@@ -38,7 +33,27 @@ namespace cml
 		
 		ofVec3f coord_sys();
 		
+		float z_mts(uint16_t raw_depth);
+		float z_mts(int x, int y, bool tex_coords = false);
+		
+		float raw_depth_to_meters(uint16_t raw_depth);
+		
+		ofVec3f raw_depth_to_p3d(uint16_t raw_depth, int x_depth, int y_depth);
+		ofVec3f raw_depth_to_p3d(int x_depth, int y_depth);
+		ofVec2f p3d_to_depth(const ofVec3f& p3d);
+		ofVec2f raw_depth_to_rgb(uint16_t raw_depth, int x_depth, int y_depth);
+		
+		uint16_t get_raw_depth_size();
+		uint16_t get_base_depth_raw();
+		float get_base_depth_mts();
+		
+		void set_hue_lut(float depth_near = 0.8, float depth_far = 5.0,
+						 float hue_near = 0.95, float hue_far = 0.15,
+						 bool clamp = false);
+		void debug_hue_texture(int x, int y, int width, int height);
+		
 		void print();
+		string get_keyboard_help();
 		void keyPressed(ofKeyEventArgs &args);
 		
 	protected:
@@ -57,7 +72,10 @@ namespace cml
 		uint16_t *raw_depth_pix;
 		int depth_xoff;
 		
-		static const char key_change_depth_xoff = 'c'; // + key up/down
+		ofVec3f _coord_sys;
+		
+		int key_depth_xoff_inc;
+		int key_depth_xoff_dec;
 		
 	private:
 		
@@ -71,26 +89,17 @@ namespace cml
 		static const float k2 = 2842.5;
 		static const float k3 = 1.1863;
 		static const float k4 = 0.0370;
-		static const uint16_t raw_depth_size = 2048; //11bits
 		
+		uint16_t _raw_depth_size;
 		uint16_t _base_depth_raw;
 		float _base_depth_mts;
-		float _zlut[raw_depth_size];
+		float *_zlut;
+		
+		ofFloatColor *hue_lut;
+		ofTexture hue_tex;
+		uint8_t *hue_px;
 		
 		void init_data();
-		void init_zlut();
 		
-		float z_mts(uint16_t raw_depth);
-		float z_mts(int x, int y, bool tex_coords = false);
-		
-		float raw_depth_to_meters(uint16_t raw_depth);
-		
-		ofVec3f raw_depth_to_p3d(uint16_t raw_depth, int x_depth, int y_depth);
-		ofVec3f raw_depth_to_p3d(int x_depth, int y_depth);
-		ofVec2f p3d_to_depth(const ofVec3f& p3d);
-		ofVec2f raw_depth_to_rgb(uint16_t raw_depth, int x_depth, int y_depth);
-		
-		uint16_t get_base_depth_raw();
-		float get_base_depth_mts();
 	};
 };

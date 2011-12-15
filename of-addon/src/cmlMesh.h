@@ -1,4 +1,4 @@
-//	Cámara Lúcida
+//	Camara Lucida
 //	www.camara-lucida.com.ar
 //
 //	Copyright (C) 2011  Christian Parsons
@@ -31,6 +31,7 @@ namespace cml
 	{
 	public:
 		
+		Mesh();
 		virtual ~Mesh();
 		
 		void init(ofxXmlSettings *xml_config,
@@ -40,14 +41,25 @@ namespace cml
 		void update();
 		void render();
 		
+		// TODO remove this render flag hack
+		// it's here because wireframe render 
+		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
+		// is not working with ofFbo.. why?
+		// @see CamaraLucida.render();
+		void enable_render(bool val);
+		bool is_render_enabled();
+		//
+		
+		virtual void debug_hue_texture(int x, int y, int width, int height) = 0;
 		virtual ofVec3f coord_sys() = 0;
 		
+		string get_keyboard_help();
 		virtual void keyPressed(ofKeyEventArgs &args);
 		virtual void keyReleased(ofKeyEventArgs &args);
 		
 	protected:
 		
-		// abstract stuff...
+		// Abstract...
 		// remember to call dispose_pts in derived classes destructors!
 		
 		virtual void init_pts() = 0;
@@ -70,6 +82,9 @@ namespace cml
 		int vbo_length;
 		int ibo_length;	
 		
+		int get_raw_depth_idx(int vbo_idx);
+		int get_raw_depth_idx(int vbo_idx, int &x, int &y);
+		
 		bool pressed[512];
 		void init_keys();
 
@@ -79,5 +94,7 @@ namespace cml
 		uint* ibo;
 		ofFloatColor* vbo_color;
 		ofVec2f* vbo_texcoords;
+		
+		bool _render_enabled;
 	};
 };

@@ -1,4 +1,4 @@
-//	Cámara Lúcida
+//	Camara Lucida
 //	www.camara-lucida.com.ar
 //
 //	Copyright (C) 2011  Christian Parsons
@@ -30,6 +30,24 @@ namespace cml
 	{
 		this->mesh = mesh;
 		
+		coord_sys = mesh->coord_sys();
+		
+		init_cml(kinect_calibration_filename, 
+				 proj_calibration_filename,
+				 xml_config_filename);
+				
+		if (mesh->is_render_enabled())
+		{
+			init_fbo(tex_width, tex_height, tex_num_samples);
+		}
+		
+		mesh->init(&xml_config, &calib, tex_width, tex_height);
+	}
+	
+	void CamaraLucida::init_cml(string kinect_calibration_filename,
+								string proj_calibration_filename,
+								string xml_config_filename)
+	{
 		_inited = true;
 		
 		xml_config.loadFile(xml_config_filename);
@@ -53,15 +71,6 @@ namespace cml
 		init_keys();
 		init_events();
 		init_gl_scene_control();
-		
-		glClearColor(0, 0, 0, 1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
-		glPolygonMode(GL_FRONT, GL_FILL);
-		
-		init_fbo(tex_width, tex_height, tex_num_samples);
-		
-		mesh->init(&xml_config, &calib, tex_width, tex_height);
 	}
 	
 	void CamaraLucida::dispose()
@@ -91,7 +100,8 @@ namespace cml
 		if (!inited())
 			return;
 				
-		mesh->update();
+		if (mesh->is_render_enabled())
+			mesh->update();
 	}
 
 	void CamaraLucida::render()
@@ -99,21 +109,28 @@ namespace cml
 		if (!inited())
 			return;
 		
-		fbo.bind();
-		//ofEnableAlphaBlending();  
-		//glEnable(GL_BLEND);  
-		//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA); 
+		if (mesh->is_render_enabled())
+		{
+			fbo.bind();
+			//ofEnableAlphaBlending();  
+			//glEnable(GL_BLEND);  
+			//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA); 
 		
-		ofNotifyEvent( render_texture, void_event_args );
+			ofNotifyEvent( render_texture, void_event_args );
 		
-		fbo.unbind();
-		//ofDisableAlphaBlending(); 
-		//glDisable(GL_BLEND);  
+			fbo.unbind();
+			//ofDisableAlphaBlending(); 
+			//glDisable(GL_BLEND);  
+		}
 		
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
+	
 		glPolygonMode(GL_FRONT, GL_FILL);
+		// TODO wireframe it's not working with fbo textures.. why?
+		// @see cmlMesh.enable_render();
+		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
 		
 		glColor3f(1, 1, 1);
 		glViewport(0, 0, ofGetWidth(), ofGetHeight());
@@ -127,16 +144,20 @@ namespace cml
 		gl_projection();	
 		gl_viewpoint();
 		
+		gl_scene_control();
+		
 		if (_debug)
 		{
-			gl_scene_control();
 			render_world_CS();
 			render_proj_CS();
 			render_rgb_CS();
+			render_proj_ppal_point();
 		}
 		
 		//	if (using_opencl)
 		//		opencl.finish();
+		
+		// TODO alpha blending!
 		
 		//glEnable(GL_BLEND);  
 		//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
@@ -145,15 +166,17 @@ namespace cml
 		//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
 		//ofEnableAlphaBlending();
 		
-		fbo.getTextureReference(0).bind();
+		if (mesh->is_render_enabled())
+		{
+			fbo.getTextureReference(0).bind();
 		
-		mesh->render();
+			mesh->render();
 		
-		fbo.getTextureReference(0).unbind();
+			fbo.getTextureReference(0).unbind();
+		}
 		
 		//glDisable(GL_BLEND);
-		//ofDisableAlphaBlending();  
-		
+		//ofDisableAlphaBlending(); 
 	}
 
 	
@@ -192,7 +215,7 @@ namespace cml
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		
-		switch(view_type)
+		switch(_viewpoint)
 		{
 			case V_PROJ:
 				glMultMatrixf(proj_KK);
@@ -211,10 +234,9 @@ namespace cml
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		
-		ofVec3f cs = mesh->coord_sys();
-		glScalef(cs.x, cs.y, cs.z);	
+		glScalef(coord_sys.x, coord_sys.y, coord_sys.z);	
 		
-		switch(view_type)
+		switch(_viewpoint)
 		{
 			case V_DEPTH:			
 				gluLookAt(0., 0., 0,		//loc
@@ -275,25 +297,40 @@ namespace cml
 		glTranslatef(-rot_pivot.x, -rot_pivot.y, -rot_pivot.z);
 	}
 
-	void CamaraLucida::render_ppal_point()
+	void CamaraLucida::render_proj_ppal_point()
 	{
 		glPointSize(5);
-		glBegin(GL_POINTS);
-		glColor3f(1,1,0);
-		glVertex3f(0, 0, 0);
-		glEnd();
+		glColor3f(1, 1, 0); //yellow
+		
+		float ts = 0.5;
+		
+		glPushMatrix();
+			glMultMatrixf(proj_RT);
+			
+			glBegin(GL_LINES);
+			glVertex3f(0, 0, 0);
+			glVertex3f(0, 0, ts);
+			glEnd();
+		
+			//float amp = 0.5;
+			//float ts = sin( ofGetElapsedTimef() * 0.7 ) * amp + amp;
+			glBegin(GL_POINTS);
+			glVertex3f(0, 0, ts);
+			glEnd();
+		
+		glPopMatrix();
 	}	
 
 	void CamaraLucida::render_world_CS()
 	{
-		render_axis(0.2);
+		render_axis(0.1);
 	}
 
 	void CamaraLucida::render_proj_CS()
 	{
 		glPushMatrix();
 		glMultMatrixf(proj_RT);
-		render_axis();
+		render_axis(0.1);
 		glPopMatrix();
 	}
 
@@ -301,7 +338,7 @@ namespace cml
 	{
 		glPushMatrix();
 		glMultMatrixf(rgb_RT);
-		render_axis();
+		render_axis(0.05);
 		glPopMatrix();
 	}
 
@@ -327,14 +364,12 @@ namespace cml
 	void CamaraLucida::render_screenlog()
 	{
 		if (!_debug) return;
-		// TODO show depth_xoff!
-		//ofDrawBitmapString(view_type_str()+" /depth_xoff: "+ofToString(depth_xoff)+" /fps: "+ofToString(ofGetFrameRate()), 10, ofGetHeight()-10);
-		ofDrawBitmapString(view_type_str()+" /fps: "+ofToString(ofGetFrameRate()), 10, ofGetHeight()-10);
+		ofDrawBitmapString(_viewpoint_str()+" /fps: "+ofToString(ofGetFrameRate()), 10, ofGetHeight()-10);
 	}
 
-	string CamaraLucida::view_type_str()
+	string CamaraLucida::_viewpoint_str()
 	{
-		switch(view_type)
+		switch(_viewpoint)
 		{
 			case V_PROJ:
 				return "projector viewpoint";
@@ -372,26 +407,41 @@ namespace cml
 	{
 		for (int i = 0; i < 512; i++) 
 			pressed[i] = false;
+		
+		xml_config.pushTag("debug_keys");
+			xml_config.pushTag("viewpoint");
+				key_viewpoint_next = xml_config.getValue("next", "t")[0];
+				key_viewpoint_prev = xml_config.getValue("prev", "v")[0];
+				xml_config.popTag();
+			xml_config.pushTag("scene_ctrl");
+				key_scene_ctrl_reset = xml_config.getValue("reset", "x")[0];
+				key_scene_ctrl_zoom = xml_config.getValue("zoom", "z")[0];
+				xml_config.popTag();
+		xml_config.popTag();
 	}
 
 	void CamaraLucida::keyPressed(ofKeyEventArgs &args)
 	{
 		pressed[args.key] = true;
 		
-		if (!_debug) return;
+		if (!_debug) 
+			return;
 		
 		mesh->keyPressed(args);
 		
-		switch(args.key)
+		if (args.key == key_viewpoint_next)
 		{		
-			case key_view_type:
-				++view_type;
-				view_type = view_type == V_TYPE_LENGTH ? 0 : view_type;
-				break;
-				
-			case key_reset_view:
-				reset_gl_scene_control();
-				break;
+			++_viewpoint;
+			_viewpoint = _viewpoint == V_LENGTH ? 0 : _viewpoint;
+		}
+		else if (args.key == key_viewpoint_prev)
+		{
+			--_viewpoint;
+			_viewpoint = _viewpoint == -1 ? V_LENGTH-1 : _viewpoint;
+		}
+		else if (args.key == key_scene_ctrl_reset)
+		{
+			reset_gl_scene_control();
 		}
 	}
 
@@ -408,16 +458,14 @@ namespace cml
 		ofVec2f m = ofVec2f(args.x, args.y);
 		ofVec2f dist = m - pmouse;
 		
-		if (pressed[key_zoom])
+		if (pressed[key_scene_ctrl_zoom])
 		{
 			tZ += -dist.y * tZ_delta;	
 		}
 		else
 		{
-			ofVec3f cs = mesh->coord_sys();
-			
-			rotX += cs.x * dist.y * rot_delta;
-			rotY += -cs.y * dist.x * rot_delta;
+			rotX += coord_sys.x * dist.y * rot_delta;
+			rotY += -coord_sys.y * dist.x * rot_delta;
 		}
 		pmouse.set(args.x, args.y);
 	}
@@ -429,7 +477,7 @@ namespace cml
 
 
 
-	// data / conversion
+	// data conversion
 
 		
 	void CamaraLucida::load_data(string kinect_calibration_filename, string proj_calibration_filename)
@@ -578,18 +626,25 @@ namespace cml
 		float cx = (float)cvGetReal2D( opencvKK, 0, 2 );
 		float cy = (float)cvGetReal2D( opencvKK, 1, 2 );
 		
-		float A = 2.*fx/width;
-		float B = 2.*fy/height;
-		float C = 2.*(cx/width)-1.;
-		float D = 2.*(cy/height)-1.;
-		float E = -(calib.far+calib.near)/(calib.far-calib.near);
-		float F = -2.*calib.far*calib.near/(calib.far-calib.near);
+		float A = 2. * fx / width;
+		float B = 2. * fy / height;
+		float C = 2. * (cx / width) - 1.;
+		float D = 2. * (cy / height) - 1.;
+		float E = - (calib.far + calib.near) / (calib.far - calib.near);
+		float F = -2. * calib.far * calib.near / (calib.far - calib.near);
 		
 	//	col-major
 		openglKK[0]= A;		openglKK[4]= 0.;	openglKK[8]= C;		openglKK[12]= 0.;
 		openglKK[1]= 0.;	openglKK[5]= B;		openglKK[9]= D;		openglKK[13]= 0.;
 		openglKK[2]= 0.;	openglKK[6]= 0.;	openglKK[10]= E;	openglKK[14]= F;
 		openglKK[3]= 0.;	openglKK[7]= 0.;	openglKK[11]= -1.;	openglKK[15]= 0.;	
+		
+//		another solution by Kyle McDonald...
+//		https://github.com/kylemcdonald/ofxCv/blob/master/libs/ofxCv/src/Calibration.cpp
+//		glFrustum(
+//				  nearDist * (-cx) / fx, nearDist * (w - cx) / fx,
+//				  nearDist * (cy - h) / fy, nearDist * (cy) / fy,
+//				  nearDist, farDist);
 	}
 
 
@@ -700,9 +755,10 @@ namespace cml
 	void CamaraLucida::toggle_debug()
 	{
 		_debug = !_debug;
-		if (!_debug)
-		{
-			reset_gl_scene_control();
-		}
+	}
+	
+	string CamaraLucida::get_keyboard_help()
+	{
+		return "camara lucida keys for debug mode: \n switch viewpoint "+string(1, key_viewpoint_next)+" and "+string(1, key_viewpoint_prev)+" \n scene control: drag mouse to rotate, "+string(1, key_scene_ctrl_zoom)+"+drag to zoom, "+string(1, key_scene_ctrl_reset)+" to reset";
 	}
 };

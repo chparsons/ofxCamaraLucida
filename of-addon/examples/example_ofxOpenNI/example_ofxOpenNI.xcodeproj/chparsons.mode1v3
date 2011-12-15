@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -264,6 +266,9 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
 								<string>E4B69B4A0A3A1720003C02F2</string>
+								<string>1227BB75149A08E100CF7664</string>
+								<string>1227BB76149A08E100CF7664</string>
+								<string>1227BB7B149A08E100CF7664</string>
 								<string>E4B69E1C0A3A1BDC003C02F2</string>
 								<string>BB4B014C10F69532006C3DED</string>
 								<string>12070EDB141D085000523CB1</string>
@@ -276,11 +281,9 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>11</integer>
-									<integer>9</integer>
-									<integer>8</integer>
-									<integer>7</integer>
-									<integer>6</integer>
+									<integer>17</integer>
+									<integer>16</integer>
+									<integer>15</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -315,14 +318,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>cmlMesh_openni.h</string>
+								<string>testApp.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -334,35 +335,16 @@
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>124AA2A3142A45F20023B1B9</string>
+										<string>1227BC7D149A0CE200CF7664</string>
 										<key>history</key>
 										<array>
 											<string>12F5E71C141BD78300F81FD0</string>
-											<string>12070F81141E1C5A00523CB1</string>
-											<string>124A9FF11428D26E0023B1B9</string>
-											<string>124A9FF21428D26E0023B1B9</string>
-											<string>124A9FF31428D26E0023B1B9</string>
-										</array>
-									</dict>
-									<key>Split1</key>
-									<dict>
-										<key>PBXProjectModuleGUID</key>
-										<string>124AA2A4142A45F20023B1B9</string>
-										<key>PBXProjectModuleLabel</key>
-										<string>cmlMesh_openni.h</string>
-										<key>_historyCapacity</key>
-										<integer>40</integer>
-										<key>bookmark</key>
-										<string>124AA2A8142A45F20023B1B9</string>
-										<key>history</key>
-										<array>
-											<string>124AA2A5142A45F20023B1B9</string>
-											<string>124AA2A6142A45F20023B1B9</string>
-											<string>124AA2A7142A45F20023B1B9</string>
+											<string>1253CC2F147865D700DBA11B</string>
+											<string>1227BC05149A0B1F00CF7664</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
-									<string>2</string>
+									<string>1</string>
 								</dict>
 								<key>StatusBarVisibility</key>
 								<true/>
@@ -416,9 +398,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>124AA2A9142A45F20023B1B9</string>
+				<string>1227BC7E149A0CE200CF7664</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>124AA2AA142A45F20023B1B9</string>
+				<string>1227BC7F149A0CE200CF7664</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -556,12 +538,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>124AA2B3142A45F20023B1B9</string>
-		<string>124AA2B4142A45F20023B1B9</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>12F5E723141BD78300F81FD0</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>/Users/chparsons/programacion/openframeworks/of-007-0-gd6183cd/apps/camara_lucida/example_ofxOpenNI/example_ofxOpenNI.xcodeproj</string>
+		<string>/users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/example_ofxOpenNI.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>4 55 1436 823 0 0 1440 878 </string>
@@ -641,7 +619,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>12F5E723141BD78300F81FD0</string>
-				<string>124AA2AB142A45F20023B1B9</string>
+				<string>1227BC80149A0CE200CF7664</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
