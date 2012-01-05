@@ -8,7 +8,6 @@ It has two modules: a [calibration module](https://github.com/chparsons/rgbdemo)
 
 Credits:
 [Christian Parsons](http://www.chparsons.com.ar/)
-
 [Mariano Tepper](http://www.tc.umn.edu/~mhtepper/)
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=chparsons&url=https://github.com/chparsons/Camara-Lucida&title=Camara Lucida&language=en_GB&tags=github&category=software) 
