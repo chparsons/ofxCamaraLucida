@@ -129,10 +129,6 @@ namespace cml
 	
 	int Mesh::get_raw_depth_idx(int vbo_idx, int& x, int& y)
 	{
-		// TODO performance: do this better
-		// instead of 1 loop through vbo_idx and calc x2d,y2d
-		// make 2 nested loops through x2d,y2d and calc vbo_idx...
-		
 		int col = vbo_idx % mesh_w;
 		int row = (vbo_idx - col) / mesh_w;
 		

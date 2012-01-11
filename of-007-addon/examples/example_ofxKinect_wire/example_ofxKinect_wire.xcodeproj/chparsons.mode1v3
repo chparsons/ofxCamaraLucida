@@ -229,8 +229,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -281,14 +279,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>29</integer>
-									<integer>28</integer>
-									<integer>14</integer>
+									<integer>3</integer>
+									<integer>2</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {233, 764}}</string>
+							<string>{{0, 0}, {233, 610}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -300,14 +298,14 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {250, 782}}</string>
+						<string>{{0, 0}, {250, 628}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
 							<string>MainColumn</string>
 							<real>233</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>4 55 1436 823 0 0 1440 878 </string>
+						<string>50 209 888 669 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -318,12 +316,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>testApp.cpp</string>
+								<string>camara_lucida_config.xml</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -331,16 +331,17 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>testApp.cpp</string>
+										<string>camara_lucida_config.xml</string>
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>1227BC51149A0CD300CF7664</string>
+										<string>12AFB43614BDC3B600E44259</string>
 										<key>history</key>
 										<array>
 											<string>12A04CA8146B15CE002BFB57</string>
 											<string>120B2D46146D502100C2E598</string>
-											<string>1227BBF7149A0AF000CF7664</string>
+											<string>12AFB40114BDB61300E44259</string>
+											<string>12AFB40314BDB61300E44259</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -352,14 +353,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1181, 777}}</string>
+								<string>{{0, 0}, {633, 623}}</string>
 								<key>RubberWindowFrame</key>
-								<string>4 55 1436 823 0 0 1440 878 </string>
+								<string>50 209 888 669 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>777pt</string>
+							<string>623pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -372,9 +373,9 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 782}, {1181, 0}}</string>
+								<string>{{0, 628}, {633, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>4 55 1436 823 0 0 1440 878 </string>
+								<string>50 209 888 669 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -383,7 +384,7 @@
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>1181pt</string>
+					<string>633pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -398,9 +399,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1227BC52149A0CD300CF7664</string>
+				<string>12AFB43714BDC3B600E44259</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1227BC53149A0CD300CF7664</string>
+				<string>12AFB43814BDC3B600E44259</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -538,11 +539,15 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>12AFB44114BDC3B600E44259</string>
+		<string>12AFB44214BDC3B600E44259</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>120708C3141CD73D00523CB1</string>
-		<string>/users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxKinect_wire/example_ofxKinect_wire.xcodeproj</string>
+		<string>1C78EAAD065D492600B07095</string>
+		<string>/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxKinect_wire/example_ofxKinect_wire.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>4 55 1436 823 0 0 1440 878 </string>
+	<string>50 209 888 669 0 0 1440 878 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -619,7 +624,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>120708C3141CD73D00523CB1</string>
-				<string>1227BC54149A0CD300CF7664</string>
+				<string>12AFB43914BDC3B600E44259</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -741,13 +746,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>120B2D50146D502100C2E598</string>
+				<string>12AFB43A14BDC3B600E44259</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>120B2D51146D502100C2E598</string>
-				<string>120B2D52146D502100C2E598</string>
-				<string>120B2D53146D502100C2E598</string>
-				<string>120B2D54146D502100C2E598</string>
-				<string>120B2D55146D502100C2E598</string>
+				<string>12AFB43B14BDC3B600E44259</string>
+				<string>12AFB43C14BDC3B600E44259</string>
+				<string>12AFB43D14BDC3B600E44259</string>
+				<string>12AFB43E14BDC3B600E44259</string>
+				<string>12AFB43F14BDC3B600E44259</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -903,7 +908,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>120B2D56146D502100C2E598</string>
+				<string>12AFB44014BDC3B600E44259</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

@@ -22,6 +22,7 @@
 namespace cml 
 {
 	Mesh_openni::Mesh_openni(xn::DepthGenerator *depth_generator)
+	: Mesh()
 	{
 		this->depth_generator = depth_generator;
 	}
@@ -34,7 +35,7 @@ namespace cml
 	 
 	ofVec3f Mesh_openni::coord_sys()
 	{
-		return ofVec3f(1,1,1);
+		return ofVec3f(-1., -1., 1.);
 	}
 
 	void Mesh_openni::init_pts()
@@ -56,16 +57,11 @@ namespace cml
 		
 		for (int i = 0; i < vbo_length; i++)
 		{
-			int mcol = i % mesh_w;
-			int mrow = (i - mcol) / mesh_w;
+			int x2d, y2d;
+			int depth_idx = get_raw_depth_idx(i, x2d, y2d);
 			
-			int col = mcol * mesh_step;
-			int row = mrow * mesh_step;
-			
-			int depth_idx = row * calib->depth_width + col;
-			
-			pts2d[i].X = col;
-			pts2d[i].Y = row;
+			pts2d[i].X = x2d;
+			pts2d[i].Y = y2d;
 			pts2d[i].Z = (short)depth_map[ depth_idx ];
 		}
 		
@@ -82,7 +78,7 @@ namespace cml
 			if (p3d.Z == 0) p3d.Z = 5.;
 			
 			pts3d[i].x = p3d.X;
-			pts3d[i].y = p3d.Y;
+			pts3d[i].y = -p3d.Y;
 			pts3d[i].z = p3d.Z;
 		}
 	}
@@ -95,6 +91,11 @@ namespace cml
 	int Mesh_openni::sizeof_pts()
 	{
 		return sizeof(ofVec3f);
+	}
+	
+	void Mesh_openni::debug_hue_texture(int x, int y, int width, int height)
+	{
+		//TODO
 	}
 	
 	void Mesh_openni::print()

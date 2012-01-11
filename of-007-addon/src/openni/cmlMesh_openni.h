@@ -20,7 +20,9 @@
 #pragma once
 
 #include "cmlMesh.h"
-#include "ofxOpenNI.h"
+#include <XnOpenNI.h>
+#include <XnCppWrapper.h>
+#include <XnLog.h>
 
 namespace cml
 {
@@ -32,6 +34,7 @@ namespace cml
 		~Mesh_openni();
 		
 		ofVec3f coord_sys();
+		void debug_hue_texture(int x, int y, int width, int height);
 		
 		void print();
 		
@@ -50,8 +53,6 @@ namespace cml
 		
 	private:
 		
-		typedef Mesh super;
-
 		ofVec3f* pts3d;
 		
 		xn::DepthGenerator *depth_generator;

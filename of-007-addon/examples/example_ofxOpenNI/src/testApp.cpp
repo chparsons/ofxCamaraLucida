@@ -22,18 +22,22 @@
 void testApp::setup()
 {
 	ofSetLogLevel(OF_LOG_VERBOSE);
-	
-	init_keys();
-	debug_depth_texture = false;
+	ofSetWindowPosition(0,0);
 	
 	init_kinect();
 	
+	init_keys();
+	debug_depth_texture = true;
+	
+	tex_width = 1024;
+	tex_height = 768;
+	
 	mesh = new cml::Mesh_openni(&depth_generator);
 	
-	camluc.init(ofToDataPath("camara_lucida/kinect_calibration.yml"),
-				ofToDataPath("camara_lucida/projector_calibration.yml"),
+	camluc.init(ofToDataPath("camara_lucida/openni_calibration.yml"),
+				ofToDataPath("camara_lucida/openni_projector_calibration.yml"),
 				ofToDataPath("camara_lucida/camara_lucida_config.xml"),
-				mesh, ofGetWidth(), ofGetHeight(), 1);
+				mesh, tex_width, tex_height, 1);
 	
 	ofAddListener(camluc.render_texture, this, &testApp::render_texture);
 	ofAddListener(camluc.render_hud, this, &testApp::render_hud);
@@ -66,11 +70,24 @@ void testApp::exit()
 
 void testApp::render_hud(ofEventArgs &args)
 {
-	ofDrawBitmapString("press 'o' to debug camera as a texture \n 'd' to toggle camara lucida debug, then use 'v' to change viewpoint between camera and projector \n mousedrag to rotate, 'z'+mousedrag to zoom, 'x' to reset the debug transformations", 10, 10);
+	if (pressed[key::keyboard_help])
+	{
+		int roff = 200;
+		int toff = roff+50;
+		
+		glColor3f(1, 1, 1);
+		ofDrawBitmapString(key::get_help()+"\n\n"+camluc.get_keyboard_help()+"\n"+mesh->get_keyboard_help(), 
+						   toff, toff+12);	
+		
+		glColor4f(0, 0, 0, 0.1);
+		ofRect(roff, roff, ofGetWidth()-roff*2, ofGetHeight()-roff*2);
+		
+		glColor3f(1, 1, 1);
+	}
 	
 	if (debug_depth_texture)
 	{
-		depth.draw(0, 0, 400, 300);
+		//depth.draw(0, 0, 400, 300);
 	}
 }
 
@@ -79,33 +96,35 @@ void testApp::render_texture(ofEventArgs &args)
 	glClearColor(0.5, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	float w = 1024;
-	float h = 768;
-	
-	glViewport(0, 0, w, h);
+	glViewport(0, 0, tex_width, tex_height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, w, 0, h, -1, 1);
+	glOrtho(0, tex_width, 0, tex_height, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
 	if (debug_depth_texture)
 	{
 		glColor3f(1, 1, 1);
-		depth.draw(0, 0, w, h);
+		depth.draw(0, 0, tex_width, tex_height);
 	}
 	
 	glColor3f(1, 1, 0);
-	ofCircle(200, 200, 100);
+	ofCircle(400, 200, 100);
 }
 
 void testApp::init_kinect()
 {
 	context.setupUsingXMLFile("");
+	
 	depth.setup(&context);	
 	//user.setup(&context, &depth);
 	
 	depth_generator = depth.getXnDepthGenerator();
+	
+//	rgb.setup(&context);
+//	rgb_generator = rgb.getXnImageGenerator();
+//	depth_generator.GetAlternativeViewPointCap().SetViewPoint(rgb_generator);
 }
 
 void testApp::update_kinect()
@@ -119,31 +138,30 @@ void testApp::keyPressed(int key)
 {
 	pressed[key] = true;
 	
-	switch (key)
-	{		
-		case 'm':
-			if (ofGetWindowPositionX() == 0)
-			{
-				ofSetWindowPosition(1440,0);
-				ofSetFullscreen(true);
-			}
-			else
-			{
-				ofSetWindowPosition(0,0);
-				ofSetFullscreen(false);
-			}
-			break;		
-			
-		case 'o':
-			debug_depth_texture = !debug_depth_texture;
-			break;
+	if (key == key::fullscreen)
+	{
+		ofToggleFullscreen();
 	}
-	
-	if (key == 'd')
+	else if (key == key::projector)
+	{
+		if (ofGetWindowPositionX() == 0)
+		{
+			ofSetWindowPosition(1440,0);
+		}
+		else
+		{
+			ofSetWindowPosition(0,0);
+		}
+	}
+	else if (key == key::debug_camaralucida)
 	{
 		camluc.toggle_debug();
 	}
-	if (key == 'f')
+	else if (key == key::debug_depth_texture)
+	{
+		debug_depth_texture = !debug_depth_texture;
+	}
+	else if (key == key::print_mesh)
 	{
 		mesh->print();
 	}

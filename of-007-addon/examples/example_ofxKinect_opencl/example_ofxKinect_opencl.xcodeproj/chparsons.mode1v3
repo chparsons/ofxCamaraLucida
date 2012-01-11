@@ -280,6 +280,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>36</integer>
+									<integer>34</integer>
 									<integer>30</integer>
 									<integer>29</integer>
 									<integer>15</integer>
@@ -287,7 +289,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 87}, {233, 764}}</string>
+							<string>{{0, 0}, {233, 764}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -324,7 +326,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>main.cpp</string>
+								<string>cmlMesh_freenect.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -332,18 +334,37 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>main.cpp</string>
+										<string>cmlMesh_freenect_opencl.h</string>
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>1227BC45149A0CC900CF7664</string>
+										<string>12AFB34114BD9E6100E44259</string>
 										<key>history</key>
 										<array>
-											<string>1227BC08149A0C6700CF7664</string>
+											<string>12AFB2D914BD95C100E44259</string>
+											<string>12AFB34014BD9E6100E44259</string>
+											<string>12AFB2DA14BD95C100E44259</string>
+										</array>
+									</dict>
+									<key>Split1</key>
+									<dict>
+										<key>PBXProjectModuleGUID</key>
+										<string>12AFB34214BD9E6100E44259</string>
+										<key>PBXProjectModuleLabel</key>
+										<string>cmlMesh_freenect.h</string>
+										<key>_historyCapacity</key>
+										<integer>40</integer>
+										<key>bookmark</key>
+										<string>12AFB34614BD9E6100E44259</string>
+										<key>history</key>
+										<array>
+											<string>12AFB34314BD9E6100E44259</string>
+											<string>12AFB34414BD9E6100E44259</string>
+											<string>12AFB34514BD9E6100E44259</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
-									<string>1</string>
+									<string>2</string>
 								</dict>
 								<key>StatusBarVisibility</key>
 								<true/>
@@ -397,9 +418,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1227BC42149A0C9D00CF7664</string>
+				<string>12AFB34714BD9E6100E44259</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1227BC43149A0C9D00CF7664</string>
+				<string>12AFB34814BD9E6100E44259</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -538,7 +559,7 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>120708C3141CD73D00523CB1</string>
-		<string>/users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxKinect_opencl/example_ofxKinect_opencl.xcodeproj</string>
+		<string>/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxKinect_opencl/example_ofxKinect_opencl.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>4 55 1436 823 0 0 1440 878 </string>
@@ -618,7 +639,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>120708C3141CD73D00523CB1</string>
-				<string>1227BC44149A0C9D00CF7664</string>
+				<string>12AFB34914BD9E6100E44259</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -740,13 +761,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>120B2C86146D291900C2E598</string>
+				<string>12AFB2EC14BD95C100E44259</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>120B2C87146D291900C2E598</string>
-				<string>120B2C88146D291900C2E598</string>
-				<string>120B2C89146D291900C2E598</string>
-				<string>120B2C8A146D291900C2E598</string>
-				<string>120B2C8B146D291900C2E598</string>
+				<string>12AFB2ED14BD95C100E44259</string>
+				<string>12AFB2EE14BD95C100E44259</string>
+				<string>12AFB2EF14BD95C100E44259</string>
+				<string>12AFB2F014BD95C100E44259</string>
+				<string>12AFB2F114BD95C100E44259</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -902,7 +923,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>120B2C96146D291900C2E598</string>
+				<string>12AFB2F214BD95C100E44259</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

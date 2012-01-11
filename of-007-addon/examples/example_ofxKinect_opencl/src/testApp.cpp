@@ -86,7 +86,7 @@ void testApp::render_hud(ofEventArgs &args)
 {
 	if (pressed[key::keyboard_help])
 	{
-		int roff = 200;
+		int roff = 100;
 		int toff = roff+50;
 		
 		glColor3f(1, 1, 1);

@@ -24,6 +24,7 @@
 #include "ofxOpenNI.h"
 #include "CamaraLucida.h"
 #include "cmlMesh_openni.h"
+#include "keyboard.h"
 
 class testApp : public ofBaseApp 
 {
@@ -36,15 +37,20 @@ public:
 	void render_hud(ofEventArgs &args);
 	
 	bool debug_depth_texture;
-		
+	
+	float tex_width;
+	float tex_height;
+	
 	
 	//	kinect
 	
 	ofxOpenNIContext context;
 	ofxDepthGenerator depth;
+	ofxImageGenerator rgb;
 	//ofxUserGenerator user;
 	
 	xn::DepthGenerator depth_generator;
+	xn::ImageGenerator rgb_generator;
 	
 	void init_kinect();
 	void update_kinect();

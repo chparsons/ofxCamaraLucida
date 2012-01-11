@@ -229,8 +229,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -270,8 +268,6 @@
 								<string>124AA240142A430B0023B1B9</string>
 								<string>E4B69E1C0A3A1BDC003C02F2</string>
 								<string>BB4B014C10F69532006C3DED</string>
-								<string>12070CCC141CF77900523CB1</string>
-								<string>12070D5B141CF77A00523CB1</string>
 								<string>12070CB8141CF74900523CB1</string>
 								<string>12070CB9141CF74900523CB1</string>
 								<string>124AA189142A37370023B1B9</string>
@@ -281,8 +277,9 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>9</integer>
-									<integer>8</integer>
+									<integer>3</integer>
+									<integer>2</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -317,12 +314,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>main.cpp</string>
+								<string>camara_lucida_config.xml</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -330,25 +329,45 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>main.cpp</string>
+										<string>testApp.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>1267F35214B5D90D004870CD</string>
+										<string>12AFB2F514BD95C200E44259</string>
 										<key>history</key>
 										<array>
+											<string>120B2C44146D218D00C2E598</string>
 											<string>12747FA614740CFA00CBBE7F</string>
+											<string>12B6AA3F14740DC20032F366</string>
 											<string>1253CC1C147864DE00DBA11B</string>
-											<string>1227BBDB149A0AEB00CF7664</string>
 											<string>1227BBDD149A0AEB00CF7664</string>
 											<string>1227BBDF149A0AEB00CF7664</string>
 											<string>1227BBE1149A0AEB00CF7664</string>
 											<string>1227BBE3149A0AEB00CF7664</string>
-											<string>120B2C44146D218D00C2E598</string>
+											<string>1227BBE5149A0AEB00CF7664</string>
+											<string>1227BBE6149A0AEB00CF7664</string>
+											<string>1227BBE7149A0AEB00CF7664</string>
+											<string>1227BBE9149A0AEB00CF7664</string>
+											<string>12A190F714BCF5B200676F25</string>
+										</array>
+									</dict>
+									<key>Split1</key>
+									<dict>
+										<key>PBXProjectModuleGUID</key>
+										<string>12AFB2F614BD95C200E44259</string>
+										<key>PBXProjectModuleLabel</key>
+										<string>camara_lucida_config.xml</string>
+										<key>_historyCapacity</key>
+										<integer>40</integer>
+										<key>bookmark</key>
+										<string>12AFB2F814BD95C200E44259</string>
+										<key>history</key>
+										<array>
+											<string>12AFB2F714BD95C200E44259</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
-									<string>1</string>
+									<string>2</string>
 								</dict>
 								<key>StatusBarVisibility</key>
 								<true/>
@@ -402,9 +421,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>1267F35314B5D90D004870CD</string>
+				<string>12AFB2C714BD8F3F00E44259</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>1267F35414B5D90D004870CD</string>
+				<string>12AFB2C814BD8F3F00E44259</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -543,7 +562,7 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>120708C3141CD73D00523CB1</string>
-		<string>/Users/chparsons/dev/github/Camara-Lucida/of-addon/examples/example_ofxKinect/example_ofxKinect.xcodeproj</string>
+		<string>/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxKinect/example_ofxKinect.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>4 55 1436 823 0 0 1440 878 </string>
@@ -623,7 +642,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>120708C3141CD73D00523CB1</string>
-				<string>1267F35514B5D90D004870CD</string>
+				<string>12AFB2C914BD8F3F00E44259</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

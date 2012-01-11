@@ -50,12 +50,13 @@ namespace cml
 		bool is_render_enabled();
 		//
 		
-		virtual void debug_hue_texture(int x, int y, int width, int height) = 0;
 		virtual ofVec3f coord_sys() = 0;
+		virtual void debug_hue_texture(int x, int y, int width, int height) = 0;
 		
-		string get_keyboard_help();
 		virtual void keyPressed(ofKeyEventArgs &args);
 		virtual void keyReleased(ofKeyEventArgs &args);
+		
+		string get_keyboard_help();
 		
 	protected:
 		

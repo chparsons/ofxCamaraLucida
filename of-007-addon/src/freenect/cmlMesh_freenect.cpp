@@ -27,11 +27,9 @@ namespace cml
 		this->raw_depth_pix = raw_depth_pix;
 		
 		_coord_sys = ofVec3f(-1., -1., 1.);
-	};
+	}
 	
-	Mesh_freenect::Mesh_freenect()
-	{
-	};
+	Mesh_freenect::Mesh_freenect(){}
 	
 	Mesh_freenect::~Mesh_freenect()
 	{
@@ -42,7 +40,7 @@ namespace cml
 		hue_tex.clear();
 		
 		dispose_pts();
-	};
+	}
 	
 	ofVec3f Mesh_freenect::coord_sys()
 	{
@@ -273,7 +271,7 @@ namespace cml
 	
 	string Mesh_freenect::get_keyboard_help()
 	{
-		return super::get_keyboard_help() + " \n mesh freenect keys for debug mode: \n "+string(1, key_depth_xoff_inc)+" increment depth_xoff \n "+string(1, key_depth_xoff_dec)+" decrement depth_xoff";
+		return Mesh::get_keyboard_help() + " \n mesh freenect keys for debug mode: \n "+string(1, key_depth_xoff_inc)+" increment depth_xoff \n "+string(1, key_depth_xoff_dec)+" decrement depth_xoff";
 	}
 	
 	void Mesh_freenect::print()
@@ -296,7 +294,7 @@ namespace cml
 	
 	void Mesh_freenect::keyPressed(ofKeyEventArgs &args)
 	{		
-		super::keyPressed(args);
+		Mesh::keyPressed(args);
 		
 		if (args.key == key_depth_xoff_inc)
 		{

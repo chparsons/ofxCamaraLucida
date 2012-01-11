@@ -50,11 +50,12 @@ namespace cml
 		void set_hue_lut(float depth_near = 0.8, float depth_far = 5.0,
 						 float hue_near = 0.95, float hue_far = 0.15,
 						 bool clamp = false);
+		
 		void debug_hue_texture(int x, int y, int width, int height);
+		void keyPressed(ofKeyEventArgs &args);
 		
 		void print();
 		string get_keyboard_help();
-		void keyPressed(ofKeyEventArgs &args);
 		
 	protected:
 		
@@ -78,8 +79,6 @@ namespace cml
 		int key_depth_xoff_dec;
 		
 	private:
-		
-		typedef Mesh super;
 		
 		ofVec3f *pts3d;
 		

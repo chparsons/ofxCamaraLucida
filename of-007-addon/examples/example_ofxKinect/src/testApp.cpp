@@ -95,6 +95,7 @@ void testApp::render_hud(ofEventArgs &args)
 		
 		glColor3f(1, 1, 1);
 	}				
+	
 	if (debug_depth_texture)
 	{
 		//kinect.getDepthTextureReference().draw(0, 0, 200, 150);
