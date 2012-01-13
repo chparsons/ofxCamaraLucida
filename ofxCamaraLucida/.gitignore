@@ -1,0 +1,5 @@
+*/build/
+*/bin/*.app
+example_ofxKinect_glsl/
+example_ofxKinect_wire/
+todo.txt

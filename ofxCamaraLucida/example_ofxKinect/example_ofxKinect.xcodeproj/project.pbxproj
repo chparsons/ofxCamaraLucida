@@ -1088,13 +1088,13 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		12070CB8141CF74900523CB1 /* camara_lucida */ = {
+		12070CB8141CF74900523CB1 /* ofxCamaraLucida */ = {
 			isa = PBXGroup;
 			children = (
 				12070CB9141CF74900523CB1 /* src */,
 			);
-			name = camara_lucida;
-			path = ../../../addons/camara_lucida;
+			name = ofxCamaraLucida;
+			path = ../../../addons/ofxCamaraLucida;
 			sourceTree = SOURCE_ROOT;
 		};
 		12070CB9141CF74900523CB1 /* src */ = {
@@ -1446,7 +1446,7 @@
 			isa = PBXGroup;
 			children = (
 				12070CCC141CF77900523CB1 /* ofxKinect */,
-				12070CB8141CF74900523CB1 /* camara_lucida */,
+				12070CB8141CF74900523CB1 /* ofxCamaraLucida */,
 				12070CAA141CF73600523CB1 /* ofxXmlSettings */,
 				12070B5A141CF72500523CB1 /* ofxOpenCv */,
 				12070B57141CF70F00523CB1 /* ofxThread */,
