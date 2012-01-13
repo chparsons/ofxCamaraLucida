@@ -29,7 +29,6 @@ namespace cml
 	
 	Mesh_openni::~Mesh_openni()
 	{
-		dispose_pts();
 		depth_generator = NULL;
 	}
 	 
@@ -41,12 +40,19 @@ namespace cml
 	void Mesh_openni::init_pts()
 	{
 		pts3d = new ofVec3f[vbo_length];
+		normals = new ofVec3f[vbo_length];
+		
+		memset( pts3d, 0, vbo_length*sizeof(ofVec3f) );	
+		memset( normals, 0, vbo_length*sizeof(ofVec3f) );
 	}
 
 	void Mesh_openni::dispose_pts()
 	{
 		delete[] pts3d;
 		pts3d = NULL;
+		
+		delete[] normals;
+		normals = NULL;
 	}
 
 	void Mesh_openni::update_pts()
@@ -83,15 +89,29 @@ namespace cml
 		}
 	}
 
+	//// dynamic buffers mesh impl
+	
 	float* Mesh_openni::pts0x()
 	{
 		return &pts3d[0].x;
 	}
-
+	
 	int Mesh_openni::sizeof_pts()
 	{
 		return sizeof(ofVec3f);
 	}
+	
+	float* Mesh_openni::normals0x()
+	{
+		return &((ofVec3f*)normals)[0].x;
+	}
+	
+	int Mesh_openni::sizeof_normals()
+	{
+		return sizeof(ofVec3f);
+	}
+	
+	////
 	
 	void Mesh_openni::debug_hue_texture(int x, int y, int width, int height)
 	{

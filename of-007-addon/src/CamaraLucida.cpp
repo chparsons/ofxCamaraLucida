@@ -82,6 +82,7 @@ namespace cml
 		
 		dispose_events();
 		
+		mesh->dispose_pts();
 		mesh = NULL;
 		
 		cvReleaseMat(&rgb_int);	
@@ -299,7 +300,7 @@ namespace cml
 
 	void CamaraLucida::render_proj_ppal_point()
 	{
-		glPointSize(5);
+		glPointSize(3);
 		glColor3f(1, 1, 0); //yellow
 		
 		float ts = 0.5;

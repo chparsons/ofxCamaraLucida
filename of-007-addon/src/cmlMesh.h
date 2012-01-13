@@ -41,6 +41,15 @@ namespace cml
 		void update();
 		void render();
 		
+		virtual void dispose_pts() = 0;
+		virtual ofVec3f coord_sys() = 0;
+		virtual void debug_hue_texture(int x, int y, int width, int height) = 0;
+		
+		virtual void keyPressed(ofKeyEventArgs &args);
+		virtual void keyReleased(ofKeyEventArgs &args);
+		
+		string get_keyboard_help();
+		
 		// TODO remove this render flag hack
 		// it's here because wireframe render 
 		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
@@ -50,27 +59,25 @@ namespace cml
 		bool is_render_enabled();
 		//
 		
-		virtual ofVec3f coord_sys() = 0;
-		virtual void debug_hue_texture(int x, int y, int width, int height) = 0;
-		
-		virtual void keyPressed(ofKeyEventArgs &args);
-		virtual void keyReleased(ofKeyEventArgs &args);
-		
-		string get_keyboard_help();
-		
 	protected:
 		
-		// Abstract...
-		// remember to call dispose_pts in derived classes destructors!
+		//// Abstract stuff...
 		
+		virtual void init_end();
 		virtual void init_pts() = 0;
-		virtual void dispose_pts() = 0;
 		virtual void update_pts() = 0;
+		
+		// dynamic buffers
 		
 		virtual float* pts0x() = 0;
 		virtual int sizeof_pts() = 0;
 		
-		///
+		virtual float* normals0x() = 0;
+		virtual int sizeof_normals() = 0;
+		
+		////
+		
+		ofVbo vbo;
 		
 		ofxXmlSettings *xml_config;
 		cml::Calibration *calib;
@@ -91,7 +98,6 @@ namespace cml
 
 	private:
 		
-		ofVbo vbo;
 		uint* ibo;
 		ofFloatColor* vbo_color;
 		ofVec2f* vbo_texcoords;

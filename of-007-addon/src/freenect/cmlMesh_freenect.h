@@ -28,10 +28,11 @@ namespace cml
 	public:
 		
 		Mesh_freenect(uint16_t *raw_depth_pix);
-		Mesh_freenect();
 		~Mesh_freenect();
 		
 		ofVec3f coord_sys();
+		
+		// TODO move all these methods to a freenect utils class
 		
 		float z_mts(uint16_t raw_depth);
 		float z_mts(int x, int y, bool tex_coords = false);
@@ -59,16 +60,24 @@ namespace cml
 		
 	protected:
 		
-		// Mesh implementation...
+		void *pts3d;
+		void *normals;
+		
+		void init_data();
+		
+		//// Mesh impl
 		
 		void init_pts();
-		void dispose_pts();
 		void update_pts();
+		void dispose_pts();
 		
 		float* pts0x();
 		int sizeof_pts();
 		
-		//
+		float* normals0x();
+		int sizeof_normals();
+		
+		////
 		
 		uint16_t *raw_depth_pix;
 		int depth_xoff;
@@ -79,10 +88,6 @@ namespace cml
 		int key_depth_xoff_dec;
 		
 	private:
-		
-		ofVec3f *pts3d;
-		
-		//
 		
 		static const float k1 = 0.1236;
 		static const float k2 = 2842.5;
@@ -97,8 +102,5 @@ namespace cml
 		ofFloatColor *hue_lut;
 		ofTexture hue_tex;
 		uint8_t *hue_px;
-		
-		void init_data();
-		
 	};
 };

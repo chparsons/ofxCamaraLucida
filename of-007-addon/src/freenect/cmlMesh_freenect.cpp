@@ -25,21 +25,16 @@ namespace cml
 	: Mesh()
 	{
 		this->raw_depth_pix = raw_depth_pix;
-		
 		_coord_sys = ofVec3f(-1., -1., 1.);
 	}
-	
-	Mesh_freenect::Mesh_freenect(){}
 	
 	Mesh_freenect::~Mesh_freenect()
 	{
 		delete[] _zlut;
-		
 		delete[] hue_px;
 		delete[] hue_lut;
 		hue_tex.clear();
-		
-		dispose_pts();
+		raw_depth_pix = NULL;
 	}
 	
 	ofVec3f Mesh_freenect::coord_sys()
@@ -52,17 +47,19 @@ namespace cml
 		init_data();
 		
 		pts3d = new ofVec3f[vbo_length];
-		for (int i = 0; i < vbo_length; i++) 
-		{
-			pts3d[i] = ofVec3f(0, 0, 0);
-		}
+		normals = new ofVec3f[vbo_length];
+		
+		memset( pts3d, 0, vbo_length*sizeof(ofVec3f) );	
+		memset( normals, 0, vbo_length*sizeof(ofVec3f) );
 	}
 
 	void Mesh_freenect::dispose_pts()
 	{
-		delete[] pts3d;
+		delete[] (ofVec3f*)pts3d;
 		pts3d = NULL;
-		raw_depth_pix = NULL;
+		
+		delete[] (ofVec3f*)normals;
+		normals = NULL;
 	}
 
 	void Mesh_freenect::update_pts()
@@ -77,15 +74,19 @@ namespace cml
 			float x = (x2d + depth_xoff - calib->cx_d) * z / calib->fx_d;
 			float y = (y2d - calib->cy_d) * z / calib->fy_d;
 			
-			pts3d[i].x = x;
-			pts3d[i].y = y;
-			pts3d[i].z = z;
+			((ofVec3f*)pts3d)[i].x = x;
+			((ofVec3f*)pts3d)[i].y = y;
+			((ofVec3f*)pts3d)[i].z = z;
+			
+			// calc normals? mmm...
 		}
 	}
-
+	
+	//// dynamic buffers mesh impl
+	
 	float* Mesh_freenect::pts0x()
 	{
-		return &pts3d[0].x;
+		return &((ofVec3f*)pts3d)[0].x;
 	}
 
 	int Mesh_freenect::sizeof_pts()
@@ -93,7 +94,17 @@ namespace cml
 		return sizeof(ofVec3f);
 	}
 	
-	//
+	float* Mesh_freenect::normals0x()
+	{
+		return &((ofVec3f*)normals)[0].x;
+	}
+	
+	int Mesh_freenect::sizeof_normals()
+	{
+		return sizeof(ofVec3f);
+	}
+	
+	////
 	
 	void Mesh_freenect::init_data()
 	{
@@ -101,7 +112,7 @@ namespace cml
 		_base_depth_raw = 1024.; //5mts~
 		_base_depth_mts = k1 * tanf(( (float)_base_depth_raw / k2) + k3) - k4;
 		
-		depth_xoff = xml_config->getValue("depth_xoff", 7); 
+		depth_xoff = xml_config->getValue("depth_xoff", -8); 
 		
 		xml_config->pushTag("debug_keys");
 			xml_config->pushTag("depth_xoff");

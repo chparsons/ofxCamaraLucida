@@ -30,41 +30,62 @@ namespace cml
 	
 	Mesh_freenect_opencl::~Mesh_freenect_opencl()
 	{
-		dispose_pts();
+		opencl = NULL;
 	};
 	
 	void Mesh_freenect_opencl::init_pts()
 	{
-		Mesh_freenect::init_pts();
+		init_data();
 		
-		pts3d_cl = new float4[vbo_length];
-		for (int i = 0; i < vbo_length; i++) 
-		{
-			pts3d_cl[i] = float4(0, 0, 0);
-		}
-		
+		pts3d = new float4[vbo_length];
+		pts3d_const = new float4[vbo_length];
+		normals = new float4[vbo_length];
+
+		memset( pts3d, 0, vbo_length*sizeof(float4) );	
+		memcpy( pts3d_const, pts3d, vbo_length*sizeof(float4) );
+		memset( normals, 0, vbo_length*sizeof(float4) );
+	}
+	
+	void Mesh_freenect_opencl::init_end()
+	{
 		init_cl();
 	}
 
 	void Mesh_freenect_opencl::dispose_pts()
 	{
-		delete[] pts3d_cl;
-		pts3d_cl = NULL;
+		delete[] (float4*)pts3d;
+		pts3d = NULL;
 		
-		opencl = NULL;
+		delete[] pts3d_const;
+		pts3d_const = NULL;
+		
+		delete[] (float4*)normals;
+		normals = NULL;
 	}
 
 	void Mesh_freenect_opencl::update_pts()
 	{
 		update_cl();
 	}
+	
+	//// dynamic buffers mesh impl
 
 	float* Mesh_freenect_opencl::pts0x()
 	{
-		return &pts3d_cl[0].x;
+		return &((float4*)pts3d)[0].x;
 	}
 
 	int Mesh_freenect_opencl::sizeof_pts()
+	{
+		return sizeof(float4);
+	}
+	
+	float* Mesh_freenect_opencl::normals0x()
+	{
+		return &((float4*)normals)[0].x;
+	}
+	
+	int Mesh_freenect_opencl::sizeof_normals()
 	{
 		return sizeof(float4);
 	}
@@ -82,31 +103,35 @@ namespace cml
 		
 		ofLog(OF_LOG_VERBOSE, "Camara Lucida Open CL init buffers... raw_depth_pix "+ofToString(raw_depth_pix));
 		
-		//	TODO why this doesn't work?
-		//	cl_buff_pts3d.initFromGLObject(vbo.getVertId());
-		
-		cl_buff_pts3d.initBuffer(sizeof(float4) * vbo_length, CL_MEM_READ_WRITE, pts3d_cl);
+		cl_buff_pts3d.initFromGLObject( vbo.getVertId() );
+		cl_buff_pts3d_const.initBuffer(sizeof(float4) * vbo_length, CL_MEM_READ_ONLY, pts3d_const);
+		cl_buff_normals.initBuffer(sizeof(float4) * vbo_length, CL_MEM_READ_WRITE, normals);
 		cl_buff_raw_depth.initBuffer(sizeof(uint16_t) * calib->depth_width * calib->depth_height, CL_MEM_READ_ONLY, raw_depth_pix);
 		
 		ofLog(OF_LOG_VERBOSE, "Camara Lucida Open CL set args");
 		
+		float4 depth_intrinsics(calib->cx_d, calib->cy_d,
+								calib->fx_d, calib->fy_d);
+		
 		kernel_vertex_update->setArg(0, cl_buff_pts3d.getCLMem());
-		kernel_vertex_update->setArg(1, cl_buff_raw_depth.getCLMem());
-		kernel_vertex_update->setArg(2, mesh_step);
-		kernel_vertex_update->setArg(3, calib->cx_d);
-		kernel_vertex_update->setArg(4, calib->cy_d);
-		kernel_vertex_update->setArg(5, calib->fx_d);
-		kernel_vertex_update->setArg(6, calib->fy_d);
-		kernel_vertex_update->setArg(7, depth_xoff);
+		kernel_vertex_update->setArg(1, cl_buff_normals.getCLMem());
+		kernel_vertex_update->setArg(2, cl_buff_raw_depth.getCLMem());
+		kernel_vertex_update->setArg(3, cl_buff_pts3d_const.getCLMem());
+		kernel_vertex_update->setArg(4, mesh_step);
+		kernel_vertex_update->setArg(5, depth_xoff);
+		kernel_vertex_update->setArg(6, depth_intrinsics);
 	}
 
 	void Mesh_freenect_opencl::update_cl()
 	{
-		cl_buff_raw_depth.write(raw_depth_pix, 0, sizeof(uint16_t) * calib->depth_width * calib->depth_height);
+		cl_buff_raw_depth.write(raw_depth_pix, 0, sizeof(uint16_t)*calib->depth_width*calib->depth_height);
 		
 		kernel_vertex_update->run1D(vbo_length);
 		
-		cl_buff_pts3d.read(pts3d_cl, 0, sizeof(float4) * vbo_length);
+		// TODO normals not working !!!!!
+		//cl_buff_normals.read(normals, 0, sizeof(float4)*vbo_length);
+		
+		memcpy( pts3d_const, pts3d, vbo_length*sizeof(float4) );
 	}
 	
 	
@@ -120,7 +145,7 @@ namespace cml
 		if (args.key == key_depth_xoff_inc || 
 			args.key == key_depth_xoff_dec)
 		{
-			kernel_vertex_update->setArg(7, depth_xoff);
+			kernel_vertex_update->setArg(5, depth_xoff);
 		}
 	}
 	

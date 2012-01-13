@@ -102,19 +102,27 @@ namespace cml
 		
 		if (is_render_enabled())
 		{
-			//replace by ofMesh.add %Vertices %Indices %Colors %TexCoords
-			vbo.setVertexData(pts0x(), 3, vbo_length, GL_DYNAMIC_DRAW, sizeof_pts());
+			//replace by ofMesh.add %Vertices %Normals %Indices %Colors %TexCoords
+			vbo.setVertexData( pts0x(), 3, vbo_length, GL_DYNAMIC_DRAW, sizeof_pts() );
+			vbo.setNormalData( normals0x(), vbo_length, GL_DYNAMIC_DRAW, sizeof_normals() );
 			vbo.setIndexData(ibo, ibo_length, GL_STATIC_DRAW);
 			vbo.setColorData(vbo_color, vbo_length, GL_STATIC_DRAW);
 			vbo.setTexCoordData(vbo_texcoords, vbo_length, GL_STATIC_DRAW);
 		}
+		
+		init_end();
+	}
+	
+	void Mesh::init_end()
+	{
+		/// override me
 	}
 
 	void Mesh::update()
 	{
 		update_pts();
-		
 		vbo.updateVertexData(pts0x(), vbo_length);
+		vbo.updateNormalData(normals0x(), vbo_length);
 	}
 
 	void Mesh::render()

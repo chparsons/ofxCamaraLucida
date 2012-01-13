@@ -49,11 +49,18 @@ namespace cml
 		float* pts0x();
 		int sizeof_pts();
 		
+		float* normals0x();
+		int sizeof_normals();
+		
 		//
 		
 	private:
 		
+		// TODO and what of we want the normals 
+		// to be calculated with opencl here ?????
+		
 		ofVec3f* pts3d;
+		ofVec3f* normals;
 		
 		xn::DepthGenerator *depth_generator;
 		

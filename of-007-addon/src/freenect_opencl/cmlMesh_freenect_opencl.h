@@ -29,29 +29,31 @@ namespace cml
 	public:
 		
 		Mesh_freenect_opencl(uint16_t *raw_depth_pix,
-							  MSA::OpenCL *opencl = NULL);
+							 MSA::OpenCL *opencl = NULL);
 		~Mesh_freenect_opencl();
 		
 		void keyPressed(ofKeyEventArgs &args);
 		
 	protected:
 		
-		// Mesh implementation...
+		//// Mesh impl
 		
+		void init_end();
 		void init_pts();
-		void dispose_pts();
 		void update_pts();
+		void dispose_pts();
 		
 		float* pts0x();
 		int sizeof_pts();
 		
-		//
+		float* normals0x();
+		int sizeof_normals();
+		
+		////
 		
 	private:
 		
-		float4* pts3d_cl;
-		
-		// open cl
+		float4* pts3d_const;
 		
 		void init_cl();
 		void update_cl();
@@ -59,6 +61,8 @@ namespace cml
 		MSA::OpenCL			*opencl;
 		MSA::OpenCLKernel	*kernel_vertex_update;
 		MSA::OpenCLBuffer	cl_buff_pts3d;
+		MSA::OpenCLBuffer	cl_buff_pts3d_const;
+		MSA::OpenCLBuffer	cl_buff_normals;
 		MSA::OpenCLBuffer	cl_buff_raw_depth;
 	};
 };
