@@ -251,8 +251,6 @@
 		1227BB94149A08E100CF7664 /* XnVNite.net_1_3_1.dll */ = {isa = PBXFileReference; lastKnownFileType = file; name = XnVNite.net_1_3_1.dll; path = "/Users/chparsons/dev/openframeworks/of-007-0-gd6183cd/apps/camara_lucida_examples/example_ofxOpenNI/bin/data/openni/lib/XnVNite.net_1_3_1.dll"; sourceTree = "<absolute>"; };
 		12AFB32A14BD9AF500E44259 /* keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
 		12AFB41814BDB93900E44259 /* openni_projector_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = openni_projector_calibration.yml; sourceTree = "<group>"; };
-		12AFB44714BDC5E300E44259 /* openni_calibration_+RT.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openni_calibration_+RT.yml"; sourceTree = "<group>"; };
-		12AFB44914BDC61500E44259 /* openni_projector_calibration_+RT.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openni_projector_calibration_+RT.yml"; sourceTree = "<group>"; };
 		12F5EAB8141BEECF00F81FD0 /* libusb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libusb.h; sourceTree = "<group>"; };
 		12F5EABA141BEECF00F81FD0 /* XnCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XnCommon.h; sourceTree = "<group>"; };
 		12F5EABB141BEECF00F81FD0 /* XnV3DVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XnV3DVector.h; sourceTree = "<group>"; };
@@ -845,8 +843,6 @@
 		1227BB76149A08E100CF7664 /* camara_lucida */ = {
 			isa = PBXGroup;
 			children = (
-				12AFB44914BDC61500E44259 /* openni_projector_calibration_+RT.yml */,
-				12AFB44714BDC5E300E44259 /* openni_calibration_+RT.yml */,
 				12AFB41814BDB93900E44259 /* openni_projector_calibration.yml */,
 				1227BB77149A08E100CF7664 /* camara_lucida_config.xml */,
 				1227BB79149A08E100CF7664 /* openni_calibration.yml */,

@@ -16,7 +16,12 @@ float raw_depth_to_meters(ushort raw_depth)
 	return BASE_DEPTH_MTS;
 }
 
-__kernel void update_vertex(__global float4* vbo_buff, __global const ushort* raw_depth_buff, const int mesh_step, const float cx_d, const float cy_d, const float fx_d, const float fy_d, const int depth_xoff)
+__kernel void update_vertex(__global float4* vbo_buff, 
+							__global float4* normals_buff, 
+							__global const ushort* raw_depth_buff, 
+							__global const float4* vbo_buff_const, 
+							const int mesh_step, const int depth_xoff,
+							const float4 depth_intrinsics)
 {
 	int vbo_idx = get_global_id(0);
 
@@ -32,9 +37,20 @@ __kernel void update_vertex(__global float4* vbo_buff, __global const ushort* ra
 	
 	int depth_idx = row * KINECT_W + col;
 	
-	// set VBO pts
+	// set normals
+	
+	normals_buff[vbo_idx].x = 0.;
+	normals_buff[vbo_idx].y = 0.;
+	normals_buff[vbo_idx].z = 1.;
+	normals_buff[vbo_idx].w = 0.;
+	
+	// set vbo pts
 	
 	ushort raw_depth = raw_depth_buff[depth_idx];
+	int cx_d = depth_intrinsics.x;
+	int cy_d = depth_intrinsics.y;
+	int fx_d = depth_intrinsics.z;
+	int fy_d = depth_intrinsics.w;
 
 	float z = raw_depth_to_meters(raw_depth);
 	float x = (col + depth_xoff - cx_d) * z / fx_d;

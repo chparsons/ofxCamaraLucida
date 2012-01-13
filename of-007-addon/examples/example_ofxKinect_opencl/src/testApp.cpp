@@ -56,6 +56,8 @@ void testApp::update()
 	
 	if (kinect.isFrameNew())
 		camluc.update();
+	
+	opencl.finish();
 }
 
 void testApp::draw()
