@@ -1,5 +1,6 @@
 */build/
 */bin/*.app
+*.swp
 example_ofxKinect_glsl/
 example_ofxKinect_wire/
 todo.txt
