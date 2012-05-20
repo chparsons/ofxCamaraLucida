@@ -1,0 +1,23 @@
+<camaralucida>
+	
+	<depth_xoff>-8</depth_xoff>
+	<mesh_step>1</mesh_step>
+	<near>0.1</near>
+	<far>20.0</far>
+	
+	<debug_keys>
+		<scene_ctrl>
+			<zoom>z</zoom>
+			<reset>x</reset>
+		</scene_ctrl>
+		<viewpoint>
+			<prev>c</prev>
+			<next>v</next>
+		</viewpoint>
+		<depth_xoff>
+			<inc>b</inc>
+			<dec>n</dec>
+		</depth_xoff>
+	</debug_keys>
+
+</camaralucida>

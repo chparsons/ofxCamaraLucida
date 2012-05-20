@@ -1,0 +1,247 @@
+  119540	[INFO]	XnLog.cpp	161	OpenNI version is 1.1.0 (Build 41)-MacOSX (Jul  9 2011 14:48:28)
+  119808	[INFO]	XnLog.cpp	169	Log system initialized. Console: 1, File: 1, Severity: VERBOSE, Masks: ALL
+  119894	[INFO]	XnLog.cpp	169	Log system initialized. Console: 1, File: 1, Severity: VERBOSE, Masks: ALL
+  120316	[VERBOSE]	XnModuleLoader.cpp	288	Checking ./../../../data/openni/lib/libnimMockNodes.dylib...
+  120594	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. ProductionNode: OpenNI/Mock/1.1.0.41
+  120676	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Generator: OpenNI/Mock/1.1.0.41
+  120725	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. MapGenerator: OpenNI/Mock/1.1.0.41
+  120769	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Device: OpenNI/Mock/1.1.0.41
+  120833	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Depth: OpenNI/Mock/1.1.0.41
+  120881	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. IR: OpenNI/Mock/1.1.0.41
+  120924	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Image: OpenNI/Mock/1.1.0.41
+  120981	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Audio: OpenNI/Mock/1.1.0.41
+  121041	[VERBOSE]	XnModuleLoader.cpp	288	Checking ./../../../data/openni/lib/libnimCodecs.dylib...
+  121242	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Codec: OpenNI/16zP/1.1.0.41
+  121318	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Codec: OpenNI/16zT/1.1.0.41
+  121383	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Codec: OpenNI/Im8z/1.1.0.41
+  121431	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Codec: OpenNI/JPEG/1.1.0.41
+  121470	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Codec: OpenNI/NONE/1.1.0.41
+  121509	[VERBOSE]	XnModuleLoader.cpp	288	Checking ./../../../data/openni/lib/libnimRecorder.dylib...
+  121713	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Recorder: OpenNI/Recorder/1.1.0.41
+  121780	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Player: OpenNI/Player/1.1.0.41
+  121837	[VERBOSE]	XnModuleLoader.cpp	288	Checking ./../../../data/openni/lib/libXnDeviceSensorV2KM.dylib...
+  122046	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Device: PrimeSense/SensorKinect/5.0.1.32
+  122110	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Depth: PrimeSense/SensorKinect/5.0.1.32
+  122191	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Image: PrimeSense/SensorKinect/5.0.1.32
+  122241	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. IR: PrimeSense/SensorKinect/5.0.1.32
+  122275	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Audio: PrimeSense/SensorKinect/5.0.1.32
+  122309	[VERBOSE]	XnModuleLoader.cpp	288	Checking ./../../../data/openni/lib/libXnVFeatures_1_3_1.dylib...
+  122464	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Scene: PrimeSense/XnVSceneAnalyzer/1.3.1.4
+  122510	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. User: PrimeSense/XnVSkeletonGenerator/1.3.1.4
+  122566	[VERBOSE]	XnModuleLoader.cpp	288	Checking ./../../../data/openni/lib/libXnVHandGenerator_1_3_1.dylib...
+  122738	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Gesture: PrimeSense/XnVGestureGenrator/1.3.1.4
+  122803	[VERBOSE]	XnModuleLoader.cpp	446	Found exported production node. Hands: PrimeSense/XnVHandTracker/1.3.1.4
+  123202	[VERBOSE]	XnXmlConfig.cpp	736	Requested to create a node of type Depth...
+  123322	[VERBOSE]	XnUSBLinux-x86.cpp	83	Initializing USB...
+  124033	[INFO]	XnUSBLinux-x86.cpp	94	USB is initialized.
+ 1432341	[INFO]	XnOpenNI.cpp	1258	Creating node 'Device1' of type Device: PrimeSense/SensorKinect/5.0.1.32...
+ 1432904	[VERBOSE]	XnSensor.cpp	837	Global configuration file './../../../data/openni/config//GlobalDefaultsKinect.ini' was not found.
+ 1432957	[VERBOSE]	XnSensor.cpp	157	Initializing device sensor...
+ 1433101	[VERBOSE]	XnDeviceModule.cpp	417	Configuring module 'Device' from section 'Device' in file './../../../data/openni/config//GlobalDefaultsKinect.ini'...
+ 1433254	[INFO]	XnDeviceModule.cpp	431	Module 'Device' configuration was loaded from file.
+ 1433325	[VERBOSE]	XnDeviceSensorIO.cpp	76	Connecting to USB device...
+ 1433345	[VERBOSE]	XnDeviceSensorIO.cpp	94	Trying to open sensor '045e/02ae@250/10'...
+ 2095295	[VERBOSE]	XnDeviceSensorIO.cpp	107	Trying to open endpoint 0x4 for control out (for old firmwares)...
+ 2095353	[INFO]	XnDeviceSensorIO.cpp	128	Connected to USB device
+ 2095377	[INFO]	XnProperty.cpp	151	Property Device.USBPath was changed to 045e/02ae@250/10.
+ 2103639	[VERBOSE]	XnHostProtocol.cpp	706	Getting hardware versions...
+ 2104914	[INFO]	XnHostProtocol.cpp	859	Hardware versions: FW=5.1.4 (7) HW=4 Chip=2 Sensor=4 SYS=7
+ 2117404	[VERBOSE]	XnHostProtocol.cpp	869	Requesting KeepAlive...
+ 2130085	[VERBOSE]	XnHostProtocol.cpp	880	Got KeepAlive Reply.
+ 2130136	[VERBOSE]	XnHostProtocol.cpp	1156	Setting mode to 3...
+ 2942500	[VERBOSE]	XnHostProtocol.cpp	869	Requesting KeepAlive...
+ 2955366	[VERBOSE]	XnHostProtocol.cpp	880	Got KeepAlive Reply.
+ 2968053	[VERBOSE]	XnProperty.cpp	151	Property Firmware.ReferenceResolution was changed to 2.
+ 2968099	[VERBOSE]	XnSensorFirmwareParams.cpp	282	Reading all params from firmware...
+ 3018289	[VERBOSE]	XnProperty.cpp	151	Property Firmware.DepthMirror (23) was changed to 1.
+ 3043328	[VERBOSE]	XnProperty.cpp	151	Property Firmware.DepthHoleFilter (22) was changed to 1.
+ 3043383	[VERBOSE]	XnProperty.cpp	151	Property Firmware.ImageSharpness (76) was changed to 50.
+ 3068096	[VERBOSE]	XnProperty.cpp	151	Property Firmware.DepthGain (21) was changed to 30.
+ 3080443	[VERBOSE]	XnProperty.cpp	151	Property Firmware.GMCMode (36) was changed to 1.
+ 3105540	[VERBOSE]	XnProperty.cpp	151	Property Firmware.DepthFPS (20) was changed to 30.
+ 3118018	[VERBOSE]	XnProperty.cpp	151	Property Firmware.DepthWhiteBalance (45) was changed to 1.
+ 3130578	[VERBOSE]	XnProperty.cpp	151	Property Firmware.DepthResolution (19) was changed to 1.
+ 3142919	[VERBOSE]	XnProperty.cpp	151	Property Firmware.DepthFormat (18) was changed to 3.
+ 3293360	[VERBOSE]	XnProperty.cpp	151	Property Firmware.ImageFlicker (17) was changed to 1.
+ 3342789	[VERBOSE]	XnProperty.cpp	151	Property Firmware.ImageFPS (14) was changed to 30.
+ 3367807	[VERBOSE]	XnProperty.cpp	151	Property Firmware.ImageResolution (13) was changed to 1.
+ 3503656	[VERBOSE]	XnSensorFirmwareParams.cpp	291	Firmware params were updated.
+ 3503753	[VERBOSE]	XnHostProtocol.cpp	989	Getting the fixed params...
+ 3516819	[VERBOSE]	XnSensorFixedParams.cpp	54	Sensor serial number: 0
+ 3516889	[INFO]	XnProperty.cpp	151	Property Device.PhysicalDeviceName was changed to PrimeSense Sensor.
+ 3516916	[INFO]	XnProperty.cpp	151	Property Device.ID was changed to 0.
+ 3516956	[INFO]	XnSensor.cpp	185	Device sensor initialized
+ 3517080	[INFO]	XnOpenNI.cpp	1258	Creating node 'Depth1' of type Depth: PrimeSense/SensorKinect/5.0.1.32...
+ 3517130	[INFO]	XnDeviceBase.cpp	1383	Creating stream 'Depth1' of type 'Depth'...
+ 3517160	[INFO]	XnProperty.cpp	74	Setting Device.ReadData to 1...
+ 3517178	[VERBOSE]	XnDeviceSensorIO.cpp	160	Opening endpoints...
+ 3517194	[VERBOSE]	XnDeviceSensorIO.cpp	170	Opening endpoint 0x81 for depth...
+ 3517219	[VERBOSE]	XnDeviceSensorIO.cpp	194	Depth endpoint is isochronous.
+ 3517239	[VERBOSE]	XnDeviceSensorIO.cpp	220	Opening endpoint 0x82 for image...
+ 3517262	[VERBOSE]	XnDeviceSensorIO.cpp	233	Image endpoint is isochronous.
+ 3517279	[VERBOSE]	XnDeviceSensorIO.cpp	250	Opening endpoint 0x83 for misc...
+ 3517297	[VERBOSE]	XnDeviceSensorIO.cpp	264	Misc endpoint is not supported...
+ 3517313	[INFO]	XnDeviceSensorIO.cpp	291	Endpoints open
+ 3517329	[VERBOSE]	XnHostProtocol.cpp	1203	Getting algorithm params 0x80 for resolution 0 and fps 0....
+ 3530004	[INFO]	XnProperty.cpp	151	Property Device.ReadData was changed to 1.
+ 3530051	[INFO]	XnProperty.cpp	101	Device.ReadData was successfully set.
+ 3530253	[VERBOSE]	XnDeviceBase.cpp	1419	Initializing stream 'Depth1'...
+ 3530487	[INFO]	XnProperty.cpp	151	Property Depth1.FPS was changed to 30.
+ 3530544	[INFO]	XnProperty.cpp	151	Property Depth1.OutputFormat was changed to 1.
+ 3530557	[INFO]	XnProperty.cpp	151	Property Depth1.BytesPerPixel was changed to 2.
+ 3530569	[INFO]	XnProperty.cpp	151	Property Depth1.RequiredDataSize was changed to 614400.
+ 3530592	[INFO]	XnProperty.cpp	151	Property Depth1.ParamCoeff was changed to 4.
+ 3530653	[INFO]	XnProperty.cpp	151	Property Depth1.ShiftScale was changed to 10.
+ 3530712	[VERBOSE]	XnHostProtocol.cpp	1203	Getting algorithm params 0x0 for resolution 1 and fps 30....
+ 3543505	[INFO]	XnProperty.cpp	151	Property Depth1.ConstShift was changed to 200.
+ 3543600	[INFO]	XnProperty.cpp	151	Property Depth1.ZPD was changed to 120.
+ 3543711	[INFO]	XnProperty.cpp	151	Property Depth1.ZPPS was changed to 0.104200.
+ 3543724	[INFO]	XnProperty.cpp	151	Property Depth1.LDDIS was changed to 7.500000.
+ 3543821	[INFO]	XnProperty.cpp	151	Property Depth1.Gain was changed to 30.
+ 3543852	[INFO]	XnProperty.cpp	151	Property Depth1.SupportedModesCount was changed to 9.
+ 3543874	[INFO]	XnDeviceBase.cpp	1458	Stream 'Depth1' was initialized.
+ 3543887	[INFO]	XnDeviceBase.cpp	1463	'Depth1' stream was created.
+ 3543902	[VERBOSE]	XnDeviceModule.cpp	417	Configuring module 'Depth1' from section 'Depth' in file './../../../data/openni/config//GlobalDefaultsKinect.ini'...
+ 3544049	[INFO]	XnDeviceModule.cpp	431	Module 'Depth1' configuration was loaded from file.
+ 3544229	[INFO]	XnProperty.cpp	74	Setting Depth1.Mirror to 1...
+ 3544247	[INFO]	XnProperty.cpp	151	Property Depth1.FirmwareMirror was changed to 1.
+ 3544259	[INFO]	XnProperty.cpp	151	Property Depth1.Mirror was changed to 1.
+ 3544271	[INFO]	XnProperty.cpp	101	Depth1.Mirror was successfully set.
+ 3544286	[VERBOSE]	XnDeviceBase.cpp	359	Opening stream Depth1...
+ 3544309	[VERBOSE]	XnFirmwareStreams.cpp	202	FW Stream Depth was claimed by Depth1
+ 3544325	[VERBOSE]	XnSensorDepthStream.cpp	336	Creating USB depth read thread...
+ 3544338	[VERBOSE]	XnUSBLinux-x86.cpp	104	Starting libusb asynch thread...
+ 3544404	[WARNING]	Linux-x86Threads.cpp	166	Failed to set thread priority: Invalid argument
+ 3544419	[WARNING]	XnUSBLinux-x86.cpp	122	USB events thread: Failed to set thread priority to critical. This might cause loss of data...
+ 3544442	[VERBOSE]	XnUSBLinux-x86.cpp	1128	Starting a USB read thread...
+ 3545639	[INFO]	XnUSBLinux-x86.cpp	1220	USB read thread was started.
+ 3545703	[INFO]	XnProperty.cpp	151	Property Depth1.ActualReadData was changed to 1.
+ 3545739	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.DepthFormat (18) to 3...
+ 3557967	[VERBOSE]	XnProperty.cpp	101	Firmware.DepthFormat (18) was successfully set.
+ 3558010	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.DepthResolution (19) to 1...
+ 3570166	[VERBOSE]	XnProperty.cpp	101	Firmware.DepthResolution (19) was successfully set.
+ 3570208	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.DepthFPS (20) to 30...
+ 3582249	[VERBOSE]	XnProperty.cpp	101	Firmware.DepthFPS (20) was successfully set.
+ 3582298	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.DepthHoleFilter (22) to 1...
+ 3594607	[VERBOSE]	XnProperty.cpp	101	Firmware.DepthHoleFilter (22) was successfully set.
+ 3594658	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.DepthGain (21) to 30...
+ 3606812	[VERBOSE]	XnProperty.cpp	101	Firmware.DepthGain (21) was successfully set.
+ 3606865	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.DepthDecimation (24) to 0...
+ 3619050	[VERBOSE]	XnProperty.cpp	101	Firmware.DepthDecimation (24) was successfully set.
+ 3619098	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.Registration (2) to 0...
+ 3631178	[VERBOSE]	XnProperty.cpp	101	Firmware.Registration (2) was successfully set.
+ 3631229	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.DepthMirror (23) to 1...
+ 3643312	[VERBOSE]	XnProperty.cpp	101	Firmware.DepthMirror (23) was successfully set.
+ 3643366	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.GMCMode (36) to 1...
+ 3655682	[VERBOSE]	XnProperty.cpp	101	Firmware.GMCMode (36) was successfully set.
+ 3655726	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.DepthWhiteBalance (45) to 1...
+ 3668352	[VERBOSE]	XnProperty.cpp	101	Firmware.DepthWhiteBalance (45) was successfully set.
+ 3668454	[VERBOSE]	XnHostProtocol.cpp	1203	Getting algorithm params 0x6 for resolution 1 and fps 30....
+ 3692836	[VERBOSE]	XnFirmwareStreams.cpp	284	Firmware stream 'Depth' processor was replaced.
+ 3692878	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.Stream1Mode (6) to 2...
+ 3793841	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I:  0.00, O:  0.00) ReadCalls:  0.00
+ 3793930	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D:  0.00, OutputFrames - I:  0.00, D:  0.00
+ 4005477	[VERBOSE]	XnProperty.cpp	151	Property Firmware.Stream1Mode (6) was changed to 2.
+ 4005519	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.FrameSync (1) to 0...
+ 4017931	[VERBOSE]	XnProperty.cpp	101	Firmware.FrameSync (1) was successfully set.
+ 4017977	[VERBOSE]	XnProperty.cpp	101	Firmware.Stream1Mode (6) was successfully set.
+ 4017998	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.DepthCropEnabled (55) to 0...
+ 4025830	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 34.48, O:  0.00) ReadCalls:  0.00
+ 4025877	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 34.49, OutputFrames - I:  0.00, D:  0.00
+ 4030363	[VERBOSE]	XnProperty.cpp	101	Firmware.DepthCropEnabled (55) was successfully set.
+ 4030417	[INFO]	XnProperty.cpp	151	Property Depth1.State was changed to 1.
+ 4030430	[INFO]	XnDeviceBase.cpp	370	Stream Depth1 is open.
+ 5003422	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.59, O: 28.50) ReadCalls: 29.56
+ 5025852	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.85, OutputFrames - I:  0.00, D: 27.84
+ 6003408	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.27) ReadCalls: 29.78
+ 6029794	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.41, OutputFrames - I:  0.00, D: 28.88
+ 7006499	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.19, O: 29.49) ReadCalls: 29.83
+ 7029821	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.26
+ 8006561	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.19, O: 30.19) ReadCalls: 30.52
+ 8029865	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+ 9006560	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.23, O: 30.23) ReadCalls: 30.33
+ 9033818	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+10006583	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.23, O: 30.23) ReadCalls: 30.33
+10033851	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+11001869	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.05
+11001911	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+12001890	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.05
+12001939	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+13001888	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.05
+13001955	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+14005869	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.10
+14005911	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+15005903	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.11
+15005950	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+16005941	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.14
+16005990	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+17005974	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.16
+17006023	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+18009926	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.13
+18009973	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+19009955	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.07
+19010004	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+20009991	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.07
+20010040	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+21010025	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.11
+21010074	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+22013978	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.07
+22014030	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+23014002	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.08
+23014050	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+24014046	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.07
+24014096	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+25014082	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.11
+25014130	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+26018038	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.07
+26018085	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+27018071	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.07
+27018119	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+28018110	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.32, O: 29.99) ReadCalls: 30.07
+28018159	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+29022038	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.07
+29022093	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+30022088	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.28, O: 29.95) ReadCalls: 30.07
+30022136	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+31000394	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.18, O: 30.18) ReadCalls: 30.29
+31022124	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+32000809	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.21, O: 30.21) ReadCalls: 30.34
+32022164	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+33000572	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.22, O: 30.22) ReadCalls: 30.33
+33026105	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+34004694	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.18, O: 30.18) ReadCalls: 30.28
+34026142	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+35004681	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.18, O: 30.18) ReadCalls: 30.28
+35026176	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+36004474	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.22, O: 30.22) ReadCalls: 30.33
+36026174	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+37004389	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.22, O: 30.22) ReadCalls: 30.32
+37030137	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+38008815	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.17, O: 30.18) ReadCalls: 30.28
+38030195	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+39008561	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.18, O: 30.18) ReadCalls: 30.33
+39030236	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.32, OutputFrames - I:  0.00, D: 29.99
+40009138	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.21, O: 30.21) ReadCalls: 30.34
+40034187	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+41008487	[VERBOSE]	XnOpenNI.cpp	588	[FPS] Depth1 (I: 30.22, O: 30.22) ReadCalls: 30.37
+41034199	[VERBOSE]	XnSensorFPS.cpp	86	[FPS] InputFrames - I:  0.00, D: 30.28, OutputFrames - I:  0.00, D: 29.95
+41282688	[INFO]	XnOpenNI.cpp	1458	Destroying node 'Depth1'
+41282759	[INFO]	XnDeviceBase.cpp	1507	Destroying stream 'Depth1'...
+41282800	[VERBOSE]	XnFirmwareStreams.cpp	225	Stream Depth1 released FW Stream Depth
+41283680	[VERBOSE]	XnDeviceBase.cpp	1531	'Depth1' stream destroyed.
+41283753	[INFO]	XnOpenNI.cpp	1458	Destroying node 'Device1'
+41283803	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.Stream0Mode (5) to 0...
+41297296	[VERBOSE]	XnProperty.cpp	101	Firmware.Stream0Mode (5) was successfully set.
+41297339	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.Stream1Mode (6) to 0...
+41609757	[VERBOSE]	XnProperty.cpp	151	Property Firmware.Stream1Mode (6) was changed to 0.
+41609797	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.FrameSync (1) to 0...
+41621885	[VERBOSE]	XnProperty.cpp	101	Firmware.FrameSync (1) was successfully set.
+41621936	[VERBOSE]	XnProperty.cpp	101	Firmware.Stream1Mode (6) was successfully set.
+41621954	[VERBOSE]	XnProperty.cpp	74	Setting Firmware.Stream2Mode (7) to 0...
+41635128	[VERBOSE]	XnProperty.cpp	101	Firmware.Stream2Mode (7) was successfully set.
+41635168	[VERBOSE]	XnDeviceSensorIO.cpp	301	Shutting down USB depth read thread...
+41635199	[VERBOSE]	XnDeviceSensorIO.cpp	311	Shutting down USB image read thread...
+41643644	[VERBOSE]	XnDeviceSensorIO.cpp	358	Device closed successfully
+41645354	[VERBOSE]	XnDeviceSensorIO.cpp	301	Shutting down USB depth read thread...
+41645397	[VERBOSE]	XnDeviceSensorIO.cpp	311	Shutting down USB image read thread...
+41645413	[VERBOSE]	XnDeviceSensorIO.cpp	358	Device closed successfully
