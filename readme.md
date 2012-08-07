@@ -30,7 +30,7 @@ example_ofxKinect_opencl
 
 msalibs https://github.com/memo/msalibs
 
-commit https://github.com/memo/msalibs/commit/8faff7ab35b76d341e9012350dcaafac500a0cd2 
+rev https://github.com/memo/msalibs/commit/8faff7ab35b76d341e9012350dcaafac500a0cd2 
 
 
 example_ofxOpenNI
@@ -38,6 +38,6 @@ example_ofxOpenNI
 ofxOpenNI 
 https://github.com/gameoverhack/ofxOpenNI master branch
 
-commit https://github.com/gameoverhack/ofxOpenNI/commit/72dbf239fd8c6e8adbb390ddb4ffbe77a5125965
+rev https://github.com/gameoverhack/ofxOpenNI/commit/72dbf239fd8c6e8adbb390ddb4ffbe77a5125965
 
 
