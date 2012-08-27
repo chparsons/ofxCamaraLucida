@@ -6,7 +6,7 @@ It has two modules: a [calibration module](https://github.com/chparsons/rgbdemo)
 
 [Calibration tutorial](http://www.camara-lucida.com.ar/tutorials/calibration)
 
-Credits:
+Credits:  
 [Christian Parsons](http://www.chparsons.com.ar/)  
 [Mariano Tepper](http://www.tc.umn.edu/~mhtepper/)
 
