@@ -15,13 +15,12 @@ Credits:
 
 dependencies:  
 
-openframeworks 007  
-https://github.com/openframeworks/openFrameworks/zipball/007  
+openframeworks 0073 
+https://github.com/openframeworks/openFrameworks/commit/2d760973aeeb3df6b8dbb4a089239facfa071409
 
 example_ofxKinect  
-ofxKinect  
-stable 007  
-https://github.com/ofTheo/ofxKinect/zipball/007  
+chparsons/ofxKinect  
+https://github.com/chparsons/ofxKinect
 
 example_ofxOpenNI  
 ofxOpenNI  
