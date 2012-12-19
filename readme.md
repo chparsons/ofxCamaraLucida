@@ -25,6 +25,5 @@ https://github.com/ofTheo/ofxKinect/zipball/007
 
 example_ofxOpenNI  
 ofxOpenNI  
-https://github.com/gameoverhack/ofxOpenNI master branch  
-rev https://github.com/gameoverhack/ofxOpenNI/commit/72dbf239fd8c6e8adbb390ddb4ffbe77a5125965  
+https://github.com/gameoverhack/ofxOpenNI/commit/72dbf239fd8c6e8adbb390ddb4ffbe77a5125965  
 
