@@ -136,7 +136,10 @@
 		12070D81141CF77A00523CB1 /* ofxKinectPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070D61141CF77A00523CB1 /* ofxKinectPlayer.cpp */; };
 		12070D82141CF77A00523CB1 /* ofxKinectRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070D63141CF77A00523CB1 /* ofxKinectRecorder.cpp */; };
 		12070DF2141D008800523CB1 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12070DF1141D008800523CB1 /* OpenCL.framework */; };
-		124AA18C142A37370023B1B9 /* cmlMesh_freenect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 124AA18A142A37370023B1B9 /* cmlMesh_freenect.cpp */; };
+		125C90EB14C6E96B00B6EAF8 /* render.frag in Sources */ = {isa = PBXBuildFile; fileRef = 125C90E914C6E96B00B6EAF8 /* render.frag */; };
+		125C90EC14C6E96B00B6EAF8 /* render.vert in Sources */ = {isa = PBXBuildFile; fileRef = 125C90EA14C6E96B00B6EAF8 /* render.vert */; };
+		125C90F314C6EAB800B6EAF8 /* normals.frag in Sources */ = {isa = PBXBuildFile; fileRef = 125C90F214C6EAB800B6EAF8 /* normals.frag */; };
+		125C90F514C6EB5400B6EAF8 /* normals.vert in Sources */ = {isa = PBXBuildFile; fileRef = 125C90F414C6EB5400B6EAF8 /* normals.vert */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -396,7 +399,6 @@
 		12070CBD141CF74900523CB1 /* cmlMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh.cpp; sourceTree = "<group>"; };
 		12070CBE141CF74900523CB1 /* cmlMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh.h; sourceTree = "<group>"; };
 		12070CC3141CF74900523CB1 /* cmlUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlUtils.h; sourceTree = "<group>"; };
-		12070CC4141CF74900523CB1 /* ofxPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPlane.h; sourceTree = "<group>"; };
 		12070D14141CF77A00523CB1 /* cameras.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cameras.c; sourceTree = "<group>"; };
 		12070D15141CF77A00523CB1 /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = core.c; sourceTree = "<group>"; };
 		12070D16141CF77A00523CB1 /* freenect_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = freenect_internal.h; sourceTree = "<group>"; };
@@ -452,11 +454,14 @@
 		12070D64141CF77A00523CB1 /* ofxKinectRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxKinectRecorder.h; sourceTree = "<group>"; };
 		12070DF1141D008800523CB1 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = /System/Library/Frameworks/OpenCL.framework; sourceTree = "<absolute>"; };
 		1223E9DD146A9C590015C6BA /* keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
-		124AA18A142A37370023B1B9 /* cmlMesh_freenect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh_freenect.cpp; sourceTree = "<group>"; };
-		124AA18B142A37370023B1B9 /* cmlMesh_freenect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh_freenect.h; sourceTree = "<group>"; };
 		124AA241142A430B0023B1B9 /* camara_lucida_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = camara_lucida_config.xml; sourceTree = "<group>"; };
 		124AA242142A430B0023B1B9 /* kinect_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kinect_calibration.yml; sourceTree = "<group>"; };
 		124AA243142A430B0023B1B9 /* projector_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = projector_calibration.yml; sourceTree = "<group>"; };
+		125C90E914C6E96B00B6EAF8 /* render.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.frag; sourceTree = "<group>"; };
+		125C90EA14C6E96B00B6EAF8 /* render.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.vert; sourceTree = "<group>"; };
+		125C90F214C6EAB800B6EAF8 /* normals.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = normals.frag; sourceTree = "<group>"; };
+		125C90F414C6EB5400B6EAF8 /* normals.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = normals.vert; sourceTree = "<group>"; };
+		125C91CD14C74E0B00B6EAF8 /* cmlMeshData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMeshData.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -1100,14 +1105,13 @@
 		12070CB9141CF74900523CB1 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				124AA189142A37370023B1B9 /* freenect */,
 				12070CBA141CF74900523CB1 /* CamaraLucida.cpp */,
 				12070CBB141CF74900523CB1 /* CamaraLucida.h */,
-				12070CBC141CF74900523CB1 /* cmlCalibration.h */,
 				12070CBD141CF74900523CB1 /* cmlMesh.cpp */,
 				12070CBE141CF74900523CB1 /* cmlMesh.h */,
+				125C91CD14C74E0B00B6EAF8 /* cmlMeshData.h */,
+				12070CBC141CF74900523CB1 /* cmlCalibration.h */,
 				12070CC3141CF74900523CB1 /* cmlUtils.h */,
-				12070CC4141CF74900523CB1 /* ofxPlane.h */,
 			);
 			name = "\U001bsrc";
 			path = src;
@@ -1414,15 +1418,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		124AA189142A37370023B1B9 /* freenect */ = {
-			isa = PBXGroup;
-			children = (
-				124AA18A142A37370023B1B9 /* cmlMesh_freenect.cpp */,
-				124AA18B142A37370023B1B9 /* cmlMesh_freenect.h */,
-			);
-			path = freenect;
-			sourceTree = "<group>";
-		};
 		124AA23E142A430B0023B1B9 /* data */ = {
 			isa = PBXGroup;
 			children = (
@@ -1435,6 +1430,10 @@
 		124AA240142A430B0023B1B9 /* camara_lucida */ = {
 			isa = PBXGroup;
 			children = (
+				125C90F214C6EAB800B6EAF8 /* normals.frag */,
+				125C90F414C6EB5400B6EAF8 /* normals.vert */,
+				125C90E914C6E96B00B6EAF8 /* render.frag */,
+				125C90EA14C6E96B00B6EAF8 /* render.vert */,
 				124AA241142A430B0023B1B9 /* camara_lucida_config.xml */,
 				124AA242142A430B0023B1B9 /* kinect_calibration.yml */,
 				124AA243142A430B0023B1B9 /* projector_calibration.yml */,
@@ -1640,7 +1639,10 @@
 				12070D80141CF77A00523CB1 /* ofxKinectCalibration.cpp in Sources */,
 				12070D81141CF77A00523CB1 /* ofxKinectPlayer.cpp in Sources */,
 				12070D82141CF77A00523CB1 /* ofxKinectRecorder.cpp in Sources */,
-				124AA18C142A37370023B1B9 /* cmlMesh_freenect.cpp in Sources */,
+				125C90EB14C6E96B00B6EAF8 /* render.frag in Sources */,
+				125C90EC14C6E96B00B6EAF8 /* render.vert in Sources */,
+				125C90F314C6EAB800B6EAF8 /* normals.frag in Sources */,
+				125C90F514C6EB5400B6EAF8 /* normals.vert in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

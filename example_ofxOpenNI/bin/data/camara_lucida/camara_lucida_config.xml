@@ -1,10 +1,21 @@
 <camaralucida>
-	
+
+	<files>
+		<kinect_calibration>camara_lucida/kinect_calibration.yml</kinect_calibration>
+		<projector_calibration>camara_lucida/projector_calibration.yml</projector_calibration>
+		<render_shader>camara_lucida/render</render_shader>
+	</files>	
+
 	<depth_xoff>-8</depth_xoff>
 	<mesh_step>1</mesh_step>
 	<near>0.1</near>
 	<far>20.0</far>
-	
+	<texture>
+		<width>1024</width>
+		<height>768</height>
+		<num_samples>1</num_samples>
+	</texture>
+
 	<debug_keys>
 		<scene_ctrl>
 			<zoom>z</zoom>

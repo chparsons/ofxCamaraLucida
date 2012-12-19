@@ -1,21 +1,23 @@
-//	Cámara Lúcida
-//	www.camara-lucida.com.ar
-//
-//	Copyright (C) 2011  Christian Parsons
-//	www.chparsons.com.ar
-//
-//	This program is free software: you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation, either version 3 of the License, or
-//	(at your option) any later version.
-//
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
-//
-//	You should have received a copy of the GNU General Public License
-//	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/*
+ * Camara Lucida
+ * www.camara-lucida.com.ar
+ *
+ * Copyright (C) 2011  Christian Parsons
+ * www.chparsons.com.ar
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "testApp.h"
 
@@ -29,21 +31,15 @@ void testApp::setup()
 	
 	init_keys();
 	
-	debug_depth_texture = false;
-	debug_hue_texture = true;
+	string config = ofToDataPath("camara_lucida/camara_lucida_config.xml");
 	
-	tex_width = 1024;
-	tex_height = 768;
+	mesh = new cml::Mesh(raw_depth_pix);
 	
-	mesh = new cml::Mesh_freenect(raw_depth_pix);
-												 
-	camluc.init(ofToDataPath("camara_lucida/kinect_calibration.yml"),
-				ofToDataPath("camara_lucida/projector_calibration.yml"),
-				ofToDataPath("camara_lucida/camara_lucida_config.xml"),
-				mesh, tex_width, tex_height, 1);
+	camluc.init(config, mesh);
 	
 	ofAddListener(camluc.render_texture, this, &testApp::render_texture);
-	ofAddListener(camluc.render_hud, this, &testApp::render_hud);
+	ofAddListener(camluc.render_2d, this, &testApp::render_2d);
+	ofAddListener(camluc.render_3d, this, &testApp::render_3d);
 }
 
 void testApp::update()
@@ -57,75 +53,78 @@ void testApp::update()
 
 void testApp::draw()
 {	
+//	light.enable();
 	camluc.render();
-	
-	glScalef(1, -1, 1);
-	glTranslatef(-0.3, 0.3, 1);
-	glColor3f(1, 1, 1);
-	glutWireTeapot(0.1);
-}
-
-void testApp::exit()
-{
-	ofLog(OF_LOG_VERBOSE, "exit!");
-	
-	ofRemoveListener(camluc.render_texture, this, &testApp::render_texture);
-	ofRemoveListener(camluc.render_hud, this, &testApp::render_hud);
-	
-	camluc.dispose();
-	kinect.close();
-	
-	delete mesh;
-	mesh = NULL;
-}
-
-void testApp::render_hud(ofEventArgs &args)
-{
-	if (pressed[key::keyboard_help])
-	{
-		int roff = 200;
-		int toff = roff+50;
-		
-		glColor3f(1, 1, 1);
-		ofDrawBitmapString(key::get_help()+"\n\n"+camluc.get_keyboard_help()+"\n"+mesh->get_keyboard_help(), 
-						   toff, toff+12);	
-		
-		glColor4f(0, 0, 0, 0.1);
-		ofRect(roff, roff, ofGetWidth()-roff*2, ofGetHeight()-roff*2);
-		
-		glColor3f(1, 1, 1);
-	}				
-	
-	if (debug_depth_texture)
-	{
-		//kinect.getDepthTextureReference().draw(0, 0, 200, 150);
-	}
 }
 
 void testApp::render_texture(ofEventArgs &args)
 {
 	glClearColor(0.5, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glViewport(0, 0, tex_width, tex_height);
+	
+	float w = mesh->get_tex_width();
+	float h = mesh->get_tex_height();
+	
+	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, tex_width, 0, tex_height, -1, 1);
+	glOrtho(0, w, 0, h, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	if (debug_hue_texture)
+	glColor3f(1, 1, 1);
+	
+	//kinect.enableCalibrationUpdate( _debug_tex == DEBUG_DEPTH_TEX );
+	switch(_debug_tex)
 	{
-		mesh->debug_hue_texture(0, 0, tex_width, tex_height);
-	}
-	else if (debug_depth_texture)
-	{
-		glColor3f(1, 1, 1);
-		kinect.getDepthTextureReference().draw(0, 0, tex_width, tex_height);
+		case DEBUG_DEPTH_TEX:
+			kinect.getDepthTextureReference().draw(0, 0, w, h);
+			break;
+		case DEBUG_HUE_TEX:
+			mesh->get_hue_tex_ref().draw(0, 0, w, h);
+			break;
+		case DEBUG_NORMALS_TEX:
+			mesh->get_normals_tex_ref().draw(0, 0, w, h);
+			break;
 	}
 	
 	glColor3f(1, 1, 0);
 	ofCircle(800, 200, 60);
+}
+
+void testApp::render_3d(ofEventArgs &args)
+{
+//	light.setPosition(0, 0, 0.5+sin(ofGetElapsedTimef()*0.8)*0.5 );
+//	//light.draw();
+//	light.transformGL();
+//	ofPushMatrix();
+//	ofTranslate( light.getPosition() );
+//	ofBox(.01);
+//	ofDrawAxis(.03);
+//	ofPopMatrix();
+//	light.restoreTransformGL();
+//	
+//	glTranslatef(-0.3, 0.3, 1);
+//	glColor3f(1, 1, 1);
+//	glutWireTeapot(0.1);
+//	
+//	ofDisableLighting();
+}
+
+void testApp::render_2d(ofEventArgs &args)
+{
+	if (pressed[key::keyboard_help])
+	{
+		int roff = 200;
+		int toff = roff+50;
+		
+		glColor4f(0, 0, 0, 0.1);
+		ofRect(roff, roff, ofGetWidth()-roff*2, ofGetHeight()-roff*2);
+		
+		glColor3f(1, 1, 1);
+		ofDrawBitmapString(key::get_help()+"\n\n"+camluc.get_keyboard_help(), 
+						   toff, toff+12);	
+	}				
 }
 
 bool testApp::init_kinect()
@@ -152,6 +151,21 @@ bool testApp::update_kinect()
 	return true;
 }
 
+void testApp::exit()
+{
+	ofLog(OF_LOG_VERBOSE, "exit!");
+	
+	ofRemoveListener(camluc.render_texture, this, &testApp::render_texture);
+	ofRemoveListener(camluc.render_2d, this, &testApp::render_2d);
+	ofRemoveListener(camluc.render_3d, this, &testApp::render_3d);
+	
+	camluc.dispose();
+	kinect.close();
+	
+	delete mesh;
+	mesh = NULL;
+}
+
 void testApp::keyPressed(int key)
 {
 	pressed[key] = true;
@@ -171,18 +185,18 @@ void testApp::keyPressed(int key)
 			ofSetWindowPosition(0,0);
 		}
 	}
-	else if (key == key::debug_camaralucida)
+	else if (key == key::toggle_debug)
 	{
 		camluc.toggle_debug();
 	}
-	else if (key == key::debug_depth_texture)
+	else if (key == key::toggle_wireframe)
 	{
-		debug_depth_texture = !debug_depth_texture;
-		//kinect.toggleCalibrationUpdate();
+		camluc.toggle_wireframe();
 	}
-	else if (key == key::debug_hue_texture)
+	else if (key == key::debug_tex)
 	{
-		debug_hue_texture = !debug_hue_texture;
+		++_debug_tex;
+		_debug_tex = _debug_tex == DEBUG_TEX_LENGTH ? 0 : _debug_tex;
 	}
 	else if (key == key::print_mesh)
 	{

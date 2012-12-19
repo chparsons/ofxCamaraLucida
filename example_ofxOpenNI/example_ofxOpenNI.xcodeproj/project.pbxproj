@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		12070EEB141D085000523CB1 /* CamaraLucida.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070EDD141D085000523CB1 /* CamaraLucida.cpp */; };
-		12070EEC141D085000523CB1 /* cmlMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070EE0141D085000523CB1 /* cmlMesh.cpp */; };
-		12070EEE141D085000523CB1 /* cmlMesh_openni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12070EE8141D085000523CB1 /* cmlMesh_openni.cpp */; };
+		127F03D014C59CDC00B75512 /* render.frag in Sources */ = {isa = PBXBuildFile; fileRef = 127F03CE14C59CDC00B75512 /* render.frag */; };
+		127F03D114C59CDC00B75512 /* render.vert in Sources */ = {isa = PBXBuildFile; fileRef = 127F03CF14C59CDC00B75512 /* render.vert */; };
+		127F3077168220A20009EFE3 /* CamaraLucida.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 127F306A168220A20009EFE3 /* CamaraLucida.cpp */; };
+		127F3078168220A20009EFE3 /* cmlMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 127F306D168220A20009EFE3 /* cmlMesh.cpp */; };
+		127F307A168220A20009EFE3 /* cmlMesh_openni.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 127F3075168220A20009EFE3 /* cmlMesh_openni.cpp */; };
 		12F5EB53141BEECF00F81FD0 /* ofxDepthGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F5EB3B141BEECF00F81FD0 /* ofxDepthGenerator.cpp */; };
 		12F5EB54141BEECF00F81FD0 /* ofxGestureGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F5EB3D141BEECF00F81FD0 /* ofxGestureGenerator.cpp */; };
 		12F5EB55141BEECF00F81FD0 /* ofxHandGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12F5EB3F141BEECF00F81FD0 /* ofxHandGenerator.cpp */; };
@@ -201,15 +203,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		12070EDD141D085000523CB1 /* CamaraLucida.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CamaraLucida.cpp; sourceTree = "<group>"; };
-		12070EDE141D085000523CB1 /* CamaraLucida.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamaraLucida.h; sourceTree = "<group>"; };
-		12070EDF141D085000523CB1 /* cmlCalibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlCalibration.h; sourceTree = "<group>"; };
-		12070EE0141D085000523CB1 /* cmlMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh.cpp; sourceTree = "<group>"; };
-		12070EE1141D085000523CB1 /* cmlMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh.h; sourceTree = "<group>"; };
-		12070EE2141D085000523CB1 /* cmlUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlUtils.h; sourceTree = "<group>"; };
-		12070EE6141D085000523CB1 /* ofxPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPlane.h; sourceTree = "<group>"; };
-		12070EE8141D085000523CB1 /* cmlMesh_openni.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh_openni.cpp; sourceTree = "<group>"; };
-		12070EE9141D085000523CB1 /* cmlMesh_openni.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh_openni.h; sourceTree = "<group>"; };
+		127F02E614C570A800B75512 /* kinect_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kinect_calibration.yml; sourceTree = "<group>"; };
+		127F02E714C570A800B75512 /* projector_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = projector_calibration.yml; sourceTree = "<group>"; };
+		127F03CE14C59CDC00B75512 /* render.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.frag; sourceTree = "<group>"; };
+		127F03CF14C59CDC00B75512 /* render.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.vert; sourceTree = "<group>"; };
+		127F306A168220A20009EFE3 /* CamaraLucida.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CamaraLucida.cpp; sourceTree = "<group>"; };
+		127F306B168220A20009EFE3 /* CamaraLucida.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamaraLucida.h; sourceTree = "<group>"; };
+		127F306C168220A20009EFE3 /* cmlCalibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlCalibration.h; sourceTree = "<group>"; };
+		127F306D168220A20009EFE3 /* cmlMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh.cpp; sourceTree = "<group>"; };
+		127F306E168220A20009EFE3 /* cmlMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh.h; sourceTree = "<group>"; };
+		127F306F168220A20009EFE3 /* cmlMeshData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMeshData.h; sourceTree = "<group>"; };
+		127F3070168220A20009EFE3 /* cmlUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlUtils.h; sourceTree = "<group>"; };
+		127F3075168220A20009EFE3 /* cmlMesh_openni.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh_openni.cpp; sourceTree = "<group>"; };
+		127F3076168220A20009EFE3 /* cmlMesh_openni.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh_openni.h; sourceTree = "<group>"; };
 		12AFB32A14BD9AF500E44259 /* keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
 		12CC8E0D14C03B1C006B9552 /* camara_lucida_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = camara_lucida_config.xml; sourceTree = "<group>"; };
 		12CC8E0E14C03B1C006B9552 /* openni_calibration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = openni_calibration.yml; sourceTree = "<group>"; };
@@ -749,32 +755,32 @@
 		12070EDB141D085000523CB1 /* ofxCamaraLucida */ = {
 			isa = PBXGroup;
 			children = (
-				12070EDC141D085000523CB1 /* src */,
+				127F3069168220A20009EFE3 /* src */,
 			);
 			name = ofxCamaraLucida;
 			path = ../../../addons/ofxCamaraLucida;
 			sourceTree = SOURCE_ROOT;
 		};
-		12070EDC141D085000523CB1 /* src */ = {
+		127F3069168220A20009EFE3 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				12070EE7141D085000523CB1 /* openni */,
-				12070EDD141D085000523CB1 /* CamaraLucida.cpp */,
-				12070EDE141D085000523CB1 /* CamaraLucida.h */,
-				12070EDF141D085000523CB1 /* cmlCalibration.h */,
-				12070EE0141D085000523CB1 /* cmlMesh.cpp */,
-				12070EE1141D085000523CB1 /* cmlMesh.h */,
-				12070EE2141D085000523CB1 /* cmlUtils.h */,
-				12070EE6141D085000523CB1 /* ofxPlane.h */,
+				127F306A168220A20009EFE3 /* CamaraLucida.cpp */,
+				127F306B168220A20009EFE3 /* CamaraLucida.h */,
+				127F306C168220A20009EFE3 /* cmlCalibration.h */,
+				127F306D168220A20009EFE3 /* cmlMesh.cpp */,
+				127F306E168220A20009EFE3 /* cmlMesh.h */,
+				127F306F168220A20009EFE3 /* cmlMeshData.h */,
+				127F3070168220A20009EFE3 /* cmlUtils.h */,
+				127F3074168220A20009EFE3 /* openni */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		12070EE7141D085000523CB1 /* openni */ = {
+		127F3074168220A20009EFE3 /* openni */ = {
 			isa = PBXGroup;
 			children = (
-				12070EE8141D085000523CB1 /* cmlMesh_openni.cpp */,
-				12070EE9141D085000523CB1 /* cmlMesh_openni.h */,
+				127F3075168220A20009EFE3 /* cmlMesh_openni.cpp */,
+				127F3076168220A20009EFE3 /* cmlMesh_openni.h */,
 			);
 			path = openni;
 			sourceTree = "<group>";
@@ -783,8 +789,12 @@
 			isa = PBXGroup;
 			children = (
 				12CC8E0D14C03B1C006B9552 /* camara_lucida_config.xml */,
+				127F02E614C570A800B75512 /* kinect_calibration.yml */,
+				127F02E714C570A800B75512 /* projector_calibration.yml */,
 				12CC8E0E14C03B1C006B9552 /* openni_calibration.yml */,
 				12CC8E0F14C03B1C006B9552 /* openni_projector_calibration.yml */,
+				127F03CE14C59CDC00B75512 /* render.frag */,
+				127F03CF14C59CDC00B75512 /* render.vert */,
 			);
 			name = camara_lucida;
 			path = bin/data/camara_lucida;
@@ -1706,9 +1716,11 @@
 				12F5ECF3141BF40E00F81FD0 /* ofxCvHaarFinder.cpp in Sources */,
 				12F5ECF4141BF40E00F81FD0 /* ofxCvImage.cpp in Sources */,
 				12F5ECF5141BF40E00F81FD0 /* ofxCvShortImage.cpp in Sources */,
-				12070EEB141D085000523CB1 /* CamaraLucida.cpp in Sources */,
-				12070EEC141D085000523CB1 /* cmlMesh.cpp in Sources */,
-				12070EEE141D085000523CB1 /* cmlMesh_openni.cpp in Sources */,
+				127F03D014C59CDC00B75512 /* render.frag in Sources */,
+				127F03D114C59CDC00B75512 /* render.vert in Sources */,
+				127F3077168220A20009EFE3 /* CamaraLucida.cpp in Sources */,
+				127F3078168220A20009EFE3 /* cmlMesh.cpp in Sources */,
+				127F307A168220A20009EFE3 /* cmlMesh_openni.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

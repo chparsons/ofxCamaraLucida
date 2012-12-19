@@ -22,33 +22,55 @@
 #pragma once
 
 #include "cmlMesh.h"
-#include <XnOpenNI.h>
-#include <XnCppWrapper.h>
-#include <XnLog.h>
+#include "MSAOpenCL.h"
 
-namespace cml
+namespace cml 
 {
-	class Mesh_openni : public Mesh
+	class Mesh_opencl : public Mesh
 	{
 	public:
 		
-		Mesh_openni(uint16_t *raw_depth_pix,
-					xn::DepthGenerator *depth_generator);
-		~Mesh_openni();
+		Mesh_opencl(uint16_t *raw_depth_pix,
+					MSA::OpenCL *opencl = NULL);
+		~Mesh_opencl();
 		
+		void init(cml::MeshData *meshdata,
+				  cml::Calibration *calib,
+				  ofxXmlSettings *xml);
+		
+		void keyPressed(ofKeyEventArgs &args);
 		void print();
 		
 	protected:
 		
 		//// Mesh impl
 		
+		void init_pts();
 		void update_pts();
-				
+		void dispose_pts();
+		
+		float* pts0x();
+		int sizeof_pts();
+		
+		float* normals0x();
+		int sizeof_normals();
+		
 		////
 		
 	private:
 		
-		xn::DepthGenerator *depth_generator;
+		//float4* _pts3d_const;
+		float4* _normals_calc;
 		
+		void init_cl();
+		void update_cl();
+		
+		MSA::OpenCL			*opencl;
+		MSA::OpenCLKernel	*kernel_vertex_update;
+		MSA::OpenCLBuffer	cl_buff_pts3d;
+		//MSA::OpenCLBuffer	cl_buff_pts3d_const;
+		MSA::OpenCLBuffer	cl_buff_normals;
+		MSA::OpenCLBuffer	cl_buff_raw_depth;
+		MSA::OpenCLBuffer	cl_buff_zlut;
 	};
 };

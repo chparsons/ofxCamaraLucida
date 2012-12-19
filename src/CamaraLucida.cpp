@@ -1,62 +1,82 @@
-//	Camara Lucida
-//	www.camara-lucida.com.ar
-//
-//	Copyright (C) 2011  Christian Parsons
-//	www.chparsons.com.ar
-//
-//	This program is free software: you can redistribute it and/or modify
-//	it under the terms of the GNU General Public License as published by
-//	the Free Software Foundation, either version 3 of the License, or
-//	(at your option) any later version.
-//
-//	This program is distributed in the hope that it will be useful,
-//	but WITHOUT ANY WARRANTY; without even the implied warranty of
-//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//	GNU General Public License for more details.
-//
-//	You should have received a copy of the GNU General Public License
-//	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/*
+ * Camara Lucida
+ * www.camara-lucida.com.ar
+ *
+ * Copyright (C) 2011  Christian Parsons
+ * www.chparsons.com.ar
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "CamaraLucida.h"
 
 namespace cml 
 {
-	void CamaraLucida::init(string kinect_calibration_filename,
-							string proj_calibration_filename,
-							string xml_config_filename,
-							cml::Mesh *mesh,
-							int tex_width, int tex_height, 
-							int tex_num_samples)
+	CamaraLucida::CamaraLucida()
+	{
+		_debug = false;
+		_inited = false;
+		_not_init_alert = false;
+		_wireframe = false;
+	}
+	
+	CamaraLucida::~CamaraLucida() {}
+	
+	void CamaraLucida::init(string xml_filename, cml::Mesh *mesh)
 	{
 		this->mesh = mesh;
 		
-		coord_sys = mesh->coord_sys();
+		xml.loadFile(xml_filename);
+		xml.pushTag("camaralucida");
 		
-		init_cml(kinect_calibration_filename, 
-				 proj_calibration_filename,
-				 xml_config_filename);
-				
-		if (mesh->is_render_enabled())
-		{
-			init_fbo(tex_width, tex_height, tex_num_samples);
-		}
-		
-		mesh->init(&xml_config, &calib, tex_width, tex_height);
+		init_cml();
+
+		ofFbo::Settings s;
+		s.width			    = meshdata.tex_width;
+		s.height		    = meshdata.tex_height;
+		s.numSamples		= meshdata.tex_num_samples;
+		s.numColorbuffers	= 1;
+		s.internalformat	= GL_RGBA;
+
+		render_fbo.allocate(s);
+		render_shader.load( xml.getValue("files:render_shader", "") );
+			
+		mesh->init( &meshdata, &calib, &xml );
 	}
 	
-	void CamaraLucida::init_cml(string kinect_calibration_filename,
-								string proj_calibration_filename,
-								string xml_config_filename)
+	void CamaraLucida::init_cml()
 	{
 		_inited = true;
 		
-		xml_config.loadFile(xml_config_filename);
-		xml_config.pushTag("camaralucida");
+		coord_sys = mesh->coord_sys();
 		
-		calib.near = xml_config.getValue("near", 0.1);
-		calib.far = xml_config.getValue("far", 20.0);
+		string kinect_calibration_filename = 
+            xml.getValue("files:kinect_calibration", "");
+		string proj_calibration_filename = 
+            xml.getValue("files:projector_calibration", "");
 		
-		load_data(kinect_calibration_filename, proj_calibration_filename);
+		load_calibration_data(
+				ofToDataPath(kinect_calibration_filename),
+				ofToDataPath(proj_calibration_filename));
+		
+		meshdata.step = xml.getValue("mesh_step", 2);
+		meshdata.width = (float)calib.depth_width/meshdata.step;
+		meshdata.height = (float)calib.depth_height/meshdata.step;
+		
+		meshdata.tex_width = xml.getValue("texture:width", 1024);
+		meshdata.tex_height = xml.getValue("texture:height", 768);
+		meshdata.tex_num_samples = xml.getValue("texture:num_samples", 1);
 		
 		proj_loc = ofVec3f(	proj_RT[12], proj_RT[13], proj_RT[14] );	
 		proj_fwd = ofVec3f(	proj_RT[8], proj_RT[9], proj_RT[10] );
@@ -77,14 +97,13 @@ namespace cml
 	{
 		ofLog(OF_LOG_VERBOSE, "CamaraLucida::dispose");
 		
-		if (!inited())
-			return;
+		if (!inited()) return;
 		
 		dispose_events();
 		
 		mesh->dispose_pts();
 		mesh = NULL;
-		
+				
 		cvReleaseMat(&rgb_int);	
 		cvReleaseMat(&depth_int);
 		
@@ -98,53 +117,48 @@ namespace cml
 
 	void CamaraLucida::update()
 	{
-		if (!inited())
-			return;
+		if (!inited()) return;
 				
-		if (mesh->is_render_enabled())
-			mesh->update();
+		mesh->update();
 	}
 
 	void CamaraLucida::render()
 	{
-		if (!inited())
-			return;
+		// TODO alpha blending
 		
-		if (mesh->is_render_enabled())
-		{
-			fbo.bind();
-			//ofEnableAlphaBlending();  
-			//glEnable(GL_BLEND);  
-			//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA); 
+		if (!inited()) return;
 		
-			ofNotifyEvent( render_texture, void_event_args );
+		// texture
 		
-			fbo.unbind();
-			//ofDisableAlphaBlending(); 
-			//glDisable(GL_BLEND);  
-		}
+		render_fbo.bind();
+		//ofEnableAlphaBlending();  
+		//glEnable(GL_BLEND);  
+		//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA); 
+		
+		ofNotifyEvent( render_texture, void_event_args );
+		
+		render_fbo.unbind();
+		//ofDisableAlphaBlending(); 
+		//glDisable(GL_BLEND);  			
+		
+		// gl init
 		
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
-	
-		glPolygonMode(GL_FRONT, GL_FILL);
-		// TODO wireframe it's not working with fbo textures.. why?
-		// @see cmlMesh.enable_render();
-		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
 		
-		glColor3f(1, 1, 1);
+		// 3d
+		
+		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, ofGetWidth(), ofGetHeight());
 		
-		gl_ortho();
-		
-		ofNotifyEvent( render_hud, void_event_args );
-		
-		render_screenlog();
+		if (!_wireframe)
+			glPolygonMode(GL_FRONT, GL_FILL);
+		else
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
+		glColor3f(1, 1, 1);
 		
 		gl_projection();	
 		gl_viewpoint();
-		
 		gl_scene_control();
 		
 		if (_debug)
@@ -153,12 +167,8 @@ namespace cml
 			render_proj_CS();
 			render_rgb_CS();
 			render_proj_ppal_point();
+			mesh->render_normals();
 		}
-		
-		//	if (using_opencl)
-		//		opencl.finish();
-		
-		// TODO alpha blending!
 		
 		//glEnable(GL_BLEND);  
 		//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
@@ -167,37 +177,35 @@ namespace cml
 		//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
 		//ofEnableAlphaBlending();
 		
-		if (mesh->is_render_enabled())
-		{
-			fbo.getTextureReference(0).bind();
+		render_shader.begin();
+		render_fbo.getTextureReference(0).bind();
+			
+		render_shader.setUniform1i("render_tex", 0);
+		//render_shader.setUniformTexture("normals_tex", mesh->get_normals_tex_ref(), 1);
+			
+		mesh->render();
 		
-			mesh->render();
-		
-			fbo.getTextureReference(0).unbind();
-		}
+		render_fbo.getTextureReference(0).unbind();
+		render_shader.end();
 		
 		//glDisable(GL_BLEND);
 		//ofDisableAlphaBlending(); 
-	}
-
-	
-	// fbo
-
-
-	void CamaraLucida::init_fbo(int tex_width, int tex_height, int tex_num_samples)
-	{
-		ofFbo::Settings s;
-		s.width				= tex_width;
-		s.height			= tex_height;
-		s.numSamples		= tex_num_samples;
-		s.numColorbuffers	= 1;
-		s.internalformat	= GL_RGBA;
 		
-		fbo.allocate(s);
-		//fbo.allocate(s.width, s.height, s.internalformat, s.numSamples);
+		glScalef(1, -1, 1);
+		ofNotifyEvent( render_3d, void_event_args );
+		
+		// 2d hud
+		
+		//glDisable(GL_LIGHTING);
+		glDisable(GL_DEPTH_TEST);
+		glPolygonMode(GL_FRONT, GL_FILL);
+		glColor3f(1, 1, 1);
+		gl_ortho();
+		ofNotifyEvent( render_2d, void_event_args );
+		render_screenlog();
 	}
-
-
+		
+	
 	// gl
 
 
@@ -252,7 +260,7 @@ namespace cml
 				break;
 				
 			case V_RGB:
-				gluLookAt(rgb_loc.x, rgb_loc.y, rgb_loc.z,	//loc
+				gluLookAt(rgb_loc.x, rgb_loc.y, rgb_loc.z,		//loc
 						  rgb_trg.x, rgb_trg.y, rgb_trg.z,		//target
 						  rgb_up.x, rgb_up.y, rgb_up.z);		//up
 				break;
@@ -409,16 +417,11 @@ namespace cml
 		for (int i = 0; i < 512; i++) 
 			pressed[i] = false;
 		
-		xml_config.pushTag("debug_keys");
-			xml_config.pushTag("viewpoint");
-				key_viewpoint_next = xml_config.getValue("next", "t")[0];
-				key_viewpoint_prev = xml_config.getValue("prev", "v")[0];
-				xml_config.popTag();
-			xml_config.pushTag("scene_ctrl");
-				key_scene_ctrl_reset = xml_config.getValue("reset", "x")[0];
-				key_scene_ctrl_zoom = xml_config.getValue("zoom", "z")[0];
-				xml_config.popTag();
-		xml_config.popTag();
+		key_viewpoint_next = xml.getValue("debug_keys:viewpoint:next", "")[0];
+		key_viewpoint_prev = xml.getValue("debug_keys:viewpoint:prev", "")[0];
+				
+		key_scene_ctrl_reset = xml.getValue("debug_keys:scene_ctrl:reset", "")[0];
+		key_scene_ctrl_zoom = xml.getValue("debug_keys:scene_ctrl:zoom", "")[0];
 	}
 
 	void CamaraLucida::keyPressed(ofKeyEventArgs &args)
@@ -481,10 +484,15 @@ namespace cml
 	// data conversion
 
 		
-	void CamaraLucida::load_data(string kinect_calibration_filename, string proj_calibration_filename)
+	void CamaraLucida::load_calibration_data(
+			string kinect_calibration_filename,
+			string proj_calibration_filename)
 	{
 		const char* kinect_calibration_filename_str = kinect_calibration_filename.c_str();
 		const char* proj_calibration_filename_str = proj_calibration_filename.c_str();
+		
+		calib.near = xml.getValue("near", 0.1);
+		calib.far = xml.getValue("far", 20.0);
 		
 		//	rgb
 		
@@ -680,7 +688,7 @@ namespace cml
 				}	
 			}
 		}
-		printf("\n");
+		printf("\n\n");
 	}
 
 	void CamaraLucida::printM(CvMat* M, bool colmajor)
@@ -735,7 +743,7 @@ namespace cml
 				}
 			}
 		}
-		printf("\n");
+		printf("\n\n");
 	}
 
 
@@ -753,6 +761,11 @@ namespace cml
 		return true;
 	}
 	
+	void CamaraLucida::toggle_wireframe()
+	{
+		_wireframe = !_wireframe;
+	}
+	
 	void CamaraLucida::toggle_debug()
 	{
 		_debug = !_debug;
@@ -760,6 +773,6 @@ namespace cml
 	
 	string CamaraLucida::get_keyboard_help()
 	{
-		return "camara lucida keys for debug mode: \n switch viewpoint "+string(1, key_viewpoint_next)+" and "+string(1, key_viewpoint_prev)+" \n scene control: drag mouse to rotate, "+string(1, key_scene_ctrl_zoom)+"+drag to zoom, "+string(1, key_scene_ctrl_reset)+" to reset";
+		return "debug mode: \n switch viewpoint "+string(1, key_viewpoint_next)+" and "+string(1, key_viewpoint_prev)+" \n scene control: drag mouse to rotate, "+string(1, key_scene_ctrl_zoom)+"+drag to zoom, "+string(1, key_scene_ctrl_reset)+" to reset \n"+mesh->get_keyboard_help();
 	}
 };

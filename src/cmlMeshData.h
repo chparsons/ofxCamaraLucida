@@ -21,24 +21,13 @@
 
 #pragma once
 
-#include "ofVectorMath.h"
-
 namespace cml
 {
-	class Calibration
+	class MeshData
 	{
 	public:
 		
-		float fx_d, fy_d, cx_d, cy_d;
-		float fx_p, fy_p, cx_p, cy_p;
-		float fx_rgb, fy_rgb, cx_rgb, cy_rgb;
-		
-		int depth_width, depth_height;
-		int proj_width, proj_height;
-		int rgb_width, rgb_height;
-		
-		float near, far;	
-		
-		ofMatrix4x4 RT_rgb;
+		int step, width, height;
+		int tex_width, tex_height, tex_num_samples;
 	};
 };
