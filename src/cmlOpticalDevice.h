@@ -13,7 +13,7 @@ namespace cml
                 float cx, cy, fx, fy;
                 ofVec3f X, Y, Z, T;
             };
- 
+
             OpticalDevice(){};
 
             OpticalDevice( const OpticalDevice::Config& config )
@@ -37,10 +37,10 @@ namespace cml
 
                 //_T = ofVec3f( RT[12], rgb_RT[13], rgb_RT[14] );
                 //_RT = ofMatrix4x4(
-                    //RT[0],  RT[1],  RT[2],  RT[12],
-                    //RT[4],  RT[5],  RT[6],  RT[13],
-                    //RT[8],  RT[9],  RT[10], RT[14],
-                    //0.,     0.,	    0.,	    1.
+                //RT[0],  RT[1],  RT[2],  RT[12],
+                //RT[4],  RT[5],  RT[6],  RT[13],
+                //RT[8],  RT[9],  RT[10], RT[14],
+                //0.,     0.,	    0.,	    1.
                 //);                
                 //_R.preMultTranslate(-_T);
                 //_R = ofMatrix4x4::getTransposedOf(_R);
@@ -62,7 +62,7 @@ namespace cml
                 p2.y = (p3.y * fy / p3.z) + cy;
                 return p2;
             };
-            
+
             int to_idx(int x, int y)
             {
                 return y * width + x;
@@ -77,14 +77,14 @@ namespace cml
             int width, height;
             float near, far;	
             float cx, cy, fx, fy;
-            
+
             ofVec3f loc, fwd, up, trg;        
 
             float* gl_projection_matrix() { return KK; };
             float* gl_modelview_matrix() { return RT; };
 
         private:
-            
+
             float KK[16]; //glMultMatrixf( KK )
             float RT[16]; //glMultMatrixf( RT )
 
@@ -114,11 +114,11 @@ namespace cml
                 //another solution by Kyle McDonald...
                 //https://github.com/kylemcdonald/ofxCv/blob/master/libs/ofxCv/src/Calibration.cpp
                 //glFrustum(
-                    //near * (-cx) / fx, near * (w - cx) / fx,
-                    //near * (cy - h) / fy, near * (cy) / fy,
-                    //near, far );
+                //near * (-cx) / fx, near * (w - cx) / fx,
+                //near * (cy - h) / fy, near * (cy) / fy,
+                //near, far );
             };
-            
+
             /*
              * RT from opencv row-major to opengl col-major
              */
@@ -126,24 +126,6 @@ namespace cml
             void RT_cv2gl( 
                     ofVec3f x, ofVec3f y, ofVec3f z, ofVec3f t )
             {
-                ////	opencv: row-major	
-                ////	R x axis
-                //float xx = (float)cvGetReal2D( cvR, 0, 0 );
-                //float xy = (float)cvGetReal2D( cvR, 1, 0 );
-                //float xz = (float)cvGetReal2D( cvR, 2, 0 );
-                ////	R y axis	
-                //float yx = (float)cvGetReal2D( cvR, 0, 1 );
-                //float yy = (float)cvGetReal2D( cvR, 1, 1 );
-                //float yz = (float)cvGetReal2D( cvR, 2, 1 );
-                ////	R z axis	
-                //float zx = (float)cvGetReal2D( cvR, 0, 2 );
-                //float zy = (float)cvGetReal2D( cvR, 1, 2 );
-                //float zz = (float)cvGetReal2D( cvR, 2, 2 );
-                ////	T
-                //float tx = (float)cvGetReal2D( cvT, 0, 0 );
-                //float ty = (float)cvGetReal2D( cvT, 1, 0 );
-                //float tz = (float)cvGetReal2D( cvT, 2, 0 );	
-
                 //	opengl: col-major	
                 RT[0]= x.x; RT[4]= y.x; RT[8]= z.x;	RT[12]= t.x;
                 RT[1]= x.y;	RT[5]= y.y;	RT[9]= z.y;	RT[13]= t.y;
