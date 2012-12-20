@@ -135,6 +135,11 @@ namespace cml
                 xoff += val;
             };
 
+            int get_xoff()
+            {
+                return xoff;
+            };
+
             //ofVec2f raw_depth_to_rgb(
                     //uint16_t raw_depth, 
                     //int _x, int _y,

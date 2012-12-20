@@ -41,11 +41,12 @@ namespace cml
                     int xdepth, ydepth, idepth;
                     mesh->to_depth( i, &xdepth, &ydepth, &idepth );
 
-                    uint16_t raw_depth = raw_depth_pix[idepth];
-                    float z = ((cml::Kinect*)depth)->z_mts(raw_depth);
+                    //uint16_t raw_depth = raw_depth_pix[idepth];
+                    //float z = ((cml::Kinect*)depth)->z_mts(raw_depth);
 
                     // ofxKinect gives raw depth as distance in mm
-                    //float z = raw_depth_pix[idepth] * 0.001;
+                    float z = raw_depth_pix[idepth] * 0.001;
+                    z = CLAMP((z == 0. ? 5. : z), 0., 5.);
 
                     float x, y;
                     depth->unproject(xdepth, ydepth, z, &x, &y);

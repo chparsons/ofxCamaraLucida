@@ -7,9 +7,9 @@ void testApp::setup()
     ofSetFrameRate(60);
     ofBackground(50);
 
-    kinect.setDepthMode( FREENECT_DEPTH_11BIT );
-    //kinect.setRegistration(false);
-    //kinect.setDepthClipping(500, 4000); //mm (50cm - 4mt)
+    kinect.setRegistration(false);
+    //kinect.setDepthMode( FREENECT_DEPTH_11BIT );
+    kinect.setDepthClipping(500, 4000); //mm (50cm - 4mt)
     kinect.enableDepthNearValueWhite(false);
     // ir:false, rgb:false, texture:true
     kinect.init(false, false, true);

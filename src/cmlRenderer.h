@@ -37,8 +37,7 @@ namespace cml
                 cml::Config* config,
                 OpticalDevice* proj, 
                 OpticalDevice* depth, 
-                OpticalDevice* rgb,
-                bool *debug 
+                OpticalDevice* rgb
             );
             ~Renderer();
 
@@ -48,13 +47,16 @@ namespace cml
             void reset_scene();
             void next_view();
             void prev_view();
+            string get_viewpoint_info();
 
 	        void mouseDragged(int x, int y, bool zoom);
 	        void mousePressed(int x, int y);
 
+            void debug( bool val ) { _debug = val; };
+
         private:
 
-            bool *debug;
+            bool _debug;
 
             OpticalDevice* proj;
             OpticalDevice* depth;
@@ -76,8 +78,6 @@ namespace cml
             void render_proj_CS();
             void render_rgb_CS();
             void render_axis(float s);
-            void render_screenlog();
-            string _viewpoint_str();
 
             // scene control
 

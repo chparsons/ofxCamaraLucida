@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>cmlMesh.cpp</string>
+								<string>ofxCamaraLucida.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,16 +327,17 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>cmlMesh.cpp</string>
+										<string>ofxCamaraLucida.h</string>
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>125E015916820FD900FBAC45</string>
+										<string>1233732C168366B7003B8383</string>
 										<key>history</key>
 										<array>
 											<string>12C09E6A167E8F3800C90FBE</string>
 											<string>125E014D16820F6C00FBAC45</string>
-											<string>125E015216820FB800FBAC45</string>
+											<string>12588614168361F3009F75C4</string>
+											<string>1258861F1683620C009F75C4</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -394,9 +395,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>125EFF831682097000FBAC45</string>
+				<string>12337313168365B1003B8383</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>125EFF841682097000FBAC45</string>
+				<string>12337314168365B1003B8383</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -534,12 +535,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>125E011116820AA000FBAC45</string>
-		<string>125E011216820AA000FBAC45</string>
+		<string>1233732616836645003B8383</string>
+		<string>1233732716836645003B8383</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>12E31FAB1594BFFE00723F9A</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/chparsons/dev/openframeworks/git/addons/ofxCamaraLucida/example/camara_lucida_example.xcodeproj</string>
+		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>458 181 423 660 0 0 1440 878 </string>
@@ -563,7 +564,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>cmlMesh.cpp</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -580,8 +581,6 @@
 							<string>181pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -621,7 +620,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>12E31FAB1594BFFE00723F9A</string>
-				<string>125EFF851682097000FBAC45</string>
+				<string>12337315168365B1003B8383</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -743,13 +742,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>125EFF9B16820A5400FBAC45</string>
+				<string>1233731F16836645003B8383</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>125EFF9C16820A5400FBAC45</string>
-				<string>125EFF9D16820A5400FBAC45</string>
-				<string>125EFF9E16820A5400FBAC45</string>
-				<string>125EFF9F16820A5400FBAC45</string>
-				<string>125EFFA016820A5400FBAC45</string>
+				<string>1233732016836645003B8383</string>
+				<string>1233732116836645003B8383</string>
+				<string>1233732216836645003B8383</string>
+				<string>1233732316836645003B8383</string>
+				<string>1233732416836645003B8383</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -913,7 +912,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>125EFFA116820A5400FBAC45</string>
+				<string>1233732516836645003B8383</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

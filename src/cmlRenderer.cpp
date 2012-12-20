@@ -27,13 +27,13 @@ namespace cml
             cml::Config* config,
             OpticalDevice* proj, 
             OpticalDevice* depth, 
-            OpticalDevice* rgb,
-            bool *debug )
+            OpticalDevice* rgb )
     {
         this->proj = proj;
         this->depth = depth;
         this->rgb = rgb;
-        this->debug = debug;
+        
+        _debug = false;
 
         ofFbo::Settings s;
         s.width			    = config->tex_width;
@@ -58,7 +58,6 @@ namespace cml
         proj = NULL;
         depth = NULL;
         rgb = NULL;
-        debug = NULL;
     }
 
     void Renderer::render( cml::Events *ev, Mesh *mesh )
@@ -97,7 +96,7 @@ namespace cml
         gl_viewpoint();
         gl_scene_control();
 
-        if ( *debug )
+        if ( _debug )
         {
             render_world_CS();
             render_proj_CS();
@@ -143,8 +142,6 @@ namespace cml
         gl_ortho();
 
         ofNotifyEvent( ev->render_2d, ev->void_args );
-
-        render_screenlog();
     }
 
     // gl
@@ -326,18 +323,7 @@ namespace cml
 		glEnd();
 	}
 
-	void Renderer::render_screenlog()
-	{
-		if ( ! *debug) return;
-        ofEnableAlphaBlending();  
-        glColor4f(0, 0, 0, 0.7);
-        ofRect(0, ofGetHeight()-25, ofGetWidth(), 25);
-        glColor3f(1, 1, 1);
-		ofDrawBitmapString(_viewpoint_str()+" / fps: "+ofToString(ofGetFrameRate()), 10, ofGetHeight()-10);
-        ofDisableAlphaBlending(); 
-	}
-
-	string Renderer::_viewpoint_str()
+	string Renderer::get_viewpoint_info()
 	{
 		switch(_viewpoint)
 		{
@@ -357,7 +343,7 @@ namespace cml
 
 	void Renderer::mouseDragged(int x, int y, bool zoom)
 	{
-		if ( ! *debug) return;
+		if ( ! _debug) return;
 		
 		ofVec2f m = ofVec2f( x, y );
 		ofVec2f dist = m - pmouse;

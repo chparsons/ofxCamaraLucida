@@ -78,8 +78,8 @@ namespace cml
                         depth->width, depth->height,
                         config->tex_width, config->tex_height );
 
-                renderer = new Renderer( config, 
-                        proj, depth, rgb, &_debug );
+                renderer = new Renderer( 
+                        config, proj, depth, rgb );
 
                 d2m->init( depth, mesh );
 
@@ -104,12 +104,14 @@ namespace cml
             void render()
             {
                 renderer->render( &events, mesh );
+                render_screenlog();
                 render_help();
             };
 
             void toggle_debug()
             {
                 _debug = !_debug;
+                renderer->debug( _debug );
             };
 
             float tex_width() { return config->tex_width; };
@@ -225,6 +227,24 @@ namespace cml
             {
                 renderer->mouseDragged( args.x, args.y, 
                         pressed[key.scene_zoom] );
+            };
+
+            void render_screenlog()
+            {
+                if ( ! _debug ) return;
+
+                string view = renderer->get_viewpoint_info();
+                float fps = ofGetFrameRate();
+                int xoff = ((cml::Kinect*)depth)->get_xoff();
+                
+                ofEnableAlphaBlending();  
+                glColor4f(0, 0, 0, 0.7);
+                ofRect(0, ofGetHeight()-25, ofGetWidth(), 25);
+                glColor3f(1, 1, 1);
+                
+                ofDrawBitmapString( view+" / depth xoff: "+ofToString(xoff)+" / fps: "+ofToString(fps), 10, ofGetHeight()-10);
+                
+                ofDisableAlphaBlending(); 
             };
 
             void render_help()
