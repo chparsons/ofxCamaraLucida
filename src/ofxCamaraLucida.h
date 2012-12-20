@@ -42,9 +42,9 @@ namespace cml
                 render_texture( events.render_texture ),
                 render_3d( events.render_3d ),
                 render_2d( events.render_2d )
-        {
-            init( config_path, d2m );
-        };
+            {
+                init( config_path, d2m );
+            };
 
             ~CamaraLucida()
             {
