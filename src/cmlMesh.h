@@ -11,7 +11,7 @@ namespace cml
     {
         public:
 
-	        Mesh( int step, 
+            Mesh( int step, 
                     int depth_width, int depth_height,
                     int tex_width, int tex_height );
             ~Mesh();
@@ -23,7 +23,7 @@ namespace cml
             void set_vertex( int i, float x, float y, float z );
 
             int length() { return mesh_length; }; 
-            
+
             void to_depth(int mesh_idx, 
                     int *x_depth, int *y_depth, int *depth_idx);
 
@@ -62,12 +62,12 @@ namespace cml
                     int *x_depth, int *y_depth);
 
             void to_mesh_coord( int mesh_idx, 
-                                int *x_mesh, int *y_mesh);
+                    int *x_mesh, int *y_mesh);
 
             int to_depth_idx( int x_depth, int y_depth );
 
             //void to_mesh_coord(int x_depth, int y_depth, 
-                    //int *x_mesh, int *y_mesh);
+            //int *x_mesh, int *y_mesh);
 
             //int to_mesh_idx(int depth_idx);	
             //int to_mesh_idx(int x_mesh, int y_mesh);

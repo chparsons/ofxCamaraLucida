@@ -21,9 +21,9 @@ namespace cml
                 render_texture( events.render_texture ),
                 render_3d( events.render_3d ),
                 render_2d( events.render_2d )
-            {
-                init( config_path, d2m );
-            };
+        {
+            init( config_path, d2m );
+        };
 
             ~CamaraLucida()
             {
@@ -34,7 +34,7 @@ namespace cml
             {
                 this->d2m = d2m; 
                 this->config_path = config_path;
-                
+
                 xml.loadFile(config_path);
                 xml.pushTag("camaralucida");
 
@@ -69,7 +69,7 @@ namespace cml
             void dispose()
             {
                 dispose_events();
-                
+
                 delete config; config = NULL;
                 delete proj; proj = NULL;
                 delete depth; depth = NULL;
@@ -80,7 +80,7 @@ namespace cml
                 //d2m->dispose();
                 d2m = NULL;
             };
-            
+
             void render()
             {
                 renderer->render( &events, mesh );
@@ -142,7 +142,7 @@ namespace cml
 
                 key.debug = xml.getValue("debug","")[0];
                 key.help = xml.getValue("help","")[0];
-                    
+
                 key.xoff_inc = xml.getValue("depth_xoff:inc","")[0]; 
                 key.xoff_dec = xml.getValue("depth_xoff:dec","")[0];
 
@@ -169,7 +169,7 @@ namespace cml
 
                 if (!_debug) 
                     return;
- 
+
                 if (args.key == key.view_next)
                 {
                     renderer->next_view();        
