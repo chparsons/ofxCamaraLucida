@@ -98,7 +98,6 @@ namespace cml
                 delete renderer; renderer = NULL;
                 delete mesh; mesh = NULL;
 
-                //d2m->dispose();
                 d2m = NULL;
             };
 
@@ -115,8 +114,6 @@ namespace cml
 
             float tex_width() { return config->tex_width; };
             float tex_height() { return config->tex_height; };
-
-            // events 
 
             ofEvent<ofEventArgs>& render_texture;
             ofEvent<ofEventArgs>& render_3d;
@@ -172,6 +169,7 @@ namespace cml
 
                 key.scene_reset = xml.getValue("scene_ctrl:reset","")[0];
                 key.scene_zoom = xml.getValue("scene_ctrl:zoom","")[0];
+
                 xml.popTag();
             };
 
