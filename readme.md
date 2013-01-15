@@ -15,7 +15,7 @@ Credits:
 
 dependencies:  
 
-openframeworks 0073 
+openframeworks 0073   
 https://github.com/openframeworks/openFrameworks/commit/2d760973aeeb3df6b8dbb4a089239facfa071409
 
 example_ofxKinect  
