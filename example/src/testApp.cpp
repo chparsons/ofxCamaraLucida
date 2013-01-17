@@ -28,15 +28,13 @@ void testApp::setup()
 
 void testApp::update() 
 {	
-    if ( !kinect.isConnected() )
+    if ( ! kinect.isConnected() )
         return;
 
     kinect.update();
 
     if ( kinect.isFrameNew() )
-        return;
-
-    _d2m->update( kinect.getRawDepthPixels() );
+        _d2m->update( kinect.getRawDepthPixels() );
 }
 
 void testApp::draw() 
