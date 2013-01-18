@@ -276,6 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>12</integer>
 									<integer>11</integer>
 									<integer>10</integer>
 									<integer>9</integer>
@@ -331,13 +332,14 @@
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>1233732C168366B7003B8383</string>
+										<string>12A1A75516A9F37F002D57AE</string>
 										<key>history</key>
 										<array>
 											<string>12C09E6A167E8F3800C90FBE</string>
 											<string>125E014D16820F6C00FBAC45</string>
 											<string>12588614168361F3009F75C4</string>
-											<string>1258861F1683620C009F75C4</string>
+											<string>12A1A74416A9F2E2002D57AE</string>
+											<string>12A1A74516A9F2E2002D57AE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -395,9 +397,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>12337313168365B1003B8383</string>
+				<string>12A1A72F16A9F260002D57AE</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>12337314168365B1003B8383</string>
+				<string>12A1A73016A9F260002D57AE</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -535,11 +537,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1233732616836645003B8383</string>
-		<string>1233732716836645003B8383</string>
+		<string>12A1A75716A9F37F002D57AE</string>
+		<string>12A1A75816A9F37F002D57AE</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>12E31FAB1594BFFE00723F9A</string>
-		<string>/Users/chparsons/dev/openframeworks/git/addons/ofxCamaraLucida/example/camara_lucida_example.xcodeproj</string>
+		<string>/Users/chparsons/dev/openframeworks/fork/addons/ofxCamaraLucida/example/camara_lucida_example.xcodeproj</string>
 		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
@@ -559,12 +561,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>ofxCamaraLucida.h</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -620,7 +624,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>12E31FAB1594BFFE00723F9A</string>
-				<string>12337315168365B1003B8383</string>
+				<string>12A1A72B16A9F25F002D57AE</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -742,13 +746,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>1233731F16836645003B8383</string>
+				<string>12A1A73E16A9F2E1002D57AE</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>1233732016836645003B8383</string>
-				<string>1233732116836645003B8383</string>
-				<string>1233732216836645003B8383</string>
-				<string>1233732316836645003B8383</string>
-				<string>1233732416836645003B8383</string>
+				<string>12A1A73F16A9F2E1002D57AE</string>
+				<string>12A1A74016A9F2E1002D57AE</string>
+				<string>12A1A74116A9F2E1002D57AE</string>
+				<string>12A1A74216A9F2E1002D57AE</string>
+				<string>12A1A74316A9F2E1002D57AE</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -912,7 +916,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>1233732516836645003B8383</string>
+				<string>12A1A75616A9F37F002D57AE</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

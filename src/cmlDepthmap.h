@@ -26,13 +26,13 @@
 
 namespace cml 
 {
-    class Depth2Mesh
+    class Depthmap
     {
         public:
 
-            Depth2Mesh(){};
+            Depthmap(){};
 
-            virtual ~Depth2Mesh()
+            virtual ~Depthmap()
             {
                 dispose();
             };

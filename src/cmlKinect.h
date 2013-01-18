@@ -40,7 +40,7 @@ namespace cml
                 _zlut = new float[size];
                 for (int i = 0; i < size; i++) 
                 {
-                    _zlut[i] = raw_depth_to_mts(i);
+                    _zlut[i] = z_raw_to_mts(i);
                 }
             }; 
 
@@ -175,7 +175,7 @@ namespace cml
 
             //http://openkinect.org/wiki/Imaging_Information
             //http://nicolas.burrus.name/index.php/Research/KinectCalibration
-            float raw_depth_to_mts(uint16_t raw_depth)
+            float z_raw_to_mts(uint16_t raw_depth)
             {
                 raw_depth = CLAMP(raw_depth, 0, 1024); //5mts~
                 return k1 * tanf(((float)raw_depth/k2) + k3) - k4;

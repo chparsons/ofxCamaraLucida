@@ -21,19 +21,19 @@
 
 #pragma once
 
-#include "cmlDepth2Mesh.h"
+#include "cmlDepthmap.h"
 #include <XnOpenNI.h>
 #include <XnCppWrapper.h>
 #include <XnLog.h>
 
 namespace cml 
 {
-    class Depth2Mesh_openni : public Depth2Mesh
+    class Depthmap_openni : public Depthmap
     {
         public:
 
-            Depth2Mesh_openni();
-            ~Depth2Mesh_openni();
+            Depthmap_openni();
+            ~Depthmap_openni();
 
             void update( 
                     uint16_t *raw_depth_pix, 
@@ -62,11 +62,12 @@ namespace cml
                     XnVector3D p3d = _pts3d[i];
                     XnVector3D p2d = _pts2d[i];
 
-                    p3d.X *= 0.001;
-                    p3d.Y *= -0.001;
+                    // mm to mts
+                    //p3d.X *= 0.001;
+                    //p3d.Y *= -0.001;
                     p3d.Z *= 0.001;
 
-                    if (p3d.Z == 0) p3d.Z = get_base_depth_mts();
+                    if (p3d.Z == 0) p3d.Z = 5.;
 
                     float z = p3d.Z;
                     float x, y;

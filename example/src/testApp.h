@@ -4,7 +4,7 @@
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
 #include "ofxCamaraLucida.h"
-#include "cmlDepth2Mesh_freenect.h"
+#include "cmlDepthmap_freenect.h"
 #include <GLUT/glut.h>
 
 class testApp : public ofBaseApp 
@@ -25,7 +25,7 @@ class testApp : public ofBaseApp
         ofxKinect kinect;
 
         cml::CamaraLucida *_cml;
-        cml::Depth2Mesh_freenect *_d2m;
+        cml::Depthmap_freenect *_depthmap;
 
         void render_texture(ofEventArgs &args);
         void render_3d(ofEventArgs &args);

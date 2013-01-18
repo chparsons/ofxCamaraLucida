@@ -325,7 +325,7 @@
 		125E009616820A7000FBAC45 /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvShortImage.cpp; sourceTree = "<group>"; };
 		125E009716820A7000FBAC45 /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvShortImage.h; sourceTree = "<group>"; };
 		125E009816820A7000FBAC45 /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
-		125E013A16820CB100FBAC45 /* cmlDepth2Mesh_freenect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlDepth2Mesh_freenect.h; sourceTree = "<group>"; };
+		125E013A16820CB100FBAC45 /* cmlDepthmap_freenect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlDepthmap_freenect.h; sourceTree = "<group>"; };
 		125EFFAA16820A6F00FBAC45 /* cv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cv.h; sourceTree = "<group>"; };
 		125EFFAB16820A6F00FBAC45 /* cv.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cv.hpp; sourceTree = "<group>"; };
 		125EFFAC16820A6F00FBAC45 /* cvaux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cvaux.h; sourceTree = "<group>"; };
@@ -402,7 +402,7 @@
 		125EFFFD16820A6F00FBAC45 /* streams.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = streams.hpp; sourceTree = "<group>"; };
 		125EFFFF16820A6F00FBAC45 /* ml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ml.hpp; sourceTree = "<group>"; };
 		12C09DCF167E73AC00C90FBE /* cmlCalibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlCalibration.h; sourceTree = "<group>"; };
-		12C09DD0167E73AC00C90FBE /* cmlDepth2Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlDepth2Mesh.h; sourceTree = "<group>"; };
+		12C09DD0167E73AC00C90FBE /* cmlDepthmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlDepthmap.h; sourceTree = "<group>"; };
 		12C09DD1167E73AC00C90FBE /* cmlKinect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlKinect.h; sourceTree = "<group>"; };
 		12C09DD2167E73AC00C90FBE /* cmlMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh.cpp; sourceTree = "<group>"; };
 		12C09DD3167E73AC00C90FBE /* cmlMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh.h; sourceTree = "<group>"; };
@@ -840,7 +840,7 @@
 		125E013916820CB100FBAC45 /* freenect */ = {
 			isa = PBXGroup;
 			children = (
-				125E013A16820CB100FBAC45 /* cmlDepth2Mesh_freenect.h */,
+				125E013A16820CB100FBAC45 /* cmlDepthmap_freenect.h */,
 			);
 			path = freenect;
 			sourceTree = "<group>";
@@ -1067,7 +1067,7 @@
 			children = (
 				125E013916820CB100FBAC45 /* freenect */,
 				12C09DCF167E73AC00C90FBE /* cmlCalibration.h */,
-				12C09DD0167E73AC00C90FBE /* cmlDepth2Mesh.h */,
+				12C09DD0167E73AC00C90FBE /* cmlDepthmap.h */,
 				12C09DD1167E73AC00C90FBE /* cmlKinect.h */,
 				12C09DD2167E73AC00C90FBE /* cmlMesh.cpp */,
 				12C09DD3167E73AC00C90FBE /* cmlMesh.h */,

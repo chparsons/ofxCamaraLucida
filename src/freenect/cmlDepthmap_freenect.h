@@ -21,16 +21,16 @@
 
 #pragma once
 
-#include "cmlDepth2Mesh.h"
+#include "cmlDepthmap.h"
 
 namespace cml 
 {
-    class Depth2Mesh_freenect : public Depth2Mesh
+    class Depthmap_freenect : public Depthmap
     {
         public:
 
-            Depth2Mesh_freenect(){};
-            ~Depth2Mesh_freenect(){};
+            Depthmap_freenect(){};
+            ~Depthmap_freenect(){};
 
             void update( uint16_t *raw_depth_pix ) 
             {
@@ -45,6 +45,7 @@ namespace cml
                     //float z = ((cml::Kinect*)depth)->z_mts(raw_depth);
 
                     // ofxKinect gives raw depth as distance in mm
+                    // mm to mts
                     float z = raw_depth_pix[idepth] * 0.001;
                     z = CLAMP((z == 0. ? 5. : z), 0., 5.);
 

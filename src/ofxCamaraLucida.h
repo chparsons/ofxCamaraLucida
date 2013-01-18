@@ -29,7 +29,7 @@
 #include "cmlKinect.h"
 #include "cmlCalibration.h"
 #include "cmlMesh.h"
-#include "cmlDepth2Mesh.h"
+#include "cmlDepthmap.h"
 #include "cmlRenderer.h"
 
 namespace cml
@@ -38,12 +38,12 @@ namespace cml
     {
         public:
 
-            CamaraLucida( string config_path, Depth2Mesh* d2m ) : 
+            CamaraLucida(string config_path, Depthmap* depthmap) : 
                 render_texture( events.render_texture ),
                 render_3d( events.render_3d ),
                 render_2d( events.render_2d )
             {
-                init( config_path, d2m );
+                init( config_path, depthmap );
             };
 
             ~CamaraLucida()
@@ -51,15 +51,15 @@ namespace cml
                 dispose(); 
             };
 
-            void init( string config_path, Depth2Mesh* d2m )
+            void init( string config_path, Depthmap* depthmap )
             {
-                this->d2m = d2m; 
+                this->depthmap = depthmap; 
                 this->config_path = config_path;
 
                 xml.loadFile(config_path);
                 xml.pushTag("camaralucida");
 
-                int k_xoff = xml.getValue("depth_xoff", -8); 
+                int dxoff = xml.getValue("depth_xoff", -8); 
 
                 init_keys(); 
                 init_events();
@@ -69,8 +69,7 @@ namespace cml
                 Calibration calib( config ); 
 
                 proj = new OpticalDevice( calib.proj_config() );
-                depth = new cml::Kinect( 
-                        calib.depth_config(), k_xoff );
+                depth = new cml::Kinect( calib.depth_config(), dxoff );
                 rgb = new OpticalDevice( calib.rgb_config() );
 
                 mesh = new Mesh( 
@@ -78,10 +77,9 @@ namespace cml
                         depth->width, depth->height,
                         config->tex_width, config->tex_height );
 
-                renderer = new Renderer( 
-                        config, proj, depth, rgb );
+                renderer = new Renderer(config, proj, depth, rgb);
 
-                d2m->init( depth, mesh );
+                depthmap->init( depth, mesh );
 
                 _debug = false;
                 _render_help = false;
@@ -98,7 +96,7 @@ namespace cml
                 delete renderer; renderer = NULL;
                 delete mesh; mesh = NULL;
 
-                d2m = NULL;
+                depthmap = NULL;
             };
 
             void render()
@@ -123,7 +121,7 @@ namespace cml
 
         private:
 
-            Depth2Mesh* d2m;
+            Depthmap* depthmap;
 
             cml::Events events;
             OpticalDevice* proj;
