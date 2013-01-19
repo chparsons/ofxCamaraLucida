@@ -75,7 +75,9 @@ void testApp::render_3d(ofEventArgs &args)
 void testApp::render_2d(ofEventArgs &args)
 {
     ofSetColor(255, 255, 255);
+
     kinect.drawDepth(10, 15, 200, 150);
+    
     ofDrawBitmapString("press h for help",10,10);
 }
 

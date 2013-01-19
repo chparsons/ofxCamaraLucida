@@ -32,14 +32,15 @@ namespace cml
     {
         public:
 
-            Depthmap_openni();
-            ~Depthmap_openni();
+            Depthmap_openni(){};
+            ~Depthmap_openni(){};
 
             void update( 
-                    uint16_t *raw_depth_pix, 
-                    xn::DepthGenerator *depth_generator ) 
+                    uint16_t *raw_depth_pix,
+                    xn::DepthGenerator depth_generator )
             {
-                //const XnDepthPixel* depth_map = depth_generator->GetDepthMap(); 
+                //const XnDepthPixel* _map = depth_generator.GetDepthMap(); 
+                //uint16_t *raw_depth_pix = (uint16_t*)_map;
 
                 int len = mesh->length();
 
@@ -55,7 +56,7 @@ namespace cml
                 }
 
                 XnPoint3D _pts3d[len];
-                depth_generator->ConvertProjectiveToRealWorld( len, _pts2d, _pts3d ); 
+                depth_generator.ConvertProjectiveToRealWorld( len, _pts2d, _pts3d ); 
 
                 for (int i = 0; i < len; i++)
                 {
