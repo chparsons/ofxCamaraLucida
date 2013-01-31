@@ -18,11 +18,11 @@ dependencies:
 openframeworks 0073   
 https://github.com/openframeworks/openFrameworks/commit/2d760973aeeb3df6b8dbb4a089239facfa071409
 
-example_ofxKinect  
+example  
 chparsons/ofxKinect  
 https://github.com/chparsons/ofxKinect
 
-example_ofxOpenNI  
+example_openni  
 ofxOpenNI  
-https://github.com/gameoverhack/ofxOpenNI/commit/72dbf239fd8c6e8adbb390ddb4ffbe77a5125965  
+https://github.com/gameoverhack/ofxOpenNI  
 
