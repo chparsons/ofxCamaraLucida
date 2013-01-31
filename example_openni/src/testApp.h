@@ -2,9 +2,9 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
-#include "ofxKinect.h"
+#include "ofxOpenNI.h"
 #include "ofxCamaraLucida.h"
-#include "cmlDepthmap_freenect.h"
+#include "cmlDepthmap_openni.h"
 #include <GLUT/glut.h>
 
 class testApp : public ofBaseApp 
@@ -22,10 +22,10 @@ class testApp : public ofBaseApp
         void mouseReleased(int x, int y, int button);
         void windowResized(int w, int h);
 
-        ofxKinect kinect;
+        ofxOpenNI openNI;
 
-        cml::CamaraLucida *cml;
-        cml::Depthmap_freenect *depthmap;
+        cml::CamaraLucida *_cml;
+        cml::Depthmap_openni *_depthmap;
 
         void render_texture(ofEventArgs &args);
         void render_3d(ofEventArgs &args);

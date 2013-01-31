@@ -1,53 +1,44 @@
 // !$*UTF8*$!
 {
-	1253AF7216BB0BFF00272C3B /* cmlCalibration.cpp */ = {
+	1253B00816BB147B00272C3B /* cmlMesh.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 3178}}";
-			sepNavSelRange = "{5148, 0}";
-			sepNavVisRange = "{5023, 273}";
+			sepNavIntBoundsRect = "{{0, 0}, {26, 1400}}";
+			sepNavSelRange = "{1790, 0}";
+			sepNavVisRange = "{0, 0}";
 		};
 	};
-	1253AF7516BB0BFF00272C3B /* cmlCamaraLucida.h */ = {
+	1253B02116BB159C00272C3B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1253B00816BB147B00272C3B /* cmlMesh.h */;
+		name = "cmlMesh.h: 70";
+		rLen = 0;
+		rLoc = 1790;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	12A1A78916A9F5A9002D57AE /* cmlMesh.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = cmlMesh.h;
+		path = /Users/chparsons/dev/openframeworks/fork/addons/ofxCamaraLucida/src/cmlMesh.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 1666}}";
-			sepNavSelRange = "{1127, 0}";
-			sepNavVisRange = "{1076, 323}";
+			sepNavIntBoundsRect = "{{0, 0}, {26, 1400}}";
+			sepNavSelRange = "{1790, 0}";
+			sepNavVisRange = "{0, 0}";
 		};
 	};
-	1253AF7716BB0BFF00272C3B /* cmlDepthmap.cpp */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 1288}}";
-			sepNavSelRange = "{880, 37}";
-			sepNavVisRange = "{839, 234}";
-		};
-	};
-	1253AF7816BB0BFF00272C3B /* cmlDepthmap.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 1036}}";
-			sepNavSelRange = "{1719, 0}";
-			sepNavVisRange = "{1098, 334}";
-		};
-	};
-	1253AF7B16BB0BFF00272C3B /* cmlKinect.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 1106}}";
-			sepNavSelRange = "{2227, 0}";
-			sepNavVisRange = "{507, 308}";
-		};
-	};
-	1253AF7E16BB0BFF00272C3B /* cmlOpticalDevice.cpp */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 2590}}";
-			sepNavSelRange = "{4442, 49}";
-			sepNavVisRange = "{4345, 286}";
-		};
-	};
-	1253AF7F16BB0BFF00272C3B /* cmlOpticalDevice.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 1316}}";
-			sepNavSelRange = "{1028, 0}";
-			sepNavVisRange = "{846, 298}";
-		};
+	12A1A8A716AB53BB002D57AE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 12A1A78916A9F5A9002D57AE /* cmlMesh.h */;
+		name = "cmlMesh.h: 70";
+		rLen = 0;
+		rLoc = 1790;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
 	};
 	12E31F851594BFFB00723F9A /* camara_lucida_example */ = {
 		isa = PBXExecutable;
@@ -129,8 +120,12 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 381357001;
-			PBXWorkspaceStateSaveDate = 381357001;
+			PBXPerProjectTemplateStateSaveDate = 381359209;
+			PBXWorkspaceStateSaveDate = 381359209;
+		};
+		perUserProjectItems = {
+			1253B02116BB159C00272C3B /* PBXTextBookmark */ = 1253B02116BB159C00272C3B /* PBXTextBookmark */;
+			12A1A8A716AB53BB002D57AE /* PBXTextBookmark */ = 12A1A8A716AB53BB002D57AE /* PBXTextBookmark */;
 		};
 		sourceControlManager = 12E31FAD1594BFFE00723F9A /* Source Control */;
 		userBuildSettings = {
@@ -144,9 +139,9 @@
 	};
 	E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {705, 1680}}";
-			sepNavSelRange = "{598, 0}";
-			sepNavVisRange = "{445, 364}";
+			sepNavIntBoundsRect = "{{0, 0}, {705, 1666}}";
+			sepNavSelRange = "{445, 0}";
+			sepNavVisRange = "{389, 421}";
 		};
 	};
 	E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {

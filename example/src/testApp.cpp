@@ -16,13 +16,12 @@ void testApp::setup()
     kinect.open();
 
     string config = ofToDataPath("camara_lucida/config.xml");
+    depthmap = new cml::Depthmap_freenect();
+    cml = new cml::CamaraLucida( config, depthmap );
 
-    _depthmap = new cml::Depthmap_freenect();
-    _cml = new cml::CamaraLucida( config, _depthmap );
-
-    ofAddListener(_cml->render_texture, this, &testApp::render_texture);
-    ofAddListener(_cml->render_3d, this, &testApp::render_3d);
-    ofAddListener(_cml->render_2d, this, &testApp::render_2d);
+    ofAddListener(cml->render_texture, this, &testApp::render_texture);
+    ofAddListener(cml->render_3d, this, &testApp::render_3d);
+    ofAddListener(cml->render_2d, this, &testApp::render_2d);
 
 }
 
@@ -34,12 +33,12 @@ void testApp::update()
     kinect.update();
 
     if ( kinect.isFrameNew() )
-        _depthmap->update( kinect.getRawDepthPixels() );
+        depthmap->update( kinect.getRawDepthPixels() );
 }
 
 void testApp::draw() 
 {    
-    _cml->render(); 
+    cml->render(); 
 }
 
 void testApp::render_texture(ofEventArgs &args)
@@ -47,8 +46,8 @@ void testApp::render_texture(ofEventArgs &args)
     glClearColor(0.5, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    float w = _cml->tex_width();
-    float h = _cml->tex_height();
+    float w = cml->tex_width();
+    float h = cml->tex_height();
 
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
@@ -85,21 +84,15 @@ void testApp::exit()
 {
     ofLog(OF_LOG_VERBOSE, "exit!");
 
-    ofRemoveListener(_cml->render_texture, this, &testApp::render_texture);
-    ofRemoveListener(_cml->render_3d, this, &testApp::render_3d);
-    ofRemoveListener(_cml->render_2d, this, &testApp::render_2d);
+    ofRemoveListener(cml->render_texture, this, &testApp::render_texture);
+    ofRemoveListener(cml->render_3d, this, &testApp::render_3d);
+    ofRemoveListener(cml->render_2d, this, &testApp::render_2d);
 
-    _cml->dispose();
-    _depthmap->dispose();
-
+    cml->dispose();
+    depthmap->dispose();
+    
     kinect.close();
 }
-
-//void testApp::init_keys()
-//{
-//for (int i = 0; i < 512; i++) 
-//pressed[i] = false;
-//}
 
 void testApp::keyPressed (int key) 
 {

@@ -30,29 +30,36 @@ namespace cml
     {
         public:
 
-            Depthmap(){};
+            Depthmap();
+            virtual ~Depthmap();
 
-            virtual ~Depthmap()
-            {
-                dispose();
-            };
+            virtual void init( 
+                    cml::OpticalDevice* depth, Mesh* mesh );
+            virtual void dispose();
 
-            virtual void init( OpticalDevice* depth, Mesh* mesh )
-            {
-                this->depth = depth;
-                this->mesh = mesh;
-            };
-
-            virtual void dispose()
-            {
-                depth = NULL;
-                mesh = NULL;
-            };
+            /*
+             * float texture in range [0,1]
+             * mapped from [mm_near,mm_far]
+             * to pass to glsl
+             */
+            ofTexture& get_float_tex_ref( 
+                    uint16_t *mm_depth_pix, 
+                    float mm_near, float mm_far );
 
         protected:
 
-            OpticalDevice* depth;
+            cml::OpticalDevice* depth;
             Mesh* mesh;
+
+        private:
+            
+            void init_float_tex( 
+                    int w, int h, 
+                    float mm_near, float mm_far );
+
+            ofTexture float_tex;
+            ofFloatPixels float_pix;
+            float *zlut_mm2f;
     };
 };
 

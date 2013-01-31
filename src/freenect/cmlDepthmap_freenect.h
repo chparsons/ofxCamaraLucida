@@ -32,7 +32,7 @@ namespace cml
             Depthmap_freenect(){};
             ~Depthmap_freenect(){};
 
-            void update( uint16_t *raw_depth_pix ) 
+            void update( uint16_t *mm_depth_pix ) 
             {
                 int len = mesh->length();
 
@@ -42,11 +42,11 @@ namespace cml
                     mesh->to_depth( i, &xdepth, &ydepth, &idepth );
 
                     //uint16_t raw_depth = raw_depth_pix[idepth];
-                    //float z = ((cml::Kinect*)depth)->z_mts(raw_depth);
+                    //float z = depth->z_mts(raw_depth);
 
                     // ofxKinect gives raw depth as distance in mm
                     // mm to mts
-                    float z = raw_depth_pix[idepth] * 0.001;
+                    float z = mm_depth_pix[idepth] * 0.001;
                     z = CLAMP((z == 0. ? 5. : z), 0., 5.);
 
                     float x, y;

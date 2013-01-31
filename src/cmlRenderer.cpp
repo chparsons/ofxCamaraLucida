@@ -46,7 +46,7 @@ namespace cml
         //shader.load(config->render_shader_path);
 
 		init_gl_scene_control();
-    };
+    }
 
     Renderer::~Renderer()
     {
