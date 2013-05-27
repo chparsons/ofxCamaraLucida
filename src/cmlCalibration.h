@@ -27,40 +27,29 @@
 
 namespace cml
 {
-    class Calibration
-    {
-        public:
+  class Calibration
+  {
+    public:
 
-            Calibration( cml::Config *cml_config );
-            ~Calibration();
+      Calibration( 
+          cml::Config *cml_config,
+          OpticalDevice::Config& proj_cfg,
+          OpticalDevice::Config& depth_cfg,
+          OpticalDevice::Config& rgb_cfg
+          );
+      ~Calibration();
 
-            OpticalDevice::Config& proj_config();
-            OpticalDevice::Config& depth_config();
-            OpticalDevice::Config& rgb_config();
+    private:
 
-        private:
+      void device_config( 
+          string calib_path, 
+          string int_id,
+          string size_id,
+          string R_id, string T_id, 
+          OpticalDevice::Config& dev_config );
 
-            OpticalDevice::Config proj_cfg;
-            OpticalDevice::Config depth_cfg;
-            OpticalDevice::Config rgb_cfg;
-            
-            float near, far;
-
-            void device_config( 
-                    OpticalDevice::Config *dev_config,
-                    string calib_path, 
-                    string int_id,
-                    string size_id,
-                    string R_id, string T_id );
-
-            void device_config(  
-                    OpticalDevice::Config *dev_config,
-                    CvMat* _size, 
-                    CvMat* _int, 
-                    CvMat* _R, CvMat* _T );
-
-            void printM( CvMat* M, bool colmajor = true );
-    };
+      void printM( CvMat* M, 
+          bool colmajor = true );
+  };
 };
-
 

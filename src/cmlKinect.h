@@ -25,55 +25,40 @@
 
 namespace cml
 {
-    class Kinect : public OpticalDevice
-    {
-        public:
+  class Kinect : public OpticalDevice
+  {
+    public:
 
-            Kinect(const OpticalDevice::Config& config, int xoff); 
+      Kinect(
+        const OpticalDevice::Config& config ); 
 
-            ~Kinect();
+      ~Kinect();
 
-            void unproject( 
-                    int x2d, int y2d, float z, float *x, float *y);
-            void unproject(
-                    int x2d, int y2d, float z, ofVec2f *p2);
-            ofVec2f unproject(
-                    int x2d, int y2d, float z);
+      float z_mts( uint16_t raw_depth );
+      float z_mts( uint16_t *raw_depth_pix, int _x, int _y );
 
-            void project(const ofVec3f& p3, float *x, float *y);
-            ofVec2f project(const ofVec3f& p3);
+      void raw_depth_to_p3( 
+          uint16_t *raw_depth_pix, 
+          int _x, int _y, ofVec3f *p3 );
 
-            float z_mts(uint16_t raw_depth);
-            float z_mts(uint16_t *raw_depth_pix, int _x, int _y);
+      ofVec3f raw_depth_to_p3( 
+          uint16_t *raw_depth_pix, 
+          int _x, int _y );
 
-            void raw_depth_to_p3( 
-                    uint16_t *raw_depth_pix, 
-                    int _x, int _y, ofVec3f *p3);
-            
-            ofVec3f raw_depth_to_p3( 
-                    uint16_t *raw_depth_pix, 
-                    int _x, int _y);
+      void raw_depth_to_p3( 
+          uint16_t raw_depth, 
+          int _x, int _y, ofVec3f *p3 );
 
-            void raw_depth_to_p3( 
-                    uint16_t raw_depth, 
-                    int _x, int _y, ofVec3f *p3); 
+      ofVec3f raw_depth_to_p3( 
+          uint16_t raw_depth, 
+          int _x, int _y );
 
-            ofVec3f raw_depth_to_p3( 
-                    uint16_t raw_depth, 
-                    int _x, int _y);
+    private:
 
-            void change_xoff( int val );
-            int get_xoff();
+      float *_zlut;
 
-        private:
-
-            float k1, k2, k3, k4;
-
-            float *_zlut;
-            int xoff;
-
-            float z_raw_to_mts(uint16_t raw_depth); 
-    };
+      float z_raw_to_mts( uint16_t raw_depth ); 
+  };
 };
 
 

@@ -34,74 +34,94 @@
 
 namespace cml
 {
-    class CamaraLucida
-    {
-        public:
+  class CamaraLucida
+  {
+    public:
 
-            CamaraLucida(string config_path, Depthmap* depthmap);
+      CamaraLucida(
+          string config_path, 
+          Depthmap* depthmap );
 
-            ~CamaraLucida();
+      ~CamaraLucida();
 
-            void dispose();
-            void render();
+      void dispose();
+      void render();
 
-            void toggle_debug();
+      void wireframe( bool _wire )
+      {
+        _wireframe = _wire;
+      };
 
-            float tex_width();
-            float tex_height();
+      bool wireframe()
+      {
+        return _wireframe;
+      };
 
-            ofEvent<ofEventArgs>& render_texture;
-            ofEvent<ofEventArgs>& render_3d;
-            ofEvent<ofEventArgs>& render_2d;
+      void toggle_debug();
 
-        private:
+      float tex_width();
+      float tex_height();
 
-            void init( string config_path, Depthmap* depthmap );
+      OpticalDevice::Config depth_config() 
+      {
+        return depth->config();
+      };
 
-            Depthmap* depthmap;
+      ofEvent<ofEventArgs>& render_texture;
+      ofEvent<ofEventArgs>& render_3d;
+      ofEvent<ofEventArgs>& render_2d;
 
-            cml::Events events;
-            OpticalDevice* proj;
-            cml::Kinect* depth;
-            OpticalDevice* rgb;
-            Renderer* renderer;
-            Mesh* mesh;
+    private:
 
-            Config *config;
-            ofxXmlSettings xml;
-            string config_path;
+      void init( 
+          string config_path, 
+          Depthmap* depthmap );
 
-            bool _debug;
-            bool _render_help;
-            bool pressed[512];
+      Depthmap* depthmap;
 
-            struct Key
-            {
-                char debug;
-                char help;
-                char view_next;
-                char view_prev;
-                char scene_reset;
-                char scene_zoom;
-                char xoff_inc;
-                char xoff_dec; 
-            };
-            Key key;
+      cml::Events events;
+      cml::Kinect* depth;
+      OpticalDevice* proj;
+      OpticalDevice* rgb;
+      Renderer* renderer;
+      Mesh* mesh;
 
-            void init_keys();
+      Config* config;
+      ofxXmlSettings xml;
+      string config_path;
 
-            void keyPressed(ofKeyEventArgs &args);
-            void keyReleased(ofKeyEventArgs &args);
+      bool _wireframe;
+      bool _debug;
+      bool _render_help;
+      bool pressed[512];
 
-            void mousePressed(ofMouseEventArgs &args);
-            void mouseDragged(ofMouseEventArgs &args);
+      struct Key
+      {
+        char debug;
+        char help;
+        char view_next;
+        char view_prev;
+        char scene_reset;
+        char scene_zoom;
+        char xoff_inc;
+        char xoff_dec; 
+      };
+      Key key;
 
-            void render_screenlog();
-            void render_help();
+      void init_keys();
 
-            void init_events();
-            void dispose_events();
-    };
+      void keyPressed(ofKeyEventArgs &args);
+      void keyReleased(ofKeyEventArgs &args);
+
+      void mousePressed(ofMouseEventArgs &args);
+      void mouseDragged(ofMouseEventArgs &args);
+
+      void render_screenlog();
+      void render_help();
+
+      void init_events();
+      void dispose_events();
+  };
 };
 
 

@@ -29,75 +29,80 @@
 
 namespace cml
 {
-    class Renderer
-    {
-        public:
+  class Renderer
+  {
+    public:
 
-            Renderer( 
-                cml::Config* config,
-                OpticalDevice* proj, 
-                OpticalDevice* depth, 
-                OpticalDevice* rgb
-            );
-            ~Renderer();
+      Renderer( 
+          cml::Config* config,
+          OpticalDevice* proj, 
+          OpticalDevice* depth, 
+          OpticalDevice* rgb
+          );
+      ~Renderer();
 
-            void render( cml::Events *ev, Mesh *mesh );
-            void dispose();
-            
-            void reset_scene();
-            void next_view();
-            void prev_view();
-            string get_viewpoint_info();
+      void render(
+          cml::Events *ev, 
+          Mesh *mesh,
+          bool wireframe );
 
-	        void mouseDragged(int x, int y, bool zoom);
-	        void mousePressed(int x, int y);
+      void dispose();
 
-            void debug( bool val ) { _debug = val; };
+      void reset_scene();
+      void next_view();
+      void prev_view();
+      string get_viewpoint_info();
 
-        private:
+      void mouseDragged(int x,int y,bool zoom);
+      void mousePressed(int x, int y);
 
-            bool _debug;
+      void debug( bool val ) { _debug = val; };
 
-            OpticalDevice* proj;
-            OpticalDevice* depth;
-            OpticalDevice* rgb;
+    private:
 
-            ofShader shader;
-            ofFbo fbo;
+      bool _debug;
 
-            // gl
+      OpticalDevice* proj;
+      OpticalDevice* depth;
+      OpticalDevice* rgb;
 
-            void gl_ortho();
-            void gl_projection();
-            void gl_viewpoint();
+      ofShader shader;
+      ofFbo fbo;
 
-            // debug
+      // gl
 
-            void render_proj_ppal_point();
-            void render_world_CS();
-            void render_proj_CS();
-            void render_rgb_CS();
-            void render_axis(float s);
+      void gl_ortho();
+      void gl_projection();
+      void gl_viewpoint();
 
-            // scene control
+      // debug
 
-            void gl_scene_control();
-            void init_gl_scene_control();
+      void render_proj_ppal_point();
+      void render_world_CS();
+      void render_depth_CS();
+      void render_proj_CS();
+      void render_rgb_CS();
+      void render_axis(float s);
 
-            ofVec2f pmouse; 
-            ofVec3f rot_pivot;
-            float tZ, rotX, rotY, rotZ;
-            float tZini, rotXini, rotYini, rotZini;
-            float tZ_delta, rot_delta;
+      // scene control
 
-            // ui
+      void gl_scene_control();
+      void init_gl_scene_control();
 
-            enum ViewpointType
-            {
-                V_DEPTH, V_PROJ, V_RGB, V_LENGTH
-            };
-            int _viewpoint;
-    };
+      ofVec2f pmouse; 
+      ofVec3f rot_pivot;
+      float tZ, rotX, rotY, rotZ;
+      float tZini, rotXini, rotYini, rotZini;
+      float tZ_delta, rot_delta;
+
+      // ui
+
+      enum ViewpointType
+      {
+        V_DEPTH, V_PROJ, V_RGB, V_LENGTH
+      };
+      int _viewpoint;
+  };
 };
 
 

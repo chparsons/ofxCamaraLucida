@@ -23,233 +23,237 @@
 
 namespace cml
 {
-    CamaraLucida::CamaraLucida(
-            string config_path, Depthmap* depthmap ) : 
-        render_texture( events.render_texture ),
-        render_3d( events.render_3d ),
-        render_2d( events.render_2d )
+  CamaraLucida::CamaraLucida(
+    string config_path, Depthmap* depthmap ) : 
+    render_texture( events.render_texture ),
+    render_3d( events.render_3d ),
+    render_2d( events.render_2d )
+  {
+    init( config_path, depthmap );
+  };
+
+  CamaraLucida::~CamaraLucida(){}; 
+
+  void CamaraLucida::dispose()
+  {
+    ofLog(OF_LOG_VERBOSE,
+        "cml::CamaraLucida::dispose");
+
+    dispose_events();
+
+    //delete config; config = NULL;
+    delete proj; proj = NULL;
+    delete depth; depth = NULL;
+    delete rgb; rgb = NULL;
+    delete renderer; renderer = NULL;
+    delete mesh; mesh = NULL;
+
+    depthmap = NULL;
+  };
+
+  void CamaraLucida::render()
+  {
+    renderer->render( 
+        &events, mesh, wireframe() );
+    render_screenlog();
+    render_help();
+  };
+      
+  void CamaraLucida::toggle_debug()
+  {
+    _debug = !_debug;
+    renderer->debug( _debug );
+  };
+
+  float CamaraLucida::tex_width() 
+  { 
+    return config->tex_width; 
+  };
+
+  float CamaraLucida::tex_height() 
+  { 
+    return config->tex_height; 
+  };
+
+  void CamaraLucida::init( 
+      string config_path, Depthmap* depthmap )
+  {
+    ofLog(OF_LOG_VERBOSE,
+        "cml::CamaraLucida::init");
+
+    this->depthmap = depthmap; 
+    this->config_path = config_path;
+
+    xml.loadFile(config_path);
+    xml.pushTag("camaralucida");
+
+    init_keys(); 
+    init_events();
+
+    config = new Config( &xml );
+
+    OpticalDevice::Config proj_cfg;
+    OpticalDevice::Config depth_cfg;
+    OpticalDevice::Config rgb_cfg;
+
+    Calibration calib( 
+        config, proj_cfg, depth_cfg, rgb_cfg ); 
+
+    proj = new OpticalDevice( proj_cfg );
+    depth = new cml::Kinect( depth_cfg );
+    rgb = new OpticalDevice( rgb_cfg );
+
+    mesh = new Mesh( 
+      config->mesh_step, 
+      depth->width(), depth->height(),
+      config->tex_width, config->tex_height );
+
+    renderer = new Renderer(
+        config, proj, depth, rgb );
+
+    depthmap->init( depth, mesh );
+
+    _wireframe = false;
+    _debug = false;
+    _render_help = false;
+  };
+
+  void CamaraLucida::init_keys()
+  {
+    for (int i = 0; i < 512; i++) 
+      pressed[i] = false;
+
+    xml.pushTag( "ui" );
+
+    key.debug = xml.getValue("debug","")[0];
+    key.help = xml.getValue("help","")[0];
+
+    key.view_next = xml.getValue(
+        "viewpoint:next","")[0];
+    key.view_prev = xml.getValue(
+        "viewpoint:prev","")[0];
+
+    key.scene_reset = xml.getValue(
+        "scene_ctrl:reset","")[0];
+    key.scene_zoom = xml.getValue(
+        "scene_ctrl:zoom","")[0];
+
+    xml.popTag();
+  };
+
+  void CamaraLucida::keyPressed(ofKeyEventArgs &args)
+  {
+    pressed[args.key] = true;
+
+    if (args.key == key.debug)
     {
-        init( config_path, depthmap );
-    };
-
-    CamaraLucida::~CamaraLucida(){}; 
-
-    void CamaraLucida::dispose()
+      toggle_debug();
+    }
+    else if (args.key == key.help)
     {
-        ofLog(OF_LOG_VERBOSE,"cml::CamaraLucida::dispose");
+      _render_help = !_render_help;
+    }
 
-        dispose_events();
+    if ( ! _debug ) 
+      return;
 
-        delete config; config = NULL;
-        delete proj; proj = NULL;
-        delete depth; depth = NULL;
-        delete rgb; rgb = NULL;
-        delete renderer; renderer = NULL;
-        delete mesh; mesh = NULL;
-
-        depthmap = NULL;
-    };
-
-    void CamaraLucida::render()
+    if (args.key == key.view_next)
     {
-        renderer->render( &events, mesh );
-        render_screenlog();
-        render_help();
-    };
-
-    void CamaraLucida::toggle_debug()
+      renderer->next_view();        
+    }
+    else if (args.key == key.view_prev)
     {
-        _debug = !_debug;
-        renderer->debug( _debug );
-    };
-
-    float CamaraLucida::tex_width() 
-    { 
-        return config->tex_width; 
-    };
-    
-    float CamaraLucida::tex_height() 
-    { 
-        return config->tex_height; 
-    };
-
-    void CamaraLucida::init( 
-            string config_path, Depthmap* depthmap )
+      renderer->prev_view(); 
+    }
+    else if (args.key == key.scene_reset)
     {
-        this->depthmap = depthmap; 
-        this->config_path = config_path;
+      renderer->reset_scene();
+    }
+  };
 
-        xml.loadFile(config_path);
-        xml.pushTag("camaralucida");
+  void CamaraLucida::keyReleased(ofKeyEventArgs &args)
+  {
+    pressed[args.key] = false;
+  };
 
-        int dxoff = xml.getValue("depth_xoff", -8); 
+  void CamaraLucida::mousePressed(ofMouseEventArgs &args)
+  {
+    renderer->mousePressed( args.x, args.y );
+  };
 
-        init_keys(); 
-        init_events();
+  void CamaraLucida::mouseDragged(ofMouseEventArgs &args)
+  {
+    renderer->mouseDragged( args.x, args.y, 
+        pressed[key.scene_zoom] );
+  };
 
-        config = new Config( &xml );
+  void CamaraLucida::render_screenlog()
+  {
+    if ( ! _debug ) return;
 
-        Calibration calib( config ); 
+    string view = renderer->get_viewpoint_info();
+    float fps = ofGetFrameRate();
 
-        proj = new OpticalDevice( calib.proj_config() );
-        depth = new cml::Kinect( calib.depth_config(), dxoff );
-        rgb = new OpticalDevice( calib.rgb_config() );
+    ofEnableAlphaBlending();  
+    glColor4f(0, 0, 0, 0.7);
+    ofRect(0, 
+        ofGetHeight()-25, 
+        ofGetWidth(), 25);
+    glColor3f(1, 1, 1);
 
-        mesh = new Mesh( 
-                config->mesh_step, 
-                depth->width(), depth->height(),
-                config->tex_width, config->tex_height );
+    ofDrawBitmapString( view+" / fps: "+ofToString(fps), 10, ofGetHeight()-10);
 
-        renderer = new Renderer(config, proj, depth, rgb);
+    ofDisableAlphaBlending(); 
+  };
 
-        depthmap->init( depth, mesh );
+  void CamaraLucida::render_help()
+  {
+    if ( ! _render_help ) return;
 
-        _debug = false;
-        _render_help = false;
-    };
+    string d = "Camara Lucida \n www.camara-lucida.com.ar \n www.chparsons.com.ar \n\n config file = "+config_path+" \n\n debug = "+string(1, key.debug)+" \n\n next viewpoint = "+string(1, key.view_next)+" \n prev viewpoint = "+string(1, key.view_prev)+" \n\n drag mouse to rotate \n\t zoom = "+string(1, key.scene_zoom)+" + drag \n\t reset = "+string(1, key.scene_reset);
 
-    void CamaraLucida::init_keys()
-    {
-        for (int i = 0; i < 512; i++) 
-            pressed[i] = false;
+    int roff = 200;
+    int toff = roff+50;
+    int rw = ofGetWidth()-roff*2;
+    int rh = ofGetHeight()-roff*2;
 
-        xml.pushTag( "ui" );
+    ofEnableAlphaBlending();  
+    glColor4f(0, 0, 0, 0.7);
+    ofRect(roff, roff, rw, rh);
+    glColor3f(1, 1, 1);
+    ofDrawBitmapString( d, toff, toff+12 );
+    ofDisableAlphaBlending(); 
+  };
 
-        key.debug = xml.getValue("debug","")[0];
-        key.help = xml.getValue("help","")[0];
+  void CamaraLucida::init_events()
+  {
+    ofAddListener(ofEvents().keyPressed, 
+        this, &CamaraLucida::keyPressed);
 
-        key.xoff_inc = xml.getValue("depth_xoff:inc","")[0]; 
-        key.xoff_dec = xml.getValue("depth_xoff:dec","")[0];
+    ofAddListener(ofEvents().keyReleased, 
+        this, &CamaraLucida::keyReleased);
 
-        key.view_next = xml.getValue("viewpoint:next","")[0];
-        key.view_prev = xml.getValue("viewpoint:prev","")[0];
+    ofAddListener(ofEvents().mouseDragged, 
+        this, &CamaraLucida::mouseDragged);
 
-        key.scene_reset = xml.getValue("scene_ctrl:reset","")[0];
-        key.scene_zoom = xml.getValue("scene_ctrl:zoom","")[0];
+    ofAddListener(ofEvents().mousePressed, 
+        this, &CamaraLucida::mousePressed);
+  };
 
-        xml.popTag();
-    };
+  void CamaraLucida::dispose_events()
+  {
+    ofRemoveListener(ofEvents().keyPressed, 
+        this, &CamaraLucida::keyPressed);
 
-    void CamaraLucida::keyPressed(ofKeyEventArgs &args)
-    {
-        pressed[args.key] = true;
+    ofRemoveListener(ofEvents().keyReleased, 
+        this, &CamaraLucida::keyReleased);
 
-        if (args.key == key.debug)
-        {
-            toggle_debug();
-        }
-        else if (args.key == key.help)
-        {
-            _render_help = !_render_help;
-        }
+    ofRemoveListener(ofEvents().mouseDragged, 
+        this, &CamaraLucida::mouseDragged);
 
-        if (!_debug) 
-            return;
-
-        if (args.key == key.view_next)
-        {
-            renderer->next_view();        
-        }
-        else if (args.key == key.view_prev)
-        {
-            renderer->prev_view(); 
-        }
-        else if (args.key == key.scene_reset)
-        {
-            renderer->reset_scene();
-        }
-        else if (args.key == key.xoff_inc)
-        {
-            depth->change_xoff( 1 );
-        }
-        else if (args.key == key.xoff_dec)
-        {
-            depth->change_xoff( -1 );
-        }
-    };
-
-    void CamaraLucida::keyReleased(ofKeyEventArgs &args)
-    {
-        pressed[args.key] = false;
-    };
-
-    void CamaraLucida::mousePressed(ofMouseEventArgs &args)
-    {
-        renderer->mousePressed( args.x, args.y );
-    };
-
-    void CamaraLucida::mouseDragged(ofMouseEventArgs &args)
-    {
-        renderer->mouseDragged( args.x, args.y, 
-                pressed[key.scene_zoom] );
-    };
-
-    void CamaraLucida::render_screenlog()
-    {
-        if ( ! _debug ) return;
-
-        string view = renderer->get_viewpoint_info();
-        float fps = ofGetFrameRate();
-        int xoff = depth->get_xoff();
-
-        ofEnableAlphaBlending();  
-        glColor4f(0, 0, 0, 0.7);
-        ofRect(0, ofGetHeight()-25, ofGetWidth(), 25);
-        glColor3f(1, 1, 1);
-
-        ofDrawBitmapString( view+" / depth xoff: "+ofToString(xoff)+" / fps: "+ofToString(fps), 10, ofGetHeight()-10);
-
-        ofDisableAlphaBlending(); 
-    };
-
-    void CamaraLucida::render_help()
-    {
-        if ( ! _render_help ) return;
-
-        string d = "Camara Lucida \n www.camara-lucida.com.ar \n www.chparsons.com.ar \n\n config file = "+config_path+" \n\n debug = "+string(1, key.debug)+" \n\n next viewpoint = "+string(1, key.view_next)+" \n prev viewpoint = "+string(1, key.view_prev)+" \n\n drag mouse to rotate \n\t zoom = "+string(1, key.scene_zoom)+" + drag \n\t reset = "+string(1, key.scene_reset)+" \n\n depth_xoff inc = "+string(1, key.xoff_inc)+" \n depth_xoff dec = "+string(1, key.xoff_dec);
-
-        int roff = 200;
-        int toff = roff+50;
-        int rw = ofGetWidth()-roff*2;
-        int rh = ofGetHeight()-roff*2;
-
-        ofEnableAlphaBlending();  
-        glColor4f(0, 0, 0, 0.7);
-        ofRect(roff, roff, rw, rh);
-        glColor3f(1, 1, 1);
-        ofDrawBitmapString( d, toff, toff+12 );
-        ofDisableAlphaBlending(); 
-    };
-
-    void CamaraLucida::init_events()
-    {
-        ofAddListener(ofEvents().keyPressed, this, 
-                &CamaraLucida::keyPressed);
-
-        ofAddListener(ofEvents().keyReleased, this, 
-                &CamaraLucida::keyReleased);
-
-        ofAddListener(ofEvents().mouseDragged, this, 
-                &CamaraLucida::mouseDragged);
-
-        ofAddListener(ofEvents().mousePressed, this, 
-                &CamaraLucida::mousePressed);
-    };
-
-    void CamaraLucida::dispose_events()
-    {
-        ofRemoveListener(ofEvents().keyPressed, this, 
-                &CamaraLucida::keyPressed);
-
-        ofRemoveListener(ofEvents().keyReleased, this, 
-                &CamaraLucida::keyReleased);
-
-        ofRemoveListener(ofEvents().mouseDragged, this, 
-                &CamaraLucida::mouseDragged);
-
-        ofRemoveListener(ofEvents().mousePressed, this, 
-                &CamaraLucida::mousePressed);
-    };
+    ofRemoveListener(ofEvents().mousePressed, 
+        this, &CamaraLucida::mousePressed);
+  };
 };
 
 

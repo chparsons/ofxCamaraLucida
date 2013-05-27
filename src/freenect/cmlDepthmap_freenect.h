@@ -25,38 +25,44 @@
 
 namespace cml 
 {
-    class Depthmap_freenect : public Depthmap
-    {
-        public:
+  class Depthmap_freenect : public Depthmap
+  {
+    public:
 
-            Depthmap_freenect(){};
-            ~Depthmap_freenect(){};
+      Depthmap_freenect(){};
+      ~Depthmap_freenect(){};
 
-            void update( uint16_t *mm_depth_pix ) 
-            {
-                int len = mesh->length();
+      void update( uint16_t *mm_depth_pix ) 
+      {
+        int len = mesh->length();
 
-                for (int i = 0; i < len; i++)
-                {
-                    int xdepth, ydepth, idepth;
-                    mesh->to_depth( i, &xdepth, &ydepth, &idepth );
+        for ( int i = 0; i < len; i++ )
+        {
+          int xdepth, ydepth, idepth;
 
-                    //uint16_t raw_depth = raw_depth_pix[idepth];
-                    //float z = depth->z_mts(raw_depth);
+          mesh->to_depth( i, 
+              &xdepth, &ydepth, &idepth );
 
-                    // ofxKinect gives raw depth as distance in mm
-                    // mm to mts
-                    float z = mm_depth_pix[idepth] * 0.001;
-                    z = CLAMP((z == 0. ? 5. : z), 0., 5.);
+          //uint16_t raw_depth = raw_depth_pix[idepth];
+          //float z = depth->z_mts(raw_depth);
 
-                    float x, y;
-                    depth->unproject(xdepth, ydepth, z, &x, &y);
+          // ofxKinect gives raw depth as dist in mm
+          // mm to mts
+          float zmts = mm_depth_pix[idepth] * 0.001;
+          zmts = CLAMP(
+              (zmts == 0. ? 5. : zmts), 0., 5.);
 
-                    mesh->set_vertex( i, x, y, z );
-                }
-                mesh->update();
-            };
-    };
+          float x, y;
+
+          depth->unproject(
+              xdepth, ydepth, zmts, &x, &y );
+
+          mesh->set_vertex( i, x, y, zmts );
+        }
+
+        mesh->update();
+      };
+  };
 };
 
 
