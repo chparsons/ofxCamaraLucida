@@ -10,7 +10,7 @@ Credits:
 [Christian Parsons](http://www.chparsons.com.ar/)  
 [Mariano Tepper](http://www.tc.umn.edu/~mhtepper/)  
 
-[Donate Bitcoins](http://chparsons.com.ar/#donate)  
+[![Donate Bitcoins](http://christianparsons.com.ar/img/donate_bitcoins.png)](http://chparsons.com.ar/#donate)   
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=chparsons&url=https://github.com/chparsons/ofxCamaraLucida&title=Camara Lucida&language=en_GB&tags=github&category=software)   
 
