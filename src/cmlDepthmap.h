@@ -48,6 +48,12 @@ namespace cml
           uint16_t *mm_depth_pix, 
           float mm_near, float mm_far );
 
+      /*
+       * hue texture
+       */
+      ofTexture& get_hue_tex_ref(
+          uint16_t *mm_depth_pix );
+
     protected:
 
       cml::OpticalDevice* depth;
@@ -55,13 +61,18 @@ namespace cml
 
     private:
 
+      ofTexture ftex;
+      ofFloatPixels fpix;
+      float *flut;
       void init_float_tex( 
           int w, int h, 
           float mm_near, float mm_far );
 
-      ofTexture ftex;
-      ofFloatPixels fpix;
-      float *zlut_mm2f;
+      ofTexture htex;
+      uint8_t *hpix;
+      ofColor *hlut;
+      void init_hue_tex( int w, int h );
+
   };
 };
 
