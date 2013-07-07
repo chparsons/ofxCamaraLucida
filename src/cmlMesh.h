@@ -44,12 +44,16 @@ namespace cml
       void set_vertex( int i, 
           float x, float y, float z );
 
-      int length() { return mesh_length; }; 
+      int length() { return mesh_len; }; 
+
+      void to_depth( 
+          int mesh_idx, 
+          int *depth_idx );
 
       void to_depth( 
           int mesh_idx, 
           int *x_depth, int *y_depth, 
-          int *depth_idx);
+          int *depth_idx );
 
     private:
 
@@ -66,8 +70,8 @@ namespace cml
       int depth_width;
       int width;
       int height;
-      int mesh_length;
-      int ibo_length;	
+      int mesh_len;
+      int ibo_len;	
 
       uint* ibo;
       ofVec2f* vbo_texcoords;

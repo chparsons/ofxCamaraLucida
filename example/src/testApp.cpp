@@ -70,6 +70,9 @@ void testApp::render_texture(ofEventArgs &args)
   glColor3f(1, 1, 1);
 
   kinect.drawDepth(0, 0, w, h);
+  //depthmap->get_hue_tex_ref(
+      //kinect.getRawDepthPixels() )
+    //.draw( 0, 0, w, h );
 
   glColor3f(1, 1, 0);
   ofCircle(800, 200, 60);
@@ -88,7 +91,6 @@ void testApp::render_2d(ofEventArgs &args)
   ofSetColor(255, 255, 255);
 
   kinect.drawDepth(0, 0, 200, 150);
-  //kinect.drawDepth(0, -100, 1024, 768);
 
   ofDrawBitmapString("press h for help",10,10);
 }
@@ -145,3 +147,4 @@ void testApp::mouseReleased(int x, int y, int button)
 
 void testApp::windowResized(int w, int h)
 {}
+

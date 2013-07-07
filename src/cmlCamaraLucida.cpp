@@ -61,8 +61,18 @@ namespace cml
       
   void CamaraLucida::toggle_debug()
   {
-    _debug = !_debug;
+    debug( ! debug() );
+  };
+
+  void CamaraLucida::debug( bool val )
+  {
+    _debug = val;
     renderer->debug( _debug );
+  };
+
+  bool CamaraLucida::debug()
+  {
+    return _debug;
   };
 
   float CamaraLucida::tex_width() 
@@ -147,7 +157,7 @@ namespace cml
 
     if (args.key == key.debug)
     {
-      toggle_debug();
+      debug( ! debug() );
     }
     else if (args.key == key.help)
     {

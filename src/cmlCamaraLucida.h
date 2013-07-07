@@ -58,9 +58,21 @@ namespace cml
       };
 
       void toggle_debug();
+      void debug( bool val );
+      bool debug();
 
       float tex_width();
       float tex_height();
+
+      float depth_width()
+      {
+        return depth->config().width;
+      };
+
+      float depth_height()
+      {
+        return depth->config().height;
+      };
 
       OpticalDevice::Config depth_config() 
       {

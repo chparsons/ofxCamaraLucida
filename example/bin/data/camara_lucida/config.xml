@@ -2,7 +2,7 @@
 
   <calibration>
     <kinect>camara_lucida/kinect_calibration.yml</kinect>
-    <projector>camara_lucida/projector_calibration_3.yml</projector>
+    <projector>camara_lucida/projector_calibration_5.yml</projector>
   </calibration>	
 
   <mesh_step>1</mesh_step>

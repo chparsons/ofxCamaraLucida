@@ -9,25 +9,26 @@
 
 class testApp : public ofBaseApp 
 {
-    public:
+  public:
 
-        void setup();
-        void update();
-        void draw();
-        void exit();
+    void setup();
+    void update();
+    void draw();
+    void exit();
 
-        void keyPressed(int key);
-        void mouseDragged(int x, int y, int button);
-        void mousePressed(int x, int y, int button);
-        void mouseReleased(int x, int y, int button);
-        void windowResized(int w, int h);
+    void keyPressed(int key);
+    void mouseDragged(int x, int y, int button);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    void windowResized(int w, int h);
 
-        ofxOpenNI openNI;
+    ofxOpenNI openNI;
 
-        cml::CamaraLucida *_cml;
-        cml::Depthmap_openni *_depthmap;
+    cml::CamaraLucida *cml;
+    cml::Depthmap_openni *depthmap;
 
-        void render_texture(ofEventArgs &args);
-        void render_3d(ofEventArgs &args);
-        void render_2d(ofEventArgs &args);
+    void render_texture(ofEventArgs &args);
+    void render_3d(ofEventArgs &args);
+    void render_2d(ofEventArgs &args);
 };
+

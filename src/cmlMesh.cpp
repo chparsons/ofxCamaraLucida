@@ -23,7 +23,8 @@
 
 namespace cml 
 {
-  Mesh::Mesh( int step, 
+  Mesh::Mesh( 
+      int step, 
       int depth_width, int depth_height,
       int tex_width, int tex_height )
   {
@@ -32,8 +33,8 @@ namespace cml
 
     width = (float)depth_width / step;
     height = (float)depth_height / step;
-    mesh_length = width * height;
-    ibo_length = mesh_length * 4;
+    mesh_len = width * height;
+    ibo_len = mesh_len * 4;
 
     init_ibo();
     init_texcoords( tex_width, tex_height );
@@ -42,19 +43,19 @@ namespace cml
 
     // init vbo
 
-    vbo.setVertexData( pts0x(), 3, mesh_length, 
+    vbo.setVertexData( pts0x(), 3, mesh_len, 
         GL_DYNAMIC_DRAW, sizeof_pts() );
 
-    //vbo.setNormalData( normals0x(), mesh_length, GL_DYNAMIC_DRAW, sizeof_normals() );
+    //vbo.setNormalData( normals0x(), mesh_len, GL_DYNAMIC_DRAW, sizeof_normals() );
 
     vbo.setIndexData( ibo, 
-        ibo_length, GL_STATIC_DRAW );
+        ibo_len, GL_STATIC_DRAW );
 
     vbo.setColorData( vbo_color, 
-        mesh_length, GL_STATIC_DRAW );
+        mesh_len, GL_STATIC_DRAW );
 
     vbo.setTexCoordData( vbo_texcoords, 
-        mesh_length, GL_STATIC_DRAW );
+        mesh_len, GL_STATIC_DRAW );
   }
 
   Mesh::~Mesh()
@@ -73,8 +74,8 @@ namespace cml
 
   void Mesh::init_ibo()
   {
-    ibo = new uint[ibo_length];
-    for (int i = 0; i < mesh_length; i++) 
+    ibo = new uint[ibo_len];
+    for (int i = 0; i < mesh_len; i++) 
     {
       int x_mesh, y_mesh;
       to_mesh_coord( i, &x_mesh, &y_mesh );
@@ -95,8 +96,8 @@ namespace cml
   void Mesh::init_texcoords( 
       int tex_width, int tex_height )
   {
-    vbo_texcoords = new ofVec2f[mesh_length];
-    for (int i = 0; i < mesh_length; i++) 
+    vbo_texcoords = new ofVec2f[mesh_len];
+    for (int i = 0; i < mesh_len; i++) 
     {
       int x_mesh, y_mesh;
       to_mesh_coord( i, &x_mesh, &y_mesh );
@@ -110,8 +111,8 @@ namespace cml
 
   void Mesh::init_colors()
   {
-    vbo_color = new ofFloatColor[mesh_length];
-    for (int i = 0; i < mesh_length; i++) 
+    vbo_color = new ofFloatColor[mesh_len];
+    for (int i = 0; i < mesh_len; i++) 
     {
       vbo_color[i] = ofFloatColor(1,1,1,1);
     }
@@ -119,14 +120,14 @@ namespace cml
 
   void Mesh::update()
   {
-    vbo.updateVertexData( pts0x(), mesh_length );
-    //vbo.updateNormalData( normals0x(), mesh_length );
+    vbo.updateVertexData( pts0x(), mesh_len );
+    //vbo.updateNormalData( normals0x(), mesh_len );
   }
 
   void Mesh::render()
   {
     //ofMesh/ofVboMesh don't support GL_QUADS
-    vbo.drawElements( GL_QUADS, ibo_length );
+    vbo.drawElements( GL_QUADS, ibo_len );
   }
 
   void Mesh::set_vertex( int i, 
@@ -139,8 +140,8 @@ namespace cml
 
   void Mesh::init_pts()
   {
-    pts3d = new ofVec3f[mesh_length];
-    memset( pts3d, 0, mesh_length*sizeof(ofVec3f) );
+    pts3d = new ofVec3f[mesh_len];
+    memset( pts3d, 0, mesh_len*sizeof(ofVec3f) );
   }
 
   void Mesh::dispose_pts()
@@ -162,16 +163,36 @@ namespace cml
 
   // mesh <--> depth
 
-  void Mesh::to_depth( int mesh_idx, 
-      int *x_depth, int *y_depth, int *depth_idx )
+  void Mesh::to_depth( 
+      int mesh_idx, 
+      int *depth_idx )
   {
-    int x_mesh, y_mesh;
-    to_mesh_coord( mesh_idx, &x_mesh, &y_mesh );
-    to_depth_coord(x_mesh, y_mesh, x_depth, y_depth);
-    *depth_idx = to_depth_idx( *x_depth, *y_depth );
+    int x_depth, y_depth;
+    to_depth( 
+        mesh_idx, 
+        &x_depth, &y_depth,
+        depth_idx );
   }
 
-  int Mesh::to_depth_idx( int x_depth, int y_depth )
+  void Mesh::to_depth( 
+      int mesh_idx, 
+      int *x_depth, int *y_depth, 
+      int *depth_idx )
+  {
+    int x_mesh, y_mesh;
+    
+    to_mesh_coord( 
+        mesh_idx, &x_mesh, &y_mesh );
+    
+    to_depth_coord(
+        x_mesh, y_mesh, x_depth, y_depth);
+
+    *depth_idx = to_depth_idx( 
+        *x_depth, *y_depth );
+  }
+
+  int Mesh::to_depth_idx( 
+      int x_depth, int y_depth )
   {
     return y_depth * depth_width + x_depth;
   }
