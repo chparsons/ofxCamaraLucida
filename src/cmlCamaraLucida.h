@@ -57,9 +57,9 @@ namespace cml
         return _wireframe;
       };
 
-      void toggle_debug();
       void debug( bool val );
       bool debug();
+      void toggle_debug();
 
       float tex_width();
       float tex_height();
@@ -82,6 +82,11 @@ namespace cml
       ofEvent<ofEventArgs>& render_texture;
       ofEvent<ofEventArgs>& render_3d;
       ofEvent<ofEventArgs>& render_2d;
+
+      void log()
+      {
+        mesh->log();
+      };
 
     private:
 

@@ -46,7 +46,8 @@ namespace cml
     vbo.setVertexData( pts0x(), 3, mesh_len, 
         GL_DYNAMIC_DRAW, sizeof_pts() );
 
-    //vbo.setNormalData( normals0x(), mesh_len, GL_DYNAMIC_DRAW, sizeof_normals() );
+    //vbo.setNormalData( normals0x(), mesh_len, 
+      //GL_DYNAMIC_DRAW, sizeof_normals() );
 
     vbo.setIndexData( ibo, 
         ibo_len, GL_STATIC_DRAW );
@@ -74,8 +75,8 @@ namespace cml
 
   void Mesh::init_ibo()
   {
-    ibo = new uint[ibo_len];
-    for (int i = 0; i < mesh_len; i++) 
+    ibo = new uint[ ibo_len ];
+    for ( int i = 0; i < mesh_len; i++ ) 
     {
       int x_mesh, y_mesh;
       to_mesh_coord( i, &x_mesh, &y_mesh );
@@ -111,8 +112,8 @@ namespace cml
 
   void Mesh::init_colors()
   {
-    vbo_color = new ofFloatColor[mesh_len];
-    for (int i = 0; i < mesh_len; i++) 
+    vbo_color = new ofFloatColor[ mesh_len ];
+    for ( int i = 0; i < mesh_len; i++ ) 
     {
       vbo_color[i] = ofFloatColor(1,1,1,1);
     }
@@ -140,7 +141,7 @@ namespace cml
 
   void Mesh::init_pts()
   {
-    pts3d = new ofVec3f[mesh_len];
+    pts3d = new ofVec3f[ mesh_len ];
     memset( pts3d, 0, mesh_len*sizeof(ofVec3f) );
   }
 

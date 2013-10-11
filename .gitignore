@@ -2,3 +2,4 @@
 *.swp
 */build/
 */bin/*.app
+*/bin/data/openni/lib

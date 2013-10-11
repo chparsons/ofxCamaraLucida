@@ -1,4 +1,0 @@
-ofxOpenCv
-ofxKinect
-ofxXmlSettings
-ofxCamaraLucida

@@ -46,6 +46,15 @@ namespace cml
 
       int length() { return mesh_len; }; 
 
+      void log()
+      {
+        for ( int i = 0; i < mesh_len; i++ )
+          cout 
+            << "cml mesh 3d vertex "
+            << ((ofVec3f*)pts3d)[i] 
+            << endl;
+      };
+
       void to_depth( 
           int mesh_idx, 
           int *depth_idx );
@@ -94,7 +103,7 @@ namespace cml
           int mesh_idx, 
           int *x_mesh, int *y_mesh);
 
-      int to_depth_idx( int x_depth, int y_depth );
+      int to_depth_idx(int x_depth, int y_depth);
 
       //void to_mesh_coord(int x_depth, int y_depth, 
       //int *x_mesh, int *y_mesh);

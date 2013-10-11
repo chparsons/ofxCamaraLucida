@@ -26,6 +26,8 @@ namespace cml
 
   Depthmap::Depthmap() 
   { 
+    depth = NULL;
+    mesh = NULL;
     flut = NULL;
     hlut = NULL;
     hpix = NULL;

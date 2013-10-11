@@ -28,56 +28,68 @@
 
 namespace cml 
 {
-    class Depthmap_openni : public Depthmap
-    {
-        public:
+  class Depthmap_openni : public Depthmap
+  {
+    public:
 
-            Depthmap_openni(){};
-            ~Depthmap_openni(){};
+      Depthmap_openni(){};
+      ~Depthmap_openni(){};
 
-            void update( 
-                    uint16_t *raw_depth_pix,
-                    xn::DepthGenerator depth_generator )
-            {
-                //const XnDepthPixel* _map = depth_generator.GetDepthMap(); 
-                //uint16_t *raw_depth_pix = (uint16_t*)_map;
+      void update( 
+          //uint16_t *mm_depth_pix,
+          xn::DepthGenerator& depth_gen )
+      {
+        if ( mesh == NULL )
+          return;
 
-                int len = mesh->length();
+        const XnDepthPixel* _map = depth_gen.GetDepthMap(); 
+        uint16_t *mm_depth_pix = (uint16_t*)_map;
 
-                XnPoint3D _pts2d[len];
+        int len = mesh->length();
 
-                for (int i = 0; i < len; i++)
-                {
-                    int xdepth, ydepth, idepth;
-                    mesh->to_depth( i, &xdepth, &ydepth, &idepth );
-                    _pts2d[i].X = xdepth;
-                    _pts2d[i].Y = ydepth;
-                    _pts2d[i].Z = raw_depth_pix[ idepth ];
-                }
+        XnPoint3D _pts2d[ len ];
 
-                XnPoint3D _pts3d[len];
-                depth_generator.ConvertProjectiveToRealWorld( len, _pts2d, _pts3d ); 
+        for ( int i = 0; i < len; i++ )
+        {
+          int xdepth, ydepth, idepth;
 
-                for (int i = 0; i < len; i++)
-                {
-                    XnVector3D p3d = _pts3d[i];
-                    XnVector3D p2d = _pts2d[i];
+          mesh->to_depth( i, 
+              &xdepth, &ydepth, &idepth );
 
-                    // mm to mts
-                    //p3d.X *= 0.001;
-                    //p3d.Y *= -0.001;
-                    p3d.Z *= 0.001;
+          _pts2d[i].X = xdepth;
+          _pts2d[i].Y = ydepth;
+          _pts2d[i].Z = mm_depth_pix[ idepth ];
+        }
 
-                    if (p3d.Z == 0) p3d.Z = 5.;
+        XnPoint3D _pts3d[ len ];
 
-                    float z = p3d.Z;
-                    float x, y;
-                    depth->unproject( p2d.X, p2d.Y, z, &x, &y );
+        depth_gen.ConvertProjectiveToRealWorld( 
+            len, _pts2d, _pts3d ); 
 
-                    mesh->set_vertex( i, x, y, z );
-                }
-            };
-    };
+        for ( int i = 0; i < len; i++ )
+        {
+          XnVector3D p3d = _pts3d[i];
+          XnVector3D p2d = _pts2d[i];
+
+          // mm to mts
+          int xdepth = (int)p2d.X;
+          int ydepth = (int)p2d.Y;
+          float zmts = p3d.Z * 0.001;
+
+          zmts = CLAMP((zmts==0.?5.:zmts),0.,5.);
+
+          float x, y;
+
+          depth->unproject( 
+              xdepth, ydepth, zmts, &x, &y );  
+
+          mesh->set_vertex( i, x, y, zmts );
+ 
+        }
+
+        mesh->update();
+      };
+  };
 };
 
 
