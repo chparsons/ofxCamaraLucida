@@ -35,20 +35,6 @@
 			sepNavVisRange = "{0, 0}";
 		};
 	};
-	1203E690180722EB0074A5B0 /* cmlCalibration.cpp */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {348, 2982}}";
-			sepNavSelRange = "{5328, 0}";
-			sepNavVisRange = "{0, 0}";
-		};
-	};
-	1203E692180722EB0074A5B0 /* cmlCamaraLucida.cpp */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {26, 3892}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 0}";
-		};
-	};
 	1203E6DC180722EB0074A5B0 /* camara_lucida_freenect_example */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
@@ -125,30 +111,13 @@
 		vrLen = 0;
 		vrLoc = 0;
 	};
-	1203E87D180731D30074A5B0 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 1203E692180722EB0074A5B0 /* cmlCamaraLucida.cpp */;
-		name = "cmlCamaraLucida.cpp: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
-	123AC76018089D300018050E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 1203E692180722EB0074A5B0 /* cmlCamaraLucida.cpp */;
-		name = "cmlCamaraLucida.cpp: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 0;
-		vrLoc = 0;
-	};
 	E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 		activeBuildConfigurationName = Debug;
 		activeExecutable = 1203E6DC180722EB0074A5B0 /* camara_lucida_freenect_example */;
 		activeTarget = E4B69B5A0A3A1756003C02F2 /* camara_lucida_freenect_example */;
+		addToTargets = (
+			E4B69B5A0A3A1756003C02F2 /* camara_lucida_freenect_example */,
+		);
 		codeSenseManager = 1203E6E4180722EC0074A5B0 /* Code sense */;
 		executables = (
 			1203E6DC180722EB0074A5B0 /* camara_lucida_freenect_example */,
@@ -212,15 +181,13 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 403217816;
-			PBXWorkspaceStateSaveDate = 403217816;
+			PBXPerProjectTemplateStateSaveDate = 403219279;
+			PBXWorkspaceStateSaveDate = 403219279;
 		};
 		perUserProjectItems = {
-			1203E70F180723AA0074A5B0 = 1203E70F180723AA0074A5B0 /* PBXTextBookmark */;
-			1203E710180723AA0074A5B0 = 1203E710180723AA0074A5B0 /* PBXTextBookmark */;
-			1203E711180723AA0074A5B0 = 1203E711180723AA0074A5B0 /* PBXTextBookmark */;
-			1203E87D180731D30074A5B0 = 1203E87D180731D30074A5B0 /* PBXTextBookmark */;
-			123AC76018089D300018050E = 123AC76018089D300018050E /* PBXTextBookmark */;
+			1203E70F180723AA0074A5B0 /* PBXTextBookmark */ = 1203E70F180723AA0074A5B0 /* PBXTextBookmark */;
+			1203E710180723AA0074A5B0 /* PBXTextBookmark */ = 1203E710180723AA0074A5B0 /* PBXTextBookmark */;
+			1203E711180723AA0074A5B0 /* PBXTextBookmark */ = 1203E711180723AA0074A5B0 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 1203E6E3180722EC0074A5B0 /* Source Control */;
 		userBuildSettings = {
