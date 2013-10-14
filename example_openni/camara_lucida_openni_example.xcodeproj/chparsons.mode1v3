@@ -320,7 +320,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>libusb.h</string>
+								<string>tinyxmlparser.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -328,11 +328,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>libusb.h</string>
+										<string>tinyxmlparser.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>12BBE8681808A46F001CA384</string>
+										<string>12C91CE3180C72CF004880CC</string>
 										<key>history</key>
 										<array>
 											<string>123AC50D18087D4B0018050E</string>
@@ -342,7 +342,6 @@
 											<string>123AC7091808828A0018050E</string>
 											<string>123AC70A1808828A0018050E</string>
 											<string>123AC715180885180018050E</string>
-											<string>123AC7B11808A2E10018050E</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -400,9 +399,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>12BBE85B1808A45E001CA384</string>
+				<string>12C91C7C1809F2C7004880CC</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>12BBE85C1808A45E001CA384</string>
+				<string>12C91C7D1809F2C7004880CC</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -540,12 +539,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>12BBE8661808A45E001CA384</string>
-		<string>12BBE8671808A45E001CA384</string>
+		<string>12C91CEB180C72CF004880CC</string>
+		<string>12C91CEC180C72CF004880CC</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>12F36BB1157188440041707A</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/chparsons/dev/openframeworks/fork2/addons/ofxCamaraLucida/example_openni/camara_lucida_openni_example.xcodeproj</string>
+		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>187 149 373 666 0 0 1440 878 </string>
@@ -625,7 +624,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>12F36BB1157188440041707A</string>
-				<string>12BBE85D1808A45E001CA384</string>
+				<string>12C91C7E1809F2C7004880CC</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -747,13 +746,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>12BBE85E1808A45E001CA384</string>
+				<string>12C91CE4180C72CF004880CC</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>12BBE85F1808A45E001CA384</string>
-				<string>12BBE8601808A45E001CA384</string>
-				<string>12BBE8611808A45E001CA384</string>
-				<string>12BBE8621808A45E001CA384</string>
-				<string>12BBE8631808A45E001CA384</string>
+				<string>12C91CE5180C72CF004880CC</string>
+				<string>12C91CE6180C72CF004880CC</string>
+				<string>12C91CE7180C72CF004880CC</string>
+				<string>12C91CE8180C72CF004880CC</string>
+				<string>12C91CE9180C72CF004880CC</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -894,7 +893,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {842, 264}}</string>
 								<key>RubberWindowFrame</key>
-								<string>560 271 842 305 0 0 1440 878 </string>
+								<string>533 358 842 305 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugCLIModule</string>
@@ -917,13 +916,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>12BBE8641808A45E001CA384</string>
+				<string>12C91CEA180C72CF004880CC</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.consoleV3</string>
 			<key>WindowString</key>
-			<string>560 271 842 305 0 0 1440 878 </string>
+			<string>533 358 842 305 0 0 1440 878 </string>
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>

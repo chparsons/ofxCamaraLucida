@@ -81,15 +81,15 @@ namespace cml
       int x_mesh, y_mesh;
       to_mesh_coord( i, &x_mesh, &y_mesh );
 
-      if ( ( x_mesh < width - step ) && 
-          ( y_mesh < height - step ) ) 
+      if ( ( x_mesh < width - step ) 
+          && ( y_mesh < height - step ) ) 
       {
         int ibo_idx = i * 4;
 
-        ibo[ibo_idx+0] = (uint)( y_mesh * width + x_mesh );
-        ibo[ibo_idx+1] = (uint)( (y_mesh + step) * width + x_mesh );
-        ibo[ibo_idx+2] = (uint)( (y_mesh + step) * width + (x_mesh + step) );
-        ibo[ibo_idx+3] = (uint)( y_mesh * width + (x_mesh + step) );
+        ibo[ ibo_idx + 0 ] = (uint)( y_mesh * width + x_mesh );
+        ibo[ ibo_idx + 1 ] = (uint)( (y_mesh + step) * width + x_mesh );
+        ibo[ ibo_idx + 2 ] = (uint)( (y_mesh + step) * width + (x_mesh + step) );
+        ibo[ ibo_idx + 3 ] = (uint)( y_mesh * width + (x_mesh + step) );
       }
     }
   }
@@ -97,7 +97,7 @@ namespace cml
   void Mesh::init_texcoords( 
       int tex_width, int tex_height )
   {
-    vbo_texcoords = new ofVec2f[mesh_len];
+    vbo_texcoords = new ofVec2f[ mesh_len ];
     for (int i = 0; i < mesh_len; i++) 
     {
       int x_mesh, y_mesh;
@@ -106,7 +106,7 @@ namespace cml
       float t = ((float)x_mesh /width) * tex_width;
       float u = ((float)y_mesh /height) * tex_height;
 
-      vbo_texcoords[i] = ofVec2f(t, u);
+      vbo_texcoords[i] = ofVec2f( t, u );
     }
   }
 

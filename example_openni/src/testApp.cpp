@@ -8,7 +8,13 @@ void testApp::setup()
   ofBackground(50);
 
 
-	oni_ctx.setup();
+  string rec = "record.oni";
+  if ( ofFile::doesFileExist( rec ) )
+    oni_ctx
+      .setupUsingRecording( ofToDataPath(rec) );
+  else
+    oni_ctx.setup();
+
   //oni_ctx.setupUsingXMLFile();
   oni_depth_gen.setup( &oni_ctx );
   oni_ctx.registerViewport();
