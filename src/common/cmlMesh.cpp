@@ -45,6 +45,7 @@ namespace cml
 
     vbo.setVertexData( pts0x(), 3, mesh_len, 
         GL_DYNAMIC_DRAW, sizeof_pts() );
+        //GL_STATIC_DRAW, sizeof_pts() );
 
     //vbo.setNormalData( normals0x(), mesh_len, 
       //GL_DYNAMIC_DRAW, sizeof_normals() );
@@ -68,9 +69,9 @@ namespace cml
   {
     vbo.clear();
     dispose_pts();
-    delete[] ibo; ibo = NULL;
-    delete[] vbo_texcoords; vbo_texcoords = NULL;
-    delete[] vbo_color; vbo_color = NULL;
+    delete[] ibo; ibo=NULL;
+    delete[] vbo_texcoords; vbo_texcoords=NULL;
+    delete[] vbo_color; vbo_color=NULL;
   }
 
   void Mesh::init_ibo()
@@ -142,7 +143,7 @@ namespace cml
   void Mesh::init_pts()
   {
     pts3d = new ofVec3f[ mesh_len ];
-    memset( pts3d, 0, mesh_len*sizeof(ofVec3f) );
+    memset(pts3d, 0, mesh_len*sizeof(ofVec3f));
   }
 
   void Mesh::dispose_pts()

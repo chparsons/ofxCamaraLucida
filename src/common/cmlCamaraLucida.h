@@ -46,6 +46,7 @@ namespace cml
 
       void dispose();
       void render();
+      void update( uint16_t *mm_depth_pix );
 
       void wireframe( bool _wire )
       {
@@ -95,6 +96,7 @@ namespace cml
           Depthmap* depthmap );
 
       Depthmap* depthmap;
+      ofTexture depth_ftex;
 
       cml::Events events;
       cml::Kinect* depth;

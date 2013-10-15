@@ -54,15 +54,29 @@ namespace cml
   void CamaraLucida::render()
   {
     renderer->render( 
-        &events, mesh, wireframe() );
+        &events, 
+        mesh, 
+        depth_ftex,
+        wireframe() );
+
     render_screenlog();
     render_help();
   };
-      
+
+  void CamaraLucida::update( 
+      uint16_t *mm_depth_pix )
+  {
+    float near_mm = 500.;
+    float far_mm = 4000.;
+    depth_ftex = depthmap->get_float_tex_ref( mm_depth_pix, near_mm, far_mm ); 
+
+    mesh->update();
+  };
+
   void CamaraLucida::toggle_debug()
   {
     debug( ! debug() );
-  };
+  }; 
 
   void CamaraLucida::debug( bool val )
   {
@@ -122,6 +136,11 @@ namespace cml
         config, proj, depth, rgb );
 
     depthmap->init( depth, mesh );
+
+    //TODO remove duplicated code
+    float near_mm = 500.;
+    float far_mm = 4000.;
+    depth_ftex = depthmap->get_float_tex_ref( NULL, near_mm, far_mm ); 
 
     _wireframe = false;
     _debug = false;

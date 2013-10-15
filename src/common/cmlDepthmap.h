@@ -41,12 +41,12 @@ namespace cml
 
       /*
        * float texture in range [0,1]
-       * mapped from [mm_near,mm_far]
+       * mapped from [near_mm,far_mm]
        * to pass to glsl
        */
       ofTexture& get_float_tex_ref( 
           uint16_t *mm_depth_pix, 
-          float mm_near, float mm_far );
+          float near_mm, float far_mm );
 
       /*
        * hue texture
@@ -66,7 +66,7 @@ namespace cml
       float *flut;
       void init_float_tex( 
           int w, int h, 
-          float mm_near, float mm_far );
+          float near_mm, float far_mm );
 
       ofTexture htex;
       uint8_t *hpix;

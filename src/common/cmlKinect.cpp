@@ -62,7 +62,7 @@ namespace cml
       int _x, int _y, ofVec3f *p3 )
   {
     float zmts, x, y;
-    zmts = z_mts(raw_depth_pix, _x, _y);
+    zmts = z_mts( raw_depth_pix, _x, _y );
     unproject( _x, _y, zmts, &x, &y );
     p3->x = x;
     p3->y = y;

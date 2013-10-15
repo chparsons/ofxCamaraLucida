@@ -49,10 +49,11 @@ namespace cml
           //uint16_t raw_depth = raw_depth_pix[idepth];
           //float z = depth->z_mts(raw_depth);
 
-          // ofxKinect gives raw depth as dist in mm
+          // ofxKinect gives raw depth 
+          // as dist in mm
           // mm to mts
-          float zmts = mm_depth_pix[idepth]*0.001;
-          zmts = CLAMP((zmts==0.?5.:zmts),0.,5.);
+          float zmts=mm_depth_pix[idepth]*0.001;
+          zmts=CLAMP((zmts==0.?5.:zmts),0.,5.);
 
           float x, y;
 
@@ -60,6 +61,7 @@ namespace cml
               xdepth, ydepth, zmts, &x, &y );
 
           mesh->set_vertex( i, x, y, zmts );
+          //mesh->set_vertex( i, x, y, 1 );
 
         }
 

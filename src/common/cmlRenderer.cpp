@@ -44,7 +44,7 @@ namespace cml
     s.internalformat	= GL_RGBA;
 
     fbo.allocate(s);
-    //shader.load(config->render_shader_path);
+    shader.load("camara_lucida/glsl/render");
 
     init_gl_scene_control();
   }
@@ -64,8 +64,10 @@ namespace cml
   void Renderer::render( 
       cml::Events *ev, 
       Mesh *mesh,
+      ofTexture& depth_ftex,
       bool wireframe )
   {
+
     // texture
 
     fbo.bind();
@@ -116,19 +118,18 @@ namespace cml
     //glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
     //ofEnableAlphaBlending();
 
-    //shader.begin();
-    fbo.getTextureReference(0).bind();
-
-    //shader.setUniform1i("render_tex", 0);
-    //shader.setUniformTexture("normals_tex", mesh->get_normals_tex_ref(), 1);
-
+    shader.begin();
+    ofTexture render_tex = fbo.getTextureReference(0);
+    render_tex.bind();
+    shader.setUniformTexture(
+        "render_tex", render_tex, 0 );
+    shader.setUniformTexture(
+        "depth_tex", depth_ftex, 1 );
 
     mesh->render();
-    //ofNotifyEvent(ev->render_mesh, ev->void_args);
 
-
-    fbo.getTextureReference(0).unbind();
-    //shader.end();
+    render_tex.unbind();
+    shader.end();
 
     //glDisable(GL_BLEND);
     //ofDisableAlphaBlending(); 

@@ -44,6 +44,7 @@ namespace cml
       void render(
           cml::Events *ev, 
           Mesh *mesh,
+          ofTexture& depth_ftex,
           bool wireframe );
 
       void dispose();

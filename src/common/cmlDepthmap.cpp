@@ -69,13 +69,15 @@ namespace cml
 
   ofTexture& Depthmap::get_float_tex_ref( 
       uint16_t *mm_depth_pix, 
-      float mm_near, float mm_far )
+      float near_mm, float far_mm )
   {
     int w = depth->width();
     int h = depth->height();
 
-    init_float_tex( 
-        w, h, mm_near, mm_far );
+    init_float_tex( w, h, near_mm, far_mm );
+
+    if ( mm_depth_pix == NULL )
+      return ftex; 
 
     int len = w * h;
 
@@ -93,7 +95,7 @@ namespace cml
 
   void Depthmap::init_float_tex( 
       int w, int h, 
-      float mm_near, float mm_far )
+      float near_mm, float far_mm )
   {
     if ( ftex.isAllocated() )
       return;
@@ -107,7 +109,8 @@ namespace cml
     for ( int i = 1; i < 10000; i++ )
     {
       flut[ i ] = ofMap( i, 
-          mm_near, mm_far, 1., 0., true );
+          near_mm, far_mm, 
+          1., 0., true );
     }
   };
 

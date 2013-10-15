@@ -101,7 +101,7 @@
 		vrLen = 0;
 		vrLoc = 0;
 	};
-	1203E711180723AA0074A5B0 /* PBXTextBookmark */ = {
+	12583AD1180D860E00EE152A /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */;
 		name = "main.cpp: 1";
@@ -110,6 +110,40 @@
 		rType = 0;
 		vrLen = 0;
 		vrLoc = 0;
+	};
+	12583ADC180D875A00EE152A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 12BBE7E61808A38D001CA384 /* cmlCamaraLucida.cpp */;
+		name = "cmlCamaraLucida.cpp: 290";
+		rLen = 0;
+		rLoc = 6667;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	126A3AF0180E000700DDDBA4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 12BBE7E61808A38D001CA384 /* cmlCamaraLucida.cpp */;
+		name = "cmlCamaraLucida.cpp: 292";
+		rLen = 0;
+		rLoc = 6761;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	12BBE7E61808A38D001CA384 /* cmlCamaraLucida.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {12, 4130}}";
+			sepNavSelRange = "{6761, 0}";
+			sepNavVisRange = "{0, 0}";
+		};
+	};
+	12BBE7F21808A38D001CA384 /* cmlRenderer.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {810, 5488}}";
+			sepNavSelRange = "{7958, 0}";
+			sepNavVisRange = "{2246, 609}";
+		};
 	};
 	E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 		activeBuildConfigurationName = Debug;
@@ -181,13 +215,15 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 403305582;
-			PBXWorkspaceStateSaveDate = 403305582;
+			PBXPerProjectTemplateStateSaveDate = 403542193;
+			PBXWorkspaceStateSaveDate = 403542193;
 		};
 		perUserProjectItems = {
 			1203E70F180723AA0074A5B0 /* PBXTextBookmark */ = 1203E70F180723AA0074A5B0 /* PBXTextBookmark */;
 			1203E710180723AA0074A5B0 /* PBXTextBookmark */ = 1203E710180723AA0074A5B0 /* PBXTextBookmark */;
-			1203E711180723AA0074A5B0 /* PBXTextBookmark */ = 1203E711180723AA0074A5B0 /* PBXTextBookmark */;
+			12583AD1180D860E00EE152A /* PBXTextBookmark */ = 12583AD1180D860E00EE152A /* PBXTextBookmark */;
+			12583ADC180D875A00EE152A /* PBXTextBookmark */ = 12583ADC180D875A00EE152A /* PBXTextBookmark */;
+			126A3AF0180E000700DDDBA4 /* PBXTextBookmark */ = 126A3AF0180E000700DDDBA4 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 1203E6E3180722EC0074A5B0 /* Source Control */;
 		userBuildSettings = {

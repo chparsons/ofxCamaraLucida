@@ -327,11 +327,16 @@
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
 										<string>cmlCamaraLucida.cpp</string>
+										<key>_historyCapacity</key>
+										<integer>40</integer>
+										<key>bookmark</key>
+										<string>126A3AF0180E000700DDDBA4</string>
 										<key>history</key>
 										<array>
 											<string>1203E70F180723AA0074A5B0</string>
 											<string>1203E710180723AA0074A5B0</string>
-											<string>1203E711180723AA0074A5B0</string>
+											<string>12583AD1180D860E00EE152A</string>
+											<string>12583ADC180D875A00EE152A</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -343,14 +348,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {0, 140}}</string>
+								<string>{{0, 0}, {0, 90}}</string>
 								<key>RubberWindowFrame</key>
 								<string>749 156 373 666 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>140pt</string>
+							<string>90pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -363,14 +368,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 145}, {0, 480}}</string>
+								<string>{{0, 95}, {0, 530}}</string>
 								<key>RubberWindowFrame</key>
 								<string>749 156 373 666 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>480pt</string>
+							<string>530pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -389,9 +394,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>12C91CED180C72D1004880CC</string>
+				<string>126A3A68180D90B300DDDBA4</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>12C91CEE180C72D1004880CC</string>
+				<string>126A3A69180D90B300DDDBA4</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -529,8 +534,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>12C91CF7180C72D1004880CC</string>
-		<string>12C91CF8180C72D1004880CC</string>
+		<string>126A3A7E180D9F5900DDDBA4</string>
+		<string>126A3A7F180D9F5900DDDBA4</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>12F36BB1157188440041707A</string>
 		<string>/Users/chparsons/dev/openframeworks/fork2/addons/ofxCamaraLucida/example_freenect/camara_lucida_freenect_example.xcodeproj</string>
@@ -614,7 +619,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>12F36BB1157188440041707A</string>
-				<string>12C91CEF180C72D1004880CC</string>
+				<string>126A3A6A180D90B300DDDBA4</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -736,13 +741,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>12C91CF0180C72D1004880CC</string>
+				<string>126A3A76180D9F5900DDDBA4</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>12C91CF1180C72D1004880CC</string>
-				<string>12C91CF2180C72D1004880CC</string>
-				<string>12C91CF3180C72D1004880CC</string>
-				<string>12C91CF4180C72D1004880CC</string>
-				<string>12C91CF5180C72D1004880CC</string>
+				<string>126A3A77180D9F5900DDDBA4</string>
+				<string>126A3A78180D9F5900DDDBA4</string>
+				<string>126A3A79180D9F5900DDDBA4</string>
+				<string>126A3A7A180D9F5900DDDBA4</string>
+				<string>126A3A7B180D9F5900DDDBA4</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -906,7 +911,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>12C91CF6180C72D1004880CC</string>
+				<string>126A3A7C180D9F5900DDDBA4</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

@@ -42,8 +42,9 @@ void testApp::update()
 
   if ( kinect.isFrameNew() )
   { 
-    depthmap->update( 
-        kinect.getRawDepthPixels() );
+    cml->update( kinect.getRawDepthPixels() );
+    //depthmap->update( 
+        //kinect.getRawDepthPixels() );
   }
 }
 
