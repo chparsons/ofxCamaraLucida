@@ -1,0 +1,9 @@
+
+TODO
+
+pasar calib data de cpu a gpu
+testear con proyector
+CamaraLucida::update calib data
+qué pasa con Depthmap_freenect::update y Depthmap_openni::update
+impl openni
+
