@@ -24,13 +24,12 @@
 		1203E6D9180722EB0074A5B0 /* registration.c in Sources */ = {isa = PBXBuildFile; fileRef = 1203E6B3180722EB0074A5B0 /* registration.c */; };
 		1203E6DA180722EB0074A5B0 /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = 1203E6B5180722EB0074A5B0 /* tilt.c */; };
 		1203E6DB180722EB0074A5B0 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = 1203E6B6180722EB0074A5B0 /* usb_libusb10.c */; };
-		12BBE7F91808A38D001CA384 /* cmlCalibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BBE7E41808A38D001CA384 /* cmlCalibration.cpp */; };
-		12BBE7FA1808A38D001CA384 /* cmlCamaraLucida.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BBE7E61808A38D001CA384 /* cmlCamaraLucida.cpp */; };
-		12BBE7FB1808A38D001CA384 /* cmlDepthmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BBE7E91808A38D001CA384 /* cmlDepthmap.cpp */; };
-		12BBE7FC1808A38D001CA384 /* cmlKinect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BBE7EC1808A38D001CA384 /* cmlKinect.cpp */; };
-		12BBE7FD1808A38D001CA384 /* cmlMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BBE7EE1808A38D001CA384 /* cmlMesh.cpp */; };
-		12BBE7FE1808A38D001CA384 /* cmlOpticalDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BBE7F01808A38D001CA384 /* cmlOpticalDevice.cpp */; };
-		12BBE7FF1808A38D001CA384 /* cmlRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12BBE7F21808A38D001CA384 /* cmlRenderer.cpp */; };
+		123E7E39180F25310047B4F7 /* cmlCalibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E2B180F25310047B4F7 /* cmlCalibration.cpp */; };
+		123E7E3A180F25310047B4F7 /* cmlCamaraLucida.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E2D180F25310047B4F7 /* cmlCamaraLucida.cpp */; };
+		123E7E3C180F25310047B4F7 /* cmlMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E33180F25310047B4F7 /* cmlMesh.cpp */; };
+		123E7E3D180F25310047B4F7 /* cmlOpticalDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E35180F25310047B4F7 /* cmlOpticalDevice.cpp */; };
+		123E7E3E180F25310047B4F7 /* cmlRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E37180F25310047B4F7 /* cmlRenderer.cpp */; };
+		123E7E48180F26950047B4F7 /* cmlDepthCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E46180F26950047B4F7 /* cmlDepthCamera.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -206,23 +205,20 @@
 		1203E6B6180722EB0074A5B0 /* usb_libusb10.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = usb_libusb10.c; path = ../../../addons/ofxKinect/libs/libfreenect/src/usb_libusb10.c; sourceTree = SOURCE_ROOT; };
 		1203E6B7180722EB0074A5B0 /* usb_libusb10.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = usb_libusb10.h; path = ../../../addons/ofxKinect/libs/libfreenect/src/usb_libusb10.h; sourceTree = SOURCE_ROOT; };
 		1203E6BA180722EB0074A5B0 /* libusb.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = libusb.h; path = "../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h"; sourceTree = SOURCE_ROOT; };
-		12BBE7E41808A38D001CA384 /* cmlCalibration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlCalibration.cpp; sourceTree = "<group>"; };
-		12BBE7E51808A38D001CA384 /* cmlCalibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlCalibration.h; sourceTree = "<group>"; };
-		12BBE7E61808A38D001CA384 /* cmlCamaraLucida.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlCamaraLucida.cpp; sourceTree = "<group>"; };
-		12BBE7E71808A38D001CA384 /* cmlCamaraLucida.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlCamaraLucida.h; sourceTree = "<group>"; };
-		12BBE7E81808A38D001CA384 /* cmlConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlConfig.h; sourceTree = "<group>"; };
-		12BBE7E91808A38D001CA384 /* cmlDepthmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlDepthmap.cpp; sourceTree = "<group>"; };
-		12BBE7EA1808A38D001CA384 /* cmlDepthmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlDepthmap.h; sourceTree = "<group>"; };
-		12BBE7EB1808A38D001CA384 /* cmlEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlEvents.h; sourceTree = "<group>"; };
-		12BBE7EC1808A38D001CA384 /* cmlKinect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlKinect.cpp; sourceTree = "<group>"; };
-		12BBE7ED1808A38D001CA384 /* cmlKinect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlKinect.h; sourceTree = "<group>"; };
-		12BBE7EE1808A38D001CA384 /* cmlMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh.cpp; sourceTree = "<group>"; };
-		12BBE7EF1808A38D001CA384 /* cmlMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh.h; sourceTree = "<group>"; };
-		12BBE7F01808A38D001CA384 /* cmlOpticalDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlOpticalDevice.cpp; sourceTree = "<group>"; };
-		12BBE7F11808A38D001CA384 /* cmlOpticalDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlOpticalDevice.h; sourceTree = "<group>"; };
-		12BBE7F21808A38D001CA384 /* cmlRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlRenderer.cpp; sourceTree = "<group>"; };
-		12BBE7F31808A38D001CA384 /* cmlRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlRenderer.h; sourceTree = "<group>"; };
-		12BBE7F51808A38D001CA384 /* cmlDepthmap_freenect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlDepthmap_freenect.h; sourceTree = "<group>"; };
+		123E7E2B180F25310047B4F7 /* cmlCalibration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlCalibration.cpp; sourceTree = "<group>"; };
+		123E7E2C180F25310047B4F7 /* cmlCalibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlCalibration.h; sourceTree = "<group>"; };
+		123E7E2D180F25310047B4F7 /* cmlCamaraLucida.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlCamaraLucida.cpp; sourceTree = "<group>"; };
+		123E7E2E180F25310047B4F7 /* cmlCamaraLucida.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlCamaraLucida.h; sourceTree = "<group>"; };
+		123E7E2F180F25310047B4F7 /* cmlConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlConfig.h; sourceTree = "<group>"; };
+		123E7E30180F25310047B4F7 /* cmlEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlEvents.h; sourceTree = "<group>"; };
+		123E7E33180F25310047B4F7 /* cmlMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh.cpp; sourceTree = "<group>"; };
+		123E7E34180F25310047B4F7 /* cmlMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh.h; sourceTree = "<group>"; };
+		123E7E35180F25310047B4F7 /* cmlOpticalDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlOpticalDevice.cpp; sourceTree = "<group>"; };
+		123E7E36180F25310047B4F7 /* cmlOpticalDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlOpticalDevice.h; sourceTree = "<group>"; };
+		123E7E37180F25310047B4F7 /* cmlRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlRenderer.cpp; sourceTree = "<group>"; };
+		123E7E38180F25310047B4F7 /* cmlRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlRenderer.h; sourceTree = "<group>"; };
+		123E7E46180F26950047B4F7 /* cmlDepthCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlDepthCamera.cpp; sourceTree = "<group>"; };
+		123E7E47180F26950047B4F7 /* cmlDepthCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlDepthCamera.h; sourceTree = "<group>"; };
 		12BBE7F61808A38D001CA384 /* ofxCamaraLucida.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCamaraLucida.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -664,44 +660,25 @@
 		12BBE7E11808A38D001CA384 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				12BBE7E31808A38D001CA384 /* common */,
-				12BBE7F41808A38D001CA384 /* freenect */,
+				123E7E46180F26950047B4F7 /* cmlDepthCamera.cpp */,
+				123E7E47180F26950047B4F7 /* cmlDepthCamera.h */,
+				123E7E2B180F25310047B4F7 /* cmlCalibration.cpp */,
+				123E7E2C180F25310047B4F7 /* cmlCalibration.h */,
+				123E7E2D180F25310047B4F7 /* cmlCamaraLucida.cpp */,
+				123E7E2E180F25310047B4F7 /* cmlCamaraLucida.h */,
+				123E7E2F180F25310047B4F7 /* cmlConfig.h */,
+				123E7E30180F25310047B4F7 /* cmlEvents.h */,
+				123E7E33180F25310047B4F7 /* cmlMesh.cpp */,
+				123E7E34180F25310047B4F7 /* cmlMesh.h */,
+				123E7E35180F25310047B4F7 /* cmlOpticalDevice.cpp */,
+				123E7E36180F25310047B4F7 /* cmlOpticalDevice.h */,
+				123E7E37180F25310047B4F7 /* cmlRenderer.cpp */,
+				123E7E38180F25310047B4F7 /* cmlRenderer.h */,
 				12BBE7F61808A38D001CA384 /* ofxCamaraLucida.h */,
 			);
 			name = src;
 			path = ../src;
 			sourceTree = SOURCE_ROOT;
-		};
-		12BBE7E31808A38D001CA384 /* common */ = {
-			isa = PBXGroup;
-			children = (
-				12BBE7E41808A38D001CA384 /* cmlCalibration.cpp */,
-				12BBE7E51808A38D001CA384 /* cmlCalibration.h */,
-				12BBE7E61808A38D001CA384 /* cmlCamaraLucida.cpp */,
-				12BBE7E71808A38D001CA384 /* cmlCamaraLucida.h */,
-				12BBE7E81808A38D001CA384 /* cmlConfig.h */,
-				12BBE7E91808A38D001CA384 /* cmlDepthmap.cpp */,
-				12BBE7EA1808A38D001CA384 /* cmlDepthmap.h */,
-				12BBE7EB1808A38D001CA384 /* cmlEvents.h */,
-				12BBE7EC1808A38D001CA384 /* cmlKinect.cpp */,
-				12BBE7ED1808A38D001CA384 /* cmlKinect.h */,
-				12BBE7EE1808A38D001CA384 /* cmlMesh.cpp */,
-				12BBE7EF1808A38D001CA384 /* cmlMesh.h */,
-				12BBE7F01808A38D001CA384 /* cmlOpticalDevice.cpp */,
-				12BBE7F11808A38D001CA384 /* cmlOpticalDevice.h */,
-				12BBE7F21808A38D001CA384 /* cmlRenderer.cpp */,
-				12BBE7F31808A38D001CA384 /* cmlRenderer.h */,
-			);
-			path = common;
-			sourceTree = "<group>";
-		};
-		12BBE7F41808A38D001CA384 /* freenect */ = {
-			isa = PBXGroup;
-			children = (
-				12BBE7F51808A38D001CA384 /* cmlDepthmap_freenect.h */,
-			);
-			path = freenect;
-			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
@@ -899,13 +876,12 @@
 				1203E6D9180722EB0074A5B0 /* registration.c in Sources */,
 				1203E6DA180722EB0074A5B0 /* tilt.c in Sources */,
 				1203E6DB180722EB0074A5B0 /* usb_libusb10.c in Sources */,
-				12BBE7F91808A38D001CA384 /* cmlCalibration.cpp in Sources */,
-				12BBE7FA1808A38D001CA384 /* cmlCamaraLucida.cpp in Sources */,
-				12BBE7FB1808A38D001CA384 /* cmlDepthmap.cpp in Sources */,
-				12BBE7FC1808A38D001CA384 /* cmlKinect.cpp in Sources */,
-				12BBE7FD1808A38D001CA384 /* cmlMesh.cpp in Sources */,
-				12BBE7FE1808A38D001CA384 /* cmlOpticalDevice.cpp in Sources */,
-				12BBE7FF1808A38D001CA384 /* cmlRenderer.cpp in Sources */,
+				123E7E39180F25310047B4F7 /* cmlCalibration.cpp in Sources */,
+				123E7E3A180F25310047B4F7 /* cmlCamaraLucida.cpp in Sources */,
+				123E7E3C180F25310047B4F7 /* cmlMesh.cpp in Sources */,
+				123E7E3D180F25310047B4F7 /* cmlOpticalDevice.cpp in Sources */,
+				123E7E3E180F25310047B4F7 /* cmlRenderer.cpp in Sources */,
+				123E7E48180F26950047B4F7 /* cmlDepthCamera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

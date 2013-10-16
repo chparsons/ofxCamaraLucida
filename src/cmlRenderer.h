@@ -25,6 +25,7 @@
 #include "cmlConfig.h"
 #include "cmlEvents.h"
 #include "cmlOpticalDevice.h"
+#include "cmlDepthCamera.h"
 #include "cmlMesh.h"
 
 namespace cml

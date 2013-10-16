@@ -318,7 +318,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>cmlCamaraLucida.cpp</string>
+								<string>main.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -326,17 +326,16 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>cmlCamaraLucida.cpp</string>
+										<string>main.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>126A3AF0180E000700DDDBA4</string>
+										<string>123E7E06180F21640047B4F7</string>
 										<key>history</key>
 										<array>
 											<string>1203E70F180723AA0074A5B0</string>
 											<string>1203E710180723AA0074A5B0</string>
 											<string>12583AD1180D860E00EE152A</string>
-											<string>12583ADC180D875A00EE152A</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -348,14 +347,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {0, 90}}</string>
+								<string>{{0, 0}, {0, 72}}</string>
 								<key>RubberWindowFrame</key>
 								<string>749 156 373 666 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>90pt</string>
+							<string>72pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -368,14 +367,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 95}, {0, 530}}</string>
+								<string>{{0, 77}, {0, 548}}</string>
 								<key>RubberWindowFrame</key>
 								<string>749 156 373 666 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>530pt</string>
+							<string>548pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -394,9 +393,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>126A3A68180D90B300DDDBA4</string>
+				<string>123E7D91180F01520047B4F7</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>126A3A69180D90B300DDDBA4</string>
+				<string>123E7D92180F01520047B4F7</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -534,12 +533,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>126A3A7E180D9F5900DDDBA4</string>
-		<string>126A3A7F180D9F5900DDDBA4</string>
+		<string>123E7DC1180F08630047B4F7</string>
+		<string>123E7DC2180F08630047B4F7</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>12F36BB1157188440041707A</string>
-		<string>/Users/chparsons/dev/openframeworks/fork2/addons/ofxCamaraLucida/example_freenect/camara_lucida_freenect_example.xcodeproj</string>
 		<string>1C78EAAD065D492600B07095</string>
+		<string>/Users/chparsons/dev/openframeworks/fork2/addons/ofxCamaraLucida/example_freenect/camara_lucida_freenect_example.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>749 156 373 666 0 0 1440 878 </string>
@@ -563,21 +562,21 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>&lt;No Editor&gt;</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {871, 352}}</string>
+								<string>{{0, 0}, {871, 0}}</string>
 								<key>RubberWindowFrame</key>
 								<string>465 214 871 634 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>352pt</string>
+							<string>0pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -594,14 +593,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 357}, {871, 236}}</string>
+								<string>{{0, 5}, {871, 588}}</string>
 								<key>RubberWindowFrame</key>
 								<string>465 214 871 634 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
 							<key>Proportion</key>
-							<string>236pt</string>
+							<string>588pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -619,7 +618,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>12F36BB1157188440041707A</string>
-				<string>126A3A6A180D90B300DDDBA4</string>
+				<string>123E7D93180F01520047B4F7</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -741,13 +740,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>126A3A76180D9F5900DDDBA4</string>
+				<string>123E7DB6180F08270047B4F7</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>126A3A77180D9F5900DDDBA4</string>
-				<string>126A3A78180D9F5900DDDBA4</string>
-				<string>126A3A79180D9F5900DDDBA4</string>
-				<string>126A3A7A180D9F5900DDDBA4</string>
-				<string>126A3A7B180D9F5900DDDBA4</string>
+				<string>123E7DB7180F08270047B4F7</string>
+				<string>123E7DB8180F08270047B4F7</string>
+				<string>123E7DB9180F08270047B4F7</string>
+				<string>123E7DBA180F08270047B4F7</string>
+				<string>123E7DBB180F08270047B4F7</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -911,7 +910,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>126A3A7C180D9F5900DDDBA4</string>
+				<string>123E7DBC180F08270047B4F7</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

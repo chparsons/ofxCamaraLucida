@@ -36,8 +36,9 @@ namespace cml
 
           Config() 
           {
+            //mts
             near = 0.1;
-            far = 20.;
+            far = 10.0;
           };
 
           void size( int w, int h )
@@ -91,8 +92,10 @@ namespace cml
           int x2d, int y2d, 
           float z, float *x, float *y );
 
-      ofVec2f project( 
-          const ofVec3f& p3 );
+      ofVec2f project( const ofVec3f& p3 );
+
+      int to_idx( int x, int y );
+      void to_xy( int idx, int& x, int& y );
 
       ofVec3f loc() { return _loc; };
       ofVec3f fwd() { return _fwd; };
@@ -123,9 +126,6 @@ namespace cml
       int height() { return cfg.height; };
       int near() { return cfg.near; };
       int far() { return cfg.far; };
-
-      int to_idx( int x, int y );
-      void to_xy( int idx, int& x, int& y );
 
 
     protected:

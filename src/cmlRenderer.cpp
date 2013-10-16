@@ -44,8 +44,9 @@ namespace cml
     s.internalformat	= GL_RGBA;
 
     fbo.allocate(s);
-    shader.load("camara_lucida/glsl/render");
 
+    shader.load("camara_lucida/glsl/render");
+ 
     init_gl_scene_control();
   }
 
@@ -119,16 +120,40 @@ namespace cml
     //ofEnableAlphaBlending();
 
     shader.begin();
-    ofTexture render_tex = fbo.getTextureReference(0);
+
+    /* shader depth calib */
+    OpticalDevice::Config cfg = depth->config();
+    ofVec4f k = ((cml::DepthCamera*)depth)->k();
+
+    shader.setUniform1f("width", cfg.width);
+    shader.setUniform1f("height", cfg.height);
+    shader.setUniform1f("near", cfg.near);
+    shader.setUniform1f("far", cfg.far);
+    shader.setUniform1f("cx", cfg.cx);
+    shader.setUniform1f("cy", cfg.cy);
+    shader.setUniform1f("fx", cfg.fx);
+    shader.setUniform1f("fy", cfg.fy);
+    shader.setUniform1f("k1", k[0]);
+    shader.setUniform1f("k2", k[1]);
+    shader.setUniform1f("k3", k[2]);
+    shader.setUniform1f("k4", k[3]);
+    /* shader depth calib */
+
+    ofTexture render_tex = fbo
+      .getTextureReference(0);
+
     render_tex.bind();
+
     shader.setUniformTexture(
         "render_tex", render_tex, 0 );
+
     shader.setUniformTexture(
         "depth_tex", depth_ftex, 1 );
 
     mesh->render();
 
     render_tex.unbind();
+
     shader.end();
 
     //glDisable(GL_BLEND);

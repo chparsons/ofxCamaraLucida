@@ -22,51 +22,48 @@
 #pragma once
 
 #include "cmlOpticalDevice.h"
-#include "cmlMesh.h"
+#include "ofTexture.h"
 
-namespace cml 
+namespace cml
 {
-  class Depthmap
+
+  class DepthCamera : public OpticalDevice
   {
     public:
 
-      Depthmap();
-      virtual ~Depthmap();
+      DepthCamera(
+        const OpticalDevice::Config& config ); 
 
-      virtual void init( 
-          cml::OpticalDevice* depth, 
-          Mesh* mesh );
-
-      virtual void dispose();
+      ~DepthCamera();
 
       /*
        * float texture in range [0,1]
        * mapped from [near_mm,far_mm]
-       * to pass to glsl
+       * to use in shaders
        */
       ofTexture& get_float_tex_ref( 
-          uint16_t *mm_depth_pix, 
-          float near_mm, float far_mm );
+          uint16_t *mm_depth_pix = NULL );
 
-      /*
-       * hue texture
-       */
-      ofTexture& get_hue_tex_ref(
-          uint16_t *mm_depth_pix );
+      ofTexture& get_hue_tex_ref( 
+          uint16_t *mm_depth_pix = NULL );
 
-    protected:
+      const ofVec4f& k() { return _k; };
 
-      cml::OpticalDevice* depth;
-      Mesh* mesh;
+      float z_mts( uint16_t raw_depth );
+      float z_mts( 
+          uint16_t *raw_depth_pix, 
+          int _x, int _y );
 
     private:
+
+      ofVec4f _k; 
+      float *_zlut;
+      float z_raw_to_mts( uint16_t raw_depth ); 
 
       ofTexture ftex;
       ofFloatPixels fpix;
       float *flut;
-      void init_float_tex( 
-          int w, int h, 
-          float near_mm, float far_mm );
+      void init_float_tex( int w, int h );
 
       ofTexture htex;
       uint8_t *hpix;
@@ -75,4 +72,5 @@ namespace cml
 
   };
 };
+
 

@@ -4,7 +4,6 @@
 #include "ofxOpenCv.h"
 #include "ofxOpenNI.h"
 #include "ofxCamaraLucida.h"
-#include "cmlDepthmap_openni.h"
 #include <GLUT/glut.h>
 
 class testApp : public ofBaseApp 
@@ -22,12 +21,10 @@ class testApp : public ofBaseApp
     void mouseReleased(int x, int y, int button);
     void windowResized(int w, int h);
 
-    //ofxOpenNI openNI;
     ofxOpenNIContext oni_ctx;
     ofxDepthGenerator oni_depth_gen;
 
     cml::CamaraLucida *cml;
-    cml::Depthmap_openni *depthmap;
 
     void render_texture(ofEventArgs &args);
     void render_3d(ofEventArgs &args);

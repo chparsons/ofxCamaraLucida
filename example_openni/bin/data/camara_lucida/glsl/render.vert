@@ -33,11 +33,6 @@ float lerp2d( float x,
   return (x-x1) / (x2-x1) * (y2-y1) + y1;
 }
 
-/*
- * WARNING
- * this interpolation is related 
- * to init_float_tex in cml::DepthCamera
- */
 float z_norm_to_mts( float z_norm ) 
 {
   return lerp2d( z_norm, 1., -1., near, far );

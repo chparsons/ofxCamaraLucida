@@ -19,8 +19,7 @@ void testApp::setup()
 
   string cfg = ofToDataPath("camara_lucida/config.xml");
 
-  depthmap = new cml::Depthmap_freenect();
-  cml = new cml::CamaraLucida( cfg, depthmap );
+  cml = new cml::CamaraLucida( cfg );
 
   ofAddListener( cml->render_texture, 
       this, &testApp::render_texture );
@@ -41,16 +40,12 @@ void testApp::update()
   kinect.update();
 
   if ( kinect.isFrameNew() )
-  { 
     cml->update( kinect.getRawDepthPixels() );
-    //depthmap->update( 
-        //kinect.getRawDepthPixels() );
-  }
 }
 
 void testApp::draw() 
 {    
-  cml->render(); 
+  cml->render();
 }
 
 void testApp::render_texture(ofEventArgs &args)
@@ -71,7 +66,8 @@ void testApp::render_texture(ofEventArgs &args)
   glColor3f(1, 1, 1);
 
   kinect.drawDepth(0, 0, w, h);
-  //depthmap->get_hue_tex_ref(
+
+  //cml->get_hue_tex_ref(
       //kinect.getRawDepthPixels() )
     //.draw( 0, 0, w, h );
 
@@ -110,7 +106,6 @@ void testApp::exit()
       this, &testApp::render_2d );
 
   cml->dispose();
-  depthmap->dispose();
 
   kinect.close();
 }

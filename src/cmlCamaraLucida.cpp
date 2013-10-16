@@ -23,13 +23,12 @@
 
 namespace cml
 {
-  CamaraLucida::CamaraLucida(
-    string config_path, Depthmap* depthmap ) : 
+  CamaraLucida::CamaraLucida(string cfg_path) : 
     render_texture( events.render_texture ),
     render_3d( events.render_3d ),
     render_2d( events.render_2d )
   {
-    init( config_path, depthmap );
+    init( cfg_path );
   };
 
   CamaraLucida::~CamaraLucida(){}; 
@@ -47,12 +46,10 @@ namespace cml
     delete rgb; rgb = NULL;
     delete renderer; renderer = NULL;
     delete mesh; mesh = NULL;
-
-    depthmap = NULL;
   };
 
   void CamaraLucida::render()
-  {
+  { 
     renderer->render( 
         &events, 
         mesh, 
@@ -63,12 +60,10 @@ namespace cml
     render_help();
   };
 
-  void CamaraLucida::update( 
+  void CamaraLucida::update(
       uint16_t *mm_depth_pix )
   {
-    float near_mm = 500.;
-    float far_mm = 4000.;
-    depth_ftex = depthmap->get_float_tex_ref( mm_depth_pix, near_mm, far_mm ); 
+    depth_ftex = depth->get_float_tex_ref( mm_depth_pix );
 
     mesh->update();
   };
@@ -99,16 +94,14 @@ namespace cml
     return config->tex_height; 
   };
 
-  void CamaraLucida::init( 
-      string config_path, Depthmap* depthmap )
+  void CamaraLucida::init( string cfg_path )
   {
     ofLog(OF_LOG_VERBOSE,
         "cml::CamaraLucida::init");
 
-    this->depthmap = depthmap; 
-    this->config_path = config_path;
+    this->cfg_path = cfg_path;
 
-    xml.loadFile(config_path);
+    xml.loadFile(cfg_path);
     xml.pushTag("camaralucida");
 
     init_keys(); 
@@ -124,7 +117,7 @@ namespace cml
         config, proj_cfg, depth_cfg, rgb_cfg ); 
 
     proj = new OpticalDevice( proj_cfg );
-    depth = new cml::Kinect( depth_cfg );
+    depth = new cml::DepthCamera( depth_cfg );
     rgb = new OpticalDevice( rgb_cfg );
 
     mesh = new Mesh( 
@@ -135,16 +128,12 @@ namespace cml
     renderer = new Renderer(
         config, proj, depth, rgb );
 
-    depthmap->init( depth, mesh );
-
-    //TODO remove duplicated code
-    float near_mm = 500.;
-    float far_mm = 4000.;
-    depth_ftex = depthmap->get_float_tex_ref( NULL, near_mm, far_mm ); 
+    depth_ftex = depth->get_float_tex_ref();
 
     _wireframe = false;
     _debug = false;
     _render_help = false;
+
   };
 
   void CamaraLucida::init_keys()
@@ -239,7 +228,7 @@ namespace cml
   {
     if ( ! _render_help ) return;
 
-    string d = "Camara Lucida \n www.camara-lucida.com.ar \n www.chparsons.com.ar \n\n config file = "+config_path+" \n\n debug = "+string(1, key.debug)+" \n\n next viewpoint = "+string(1, key.view_next)+" \n prev viewpoint = "+string(1, key.view_prev)+" \n\n drag mouse to rotate \n\t zoom = "+string(1, key.scene_zoom)+" + drag \n\t reset = "+string(1, key.scene_reset);
+    string d = "Camara Lucida \n www.camara-lucida.com.ar \n www.chparsons.com.ar \n\n config file = "+cfg_path+" \n\n debug = "+string(1, key.debug)+" \n\n next viewpoint = "+string(1, key.view_next)+" \n prev viewpoint = "+string(1, key.view_prev)+" \n\n drag mouse to rotate \n\t zoom = "+string(1, key.scene_zoom)+" + drag \n\t reset = "+string(1, key.scene_reset);
 
     int roff = 200;
     int toff = roff+50;

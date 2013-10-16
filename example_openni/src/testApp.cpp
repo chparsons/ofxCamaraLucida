@@ -23,8 +23,7 @@ void testApp::setup()
 
   string cfg = ofToDataPath("camara_lucida/config.xml");
 
-  depthmap = new cml::Depthmap_openni();
-  cml = new cml::CamaraLucida( cfg, depthmap );
+  cml = new cml::CamaraLucida( cfg );
 
   ofAddListener( cml->render_texture, 
       this, &testApp::render_texture );
@@ -42,13 +41,14 @@ void testApp::update()
   oni_ctx.update();
   oni_depth_gen.update();
 
-  depthmap->update( 
-      oni_depth_gen.getXnDepthGenerator() );
+  uint16_t *mm_depth_pix = (uint16_t*)oni_depth_gen.getXnDepthGenerator().GetDepthMap(); 
+
+  cml->update( mm_depth_pix );
 }
 
 void testApp::draw() 
 {    
-  cml->render(); 
+  cml->render();
 }
 
 void testApp::render_texture(ofEventArgs &args)
@@ -105,7 +105,6 @@ void testApp::exit()
       this, &testApp::render_2d );
 
   cml->dispose();
-  depthmap->dispose();
 
   oni_ctx.shutdown();
 }

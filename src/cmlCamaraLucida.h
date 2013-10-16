@@ -26,10 +26,9 @@
 #include "cmlConfig.h"
 #include "cmlEvents.h"
 #include "cmlOpticalDevice.h"
-#include "cmlKinect.h"
+#include "cmlDepthCamera.h"
 #include "cmlCalibration.h"
 #include "cmlMesh.h"
-#include "cmlDepthmap.h"
 #include "cmlRenderer.h"
 
 namespace cml
@@ -38,9 +37,7 @@ namespace cml
   {
     public:
 
-      CamaraLucida(
-          string config_path, 
-          Depthmap* depthmap );
+      CamaraLucida( string cfg_path );
 
       ~CamaraLucida();
 
@@ -86,20 +83,17 @@ namespace cml
 
       void log()
       {
-        mesh->log();
+        //mesh->log();
       };
 
     private:
 
-      void init( 
-          string config_path, 
-          Depthmap* depthmap );
+      void init( string cfg_path );
 
-      Depthmap* depthmap;
       ofTexture depth_ftex;
 
       cml::Events events;
-      cml::Kinect* depth;
+      cml::DepthCamera* depth;
       OpticalDevice* proj;
       OpticalDevice* rgb;
       Renderer* renderer;
@@ -107,7 +101,7 @@ namespace cml
 
       Config* config;
       ofxXmlSettings xml;
-      string config_path;
+      string cfg_path;
 
       bool _wireframe;
       bool _debug;
@@ -142,7 +136,4 @@ namespace cml
       void dispose_events();
   };
 };
-
-
-
 
