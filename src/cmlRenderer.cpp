@@ -66,6 +66,7 @@ namespace cml
       cml::Events *ev, 
       Mesh *mesh,
       ofTexture& depth_ftex,
+      bool gpu, 
       bool wireframe )
   {
 
@@ -90,11 +91,11 @@ namespace cml
     // 3d
 
     glEnable( GL_DEPTH_TEST );
-    glViewport( 0,0,ofGetWidth(),ofGetHeight() );
+    glViewport(0,0,ofGetWidth(),ofGetHeight());
 
     glPushAttrib( GL_POLYGON_BIT );
     if ( wireframe )
-      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
+      glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); 
     else
       glPolygonMode( GL_FRONT, GL_FILL );
 
@@ -119,6 +120,12 @@ namespace cml
     //glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
     //ofEnableAlphaBlending();
 
+    ofTexture render_tex = fbo
+      .getTextureReference(0);
+
+    if ( gpu )
+    {
+
     shader.begin();
 
     /* shader depth calib */
@@ -139,9 +146,6 @@ namespace cml
     shader.setUniform1f("k4", k[3]);
     /* shader depth calib */
 
-    ofTexture render_tex = fbo
-      .getTextureReference(0);
-
     render_tex.bind();
 
     shader.setUniformTexture(
@@ -155,6 +159,17 @@ namespace cml
     render_tex.unbind();
 
     shader.end();
+
+    } 
+    //end of gpu
+
+    else
+    {
+      render_tex.bind();
+      mesh->render();
+      render_tex.unbind();
+    } 
+    //end of cpu
 
     //glDisable(GL_BLEND);
     //ofDisableAlphaBlending(); 

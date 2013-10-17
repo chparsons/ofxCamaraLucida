@@ -44,8 +44,8 @@ namespace cml
     // init vbo
 
     vbo.setVertexData( pts0x(), 3, mesh_len, 
-        //GL_DYNAMIC_DRAW, sizeof_pts() );
-        GL_STATIC_DRAW, sizeof_pts() );
+        GL_DYNAMIC_DRAW, sizeof_pts() );
+        //GL_STATIC_DRAW, sizeof_pts() );
 
     //vbo.setNormalData( normals0x(), mesh_len, 
       //GL_DYNAMIC_DRAW, sizeof_normals() );

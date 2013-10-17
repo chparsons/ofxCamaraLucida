@@ -54,6 +54,7 @@ namespace cml
         &events, 
         mesh, 
         depth_ftex,
+        gpu(),
         wireframe() );
 
     render_screenlog();
@@ -63,7 +64,45 @@ namespace cml
   void CamaraLucida::update(
       uint16_t *mm_depth_pix )
   {
-    depth_ftex = depth->get_float_tex_ref( mm_depth_pix );
+    if ( _gpu ) update_gpu( mm_depth_pix );
+    else update_cpu( mm_depth_pix );
+  };
+
+  void CamaraLucida::update_gpu(
+      uint16_t *mm_depth_pix )
+  {
+    depth_ftex = depth->get_float_tex_ref( 
+        mm_depth_pix );
+  };
+
+  void CamaraLucida::update_cpu(
+      uint16_t *mm_depth_pix )
+  {
+
+    int len = mesh->length();
+
+    for ( int i = 0; i < len; i++ )
+    {
+      int xdepth, ydepth, idepth;
+
+      mesh->to_depth( i, 
+          &xdepth, &ydepth, &idepth );
+
+      //uint16_t raw_depth=raw_depth_pix[idepth];
+      //float z = depth->z_mts(raw_depth);
+
+      // mm to mts
+      float zmts = mm_depth_pix[idepth]*0.001;
+      zmts = CLAMP((zmts==0.?5.:zmts),0.,5.);
+
+      float x, y;
+
+      depth->unproject(
+          xdepth, ydepth, zmts, &x, &y );
+
+      mesh->set_vertex( i, x, y, zmts );
+
+    }
 
     mesh->update();
   };
@@ -99,6 +138,8 @@ namespace cml
     ofLog(OF_LOG_VERBOSE,
         "cml::CamaraLucida::init");
 
+    _gpu = true;
+
     this->cfg_path = cfg_path;
 
     xml.loadFile(cfg_path);
@@ -130,7 +171,7 @@ namespace cml
 
     depth_ftex = depth->get_float_tex_ref();
 
-    _wireframe = false;
+    _wire = false;
     _debug = false;
     _render_help = false;
 

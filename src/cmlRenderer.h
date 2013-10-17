@@ -46,6 +46,7 @@ namespace cml
           cml::Events *ev, 
           Mesh *mesh,
           ofTexture& depth_ftex,
+          bool gpu, 
           bool wireframe );
 
       void dispose();

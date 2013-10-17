@@ -116,7 +116,7 @@ void testApp::keyPressed (int key)
   {
 
     case 'o':
-      cml->log();
+      cml->gpu( !cml->gpu() );
       break;
 
     case 'w':

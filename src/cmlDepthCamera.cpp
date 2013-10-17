@@ -91,13 +91,13 @@ namespace cml
     return ftex; 
   };
 
-  void DepthCamera::init_float_tex( int w, int h )
+  void DepthCamera::init_float_tex(int w, int h)
   {
     if ( ftex.isAllocated() )
       return;
 
     ftex.allocate( w, h, GL_LUMINANCE32F_ARB );
-    fpix.allocate( w, h, 1);
+    fpix.allocate( w, h, 1 );
     fpix.set( 0 );
 
     int near_mm = (int)(near() * 1000);

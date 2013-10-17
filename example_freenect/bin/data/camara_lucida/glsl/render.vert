@@ -26,6 +26,11 @@ float lerp2d( float x,
   return (x-x1) / (x2-x1) * (y2-y1) + y1;
 }
 
+float round( float n )
+{
+  return fract(n) < 0.5 ? floor(n) : ceil(n);
+}
+
 /*
  * WARNING
  * this interpolation is related 
@@ -33,7 +38,8 @@ float lerp2d( float x,
  */
 float z_norm_to_mts( float z_norm ) 
 {
-  return lerp2d( z_norm, 1., -1., near, far );
+  /*return lerp2d(z_norm, 1., -1., near, far);*/
+  return lerp2d(z_norm, 1., 0., near, far);
 }
 
 /*float z_raw_to_mts( float z_raw ) */
@@ -45,15 +51,15 @@ float z_norm_to_mts( float z_norm )
 void main()
 {	
 
-  ivec2 render_tex_size = textureSize2DRect( render_tex, 0 );
+  vec2 render_tex_size = vec2( textureSize2DRect( render_tex, 0 ) );
 
   gl_TexCoord[0] = gl_MultiTexCoord0;
 
   vec2 p2 = gl_TexCoord[0].st;
 
   vec2 d2 = vec2( 
-    p2.x / float(render_tex_size.x) * width,
-    p2.y / float(render_tex_size.y) * height );
+    floor(p2.x/render_tex_size.x * (width-1)),
+    floor(p2.y/render_tex_size.y * (height-1)));
 
   float depth = texture2DRect(depth_tex, d2).r;
 
@@ -68,7 +74,8 @@ void main()
 
   /*gl_Position = ftransform();*/
 
-	gl_FrontColor  = gl_Color;
+  gl_FrontColor  = gl_Color;
+	/*gl_FrontColor  = vec4( lerp2d(z_mts,0.5,5.0,0.,1.) );*/
 }
 
 

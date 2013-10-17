@@ -45,15 +45,11 @@ namespace cml
       void render();
       void update( uint16_t *mm_depth_pix );
 
-      void wireframe( bool _wire )
-      {
-        _wireframe = _wire;
-      };
+      void wireframe(bool v) { _wire = v; };
+      bool wireframe() { return _wire; };
 
-      bool wireframe()
-      {
-        return _wireframe;
-      };
+      void gpu(bool v) { _gpu = v; };
+      bool gpu() { return _gpu; };
 
       void debug( bool val );
       bool debug();
@@ -88,6 +84,11 @@ namespace cml
 
     private:
 
+      bool _gpu;
+
+      void update_cpu( uint16_t *mm_depth_pix );
+      void update_gpu( uint16_t *mm_depth_pix );
+
       void init( string cfg_path );
 
       ofTexture depth_ftex;
@@ -103,7 +104,7 @@ namespace cml
       ofxXmlSettings xml;
       string cfg_path;
 
-      bool _wireframe;
+      bool _wire;
       bool _debug;
       bool _render_help;
       bool pressed[512];
