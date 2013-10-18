@@ -260,7 +260,7 @@ namespace cml
         ofGetWidth(), 25);
     glColor3f(1, 1, 1);
 
-    ofDrawBitmapString( view+" / fps: "+ofToString(fps), 10, ofGetHeight()-10);
+    ofDrawBitmapString( view + " / fps: " + ofToString(fps) + " / gpu " + ofToString(gpu()), 10, ofGetHeight()-10);
 
     ofDisableAlphaBlending(); 
   };

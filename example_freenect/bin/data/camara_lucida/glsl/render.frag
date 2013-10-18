@@ -9,7 +9,8 @@ void main()
   vec2 p2 = gl_TexCoord[0].st;
   vec4 color = texture2DRect( render_tex, p2 );
 
-  gl_FragColor = color * gl_Color;
+  /*gl_FragColor = color * gl_Color;*/
+  gl_FragColor = color;
 
 }
 

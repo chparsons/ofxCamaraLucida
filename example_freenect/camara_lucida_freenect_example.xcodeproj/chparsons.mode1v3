@@ -330,12 +330,12 @@
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>12DA9B581810989F007AD705</string>
+										<string>12C5D2741811DAA00015BD7E</string>
 										<key>history</key>
 										<array>
 											<string>1203E70F180723AA0074A5B0</string>
 											<string>1203E710180723AA0074A5B0</string>
-											<string>1203D54518108ED7007A4E68</string>
+											<string>12DA9B581810989F007AD705</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -393,9 +393,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>12DA9B4318108FFB007AD705</string>
+				<string>12C5D2161811B5930015BD7E</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>12DA9B4418108FFB007AD705</string>
+				<string>12C5D2171811B5930015BD7E</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -533,8 +533,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>12DA9B591810989F007AD705</string>
-		<string>12DA9B5A1810989F007AD705</string>
+		<string>12C5D27C1811DAA00015BD7E</string>
+		<string>12C5D27D1811DAA00015BD7E</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>12F36BB1157188440041707A</string>
 		<string>/Users/chparsons/dev/openframeworks/fork2/addons/ofxCamaraLucida/example_freenect/camara_lucida_freenect_example.xcodeproj</string>
@@ -579,8 +579,6 @@
 							<string>0pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -620,7 +618,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>12F36BB1157188440041707A</string>
-				<string>12DA9B4518108FFB007AD705</string>
+				<string>12C5D2181811B5930015BD7E</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -742,13 +740,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>12DA9B4F18109771007AD705</string>
+				<string>12C5D2751811DAA00015BD7E</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>12DA9B5018109771007AD705</string>
-				<string>12DA9B5118109771007AD705</string>
-				<string>12DA9B5218109771007AD705</string>
-				<string>12DA9B5318109771007AD705</string>
-				<string>12DA9B5418109771007AD705</string>
+				<string>12C5D2761811DAA00015BD7E</string>
+				<string>12C5D2771811DAA00015BD7E</string>
+				<string>12C5D2781811DAA00015BD7E</string>
+				<string>12C5D2791811DAA00015BD7E</string>
+				<string>12C5D27A1811DAA00015BD7E</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -912,7 +910,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>12DA9B5518109771007AD705</string>
+				<string>12C5D27B1811DAA00015BD7E</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>

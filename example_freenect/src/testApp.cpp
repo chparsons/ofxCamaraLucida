@@ -65,11 +65,11 @@ void testApp::render_texture(ofEventArgs &args)
 
   glColor3f(1, 1, 1);
 
-  kinect.drawDepth(0, 0, w, h);
+  //kinect.drawDepth(0, 0, w, h);
 
-  //cml->get_hue_tex_ref(
-      //kinect.getRawDepthPixels() )
-    //.draw( 0, 0, w, h );
+  cml->get_hue_tex_ref(
+      kinect.getRawDepthPixels() )
+    .draw( 0, 0, w, h );
 
   glColor3f(1, 1, 0);
   ofCircle(800, 200, 60);

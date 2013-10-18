@@ -38,8 +38,7 @@ float round( float n )
  */
 float z_norm_to_mts( float z_norm ) 
 {
-  /*return lerp2d(z_norm, 1., -1., near, far);*/
-  return lerp2d(z_norm, 1., 0., near, far);
+  return lerp2d(z_norm, 1., -0.1, near, far);
 }
 
 /*float z_raw_to_mts( float z_raw ) */
@@ -58,8 +57,9 @@ void main()
   vec2 p2 = gl_TexCoord[0].st;
 
   vec2 d2 = vec2( 
-    floor(p2.x/render_tex_size.x * (width-1)),
-    floor(p2.y/render_tex_size.y * (height-1)));
+    round(p2.x/render_tex_size.x * width),
+    round(p2.y/render_tex_size.y * height) 
+  );
 
   float depth = texture2DRect(depth_tex, d2).r;
 

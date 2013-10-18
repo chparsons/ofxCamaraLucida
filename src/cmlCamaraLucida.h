@@ -73,14 +73,28 @@ namespace cml
         return depth->config();
       };
 
-      ofEvent<ofEventArgs>& render_texture;
-      ofEvent<ofEventArgs>& render_3d;
-      ofEvent<ofEventArgs>& render_2d;
+      ofTexture& get_float_tex_ref(
+          uint16_t *mm_depth_pix ) 
+      {
+        return depth->get_float_tex_ref(
+            mm_depth_pix );
+      };
+
+      ofTexture& get_hue_tex_ref(
+          uint16_t *mm_depth_pix ) 
+      {
+        return depth->get_hue_tex_ref(
+            mm_depth_pix );
+      };
 
       void log()
       {
         //mesh->log();
       };
+
+      ofEvent<ofEventArgs>& render_texture;
+      ofEvent<ofEventArgs>& render_3d;
+      ofEvent<ofEventArgs>& render_2d; 
 
     private:
 
