@@ -1,4 +1,3 @@
 ofxOpenCv
-ofxXmlSettings
 ofxCamaraLucida
 ofxKinect

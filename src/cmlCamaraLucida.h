@@ -1,28 +1,6 @@
-/*
- * Camara Lucida
- * www.camara-lucida.com.ar
- *
- * Copyright (C) 2011  Christian Parsons
- * www.chparsons.com.ar
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 #pragma once
 
 #include "ofMain.h"
-#include "ofxXmlSettings.h"
 #include "cmlConfig.h"
 #include "cmlEvents.h"
 #include "cmlOpticalDevice.h"
@@ -37,8 +15,8 @@ namespace cml
   {
     public:
 
-      CamaraLucida( string cfg_path );
-
+      CamaraLucida();
+      CamaraLucida( cml::Config config );
       ~CamaraLucida();
 
       void dispose();
@@ -103,7 +81,7 @@ namespace cml
       void update_cpu( uint16_t *mm_depth_pix );
       void update_gpu( uint16_t *mm_depth_pix );
 
-      void init( string cfg_path );
+      void init( cml::Config config );
 
       ofTexture depth_ftex;
 
@@ -114,27 +92,12 @@ namespace cml
       Renderer* renderer;
       Mesh* mesh;
 
-      Config* config;
-      ofxXmlSettings xml;
-      string cfg_path;
+      Config config;
 
       bool _wire;
       bool _debug;
       bool _render_help;
       bool pressed[512];
-
-      struct Key
-      {
-        char debug;
-        char help;
-        char view_next;
-        char view_prev;
-        char scene_reset;
-        char scene_zoom;
-        char xoff_inc;
-        char xoff_dec; 
-      };
-      Key key;
 
       void init_keys();
 

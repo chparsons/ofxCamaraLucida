@@ -1,30 +1,9 @@
-/*
- * Camara Lucida
- * www.camara-lucida.com.ar
- *
- * Copyright (C) 2011  Christian Parsons
- * www.chparsons.com.ar
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 #include "cmlRenderer.h"
 
 namespace cml 
 {
   Renderer::Renderer( 
-      cml::Config* config,
+      cml::Config config,
       OpticalDevice* proj, 
       OpticalDevice* depth, 
       OpticalDevice* rgb )
@@ -37,9 +16,9 @@ namespace cml
     _viewpoint = V_DEPTH;
 
     ofFbo::Settings s;
-    s.width			    = config->tex_width;
-    s.height		    = config->tex_height;
-    s.numSamples		= config->tex_nsamples;
+    s.width			    = config.tex_width;
+    s.height		    = config.tex_height;
+    s.numSamples		= config.tex_nsamples;
     s.numColorbuffers	= 1;
     s.internalformat	= GL_RGBA;
 
@@ -74,24 +53,32 @@ namespace cml
 
     fbo.bind();
     //ofEnableAlphaBlending();  
-    //glEnable(GL_BLEND);  
-    //glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA); 
+
+    float w = fbo.getWidth();
+    float h = fbo.getHeight();
+
+    ofClear(0,1);
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, w, 0, h, -1, 1);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glColor3f(1,1,1);
 
     ofNotifyEvent(ev->render_texture, ev->void_args);
 
     fbo.unbind();
     //ofDisableAlphaBlending(); 
-    //glDisable(GL_BLEND);  			
 
     // gl init
 
-    glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    ofClear(0,1);
 
     // 3d
 
-    glEnable( GL_DEPTH_TEST );
-    glViewport(0,0,ofGetWidth(),ofGetHeight());
+    ofEnableDepthTest();
+    ofViewport();
 
     glPushAttrib( GL_POLYGON_BIT );
     if ( wireframe )
@@ -99,7 +86,7 @@ namespace cml
     else
       glPolygonMode( GL_FRONT, GL_FILL );
 
-    glColor3f(1, 1, 1);
+    glColor3f(1,1,1);
 
     gl_projection();	
     gl_viewpoint();
@@ -113,15 +100,9 @@ namespace cml
       render_proj_ppal_point();
     }
 
-    //glEnable(GL_BLEND);  
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
-    //glBlendFuncSeparate(GL_ONE, GL_SRC_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
-    //glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
     //ofEnableAlphaBlending();
 
-    ofTexture render_tex = fbo
-      .getTextureReference(0);
+    ofTexture render_tex = fbo.getTextureReference(0);
 
     if ( gpu )
     {
@@ -171,7 +152,6 @@ namespace cml
     } 
     //end of cpu
 
-    //glDisable(GL_BLEND);
     //ofDisableAlphaBlending(); 
 
     ofNotifyEvent(ev->render_3d, ev->void_args);
@@ -179,10 +159,10 @@ namespace cml
     // 2d hud
 
     glPopAttrib();//GL_POLYGON_BIT
-    //glDisable( GL_LIGHTING );
-    glDisable( GL_DEPTH_TEST );
+    ofDisableDepthTest();
+
     glPolygonMode( GL_FRONT, GL_FILL );
-    glColor3f(1, 1, 1);
+    glColor3f(1,1,1);
 
     gl_ortho();
 
@@ -320,7 +300,7 @@ namespace cml
   void Renderer::render_proj_ppal_point()
   {
     glPointSize(3);
-    glColor3f(1, 1, 0); //yellow
+    glColor3f(1,1,0); //yellow
 
     float ts = 0.5;
 

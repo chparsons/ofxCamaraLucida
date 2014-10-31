@@ -17,9 +17,11 @@ void testApp::setup()
   kinect.open();
 
 
-  string cfg = ofToDataPath("camara_lucida/config.xml");
 
-  cml = new cml::CamaraLucida( cfg );
+  cml::Config config;
+  cml.tex_width = 1024;
+  cml.tex_height = 768;
+  cml = new cml::CamaraLucida(config);
 
   ofAddListener( cml->render_texture, 
       this, &testApp::render_texture );
@@ -50,28 +52,13 @@ void testApp::draw()
 
 void testApp::render_texture(ofEventArgs &args)
 {
-  glClearColor(0.5, 0, 0, 1);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  float w = cml->tex_width();
-  float h = cml->tex_height();
-
-  glViewport(0, 0, w, h);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(0, w, 0, h, -1, 1);
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-
-  glColor3f(1, 1, 1);
-
   //kinect.drawDepth(0, 0, w, h);
 
   cml->get_hue_tex_ref(
       kinect.getRawDepthPixels() )
     .draw( 0, 0, w, h );
 
-  glColor3f(1, 1, 0);
+  ofSetColor(255,255,0);
   ofCircle(800, 200, 60);
 }
 
