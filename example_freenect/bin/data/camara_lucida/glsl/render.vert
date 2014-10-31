@@ -33,8 +33,9 @@ float round( float n )
 
 /*
  * WARNING
- * this interpolation is related 
- * to init_float_tex in cml::DepthCamera
+ * this interpolation depends on 
+ * cml::DepthCamera::init_float_tex 
+ * TODO map to [0.0, 255.0]
  */
 float z_norm_to_mts( float z_norm ) 
 {
@@ -64,6 +65,8 @@ void main()
   float depth = texture2DRect(depth_tex, d2).r;
 
   float z_mts = z_norm_to_mts( depth );
+  /*TODO 16-bit tex depth in mm */
+  /*float z_mts = depth / 1000.0; */
 
   vec4 p3 = vec4( unproject( d2, z_mts ), 1.);
 
@@ -74,6 +77,7 @@ void main()
 
   /*gl_Position = ftransform();*/
 
+  //Values written to gl_FrontColor are clamped to the range [0,1]
   gl_FrontColor  = gl_Color;
 	/*gl_FrontColor  = vec4( lerp2d(z_mts,0.5,5.0,0.,1.) );*/
 }
