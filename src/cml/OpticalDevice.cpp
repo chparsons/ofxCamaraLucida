@@ -44,8 +44,8 @@ namespace cml
       int x2d, int y2d, float z, 
       float *x, float *y)
   {
-    *x = (x2d - cx) * z / fx;
-    *y = (y2d - cy) * z / fy;
+    *x = (float)(x2d - cx) * z / fx;
+    *y = (float)(y2d - cy) * z / fy;
   };
 
   ofVec2f OpticalDevice::project( 

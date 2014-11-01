@@ -42,16 +42,15 @@ namespace cml
     render_help();
   };
 
-  void CamaraLucida::update(
-      uint16_t *mm_depth_pix )
+  void CamaraLucida::update( uint16_t *depth_pix_mm )
   {
-    if ( _gpu ) update_gpu(mm_depth_pix);
-    else update_cpu(mm_depth_pix);
+    if ( _gpu ) update_gpu(depth_pix_mm);
+    else update_cpu(depth_pix_mm);
   };
 
-  void CamaraLucida::update_gpu( uint16_t *mm_depth_pix )
+  void CamaraLucida::update_gpu( uint16_t *depth_pix_mm )
   {
-    depth_ftex = depth->get_float_tex_ref( mm_depth_pix );
+    depth_ftex = depth->get_float_tex_ref( depth_pix_mm );
   };
 
   void CamaraLucida::update_cpu( uint16_t *depth_pix_mm )
@@ -90,9 +89,9 @@ namespace cml
 
     Calibration calib( config, proj_cfg, depth_cfg, rgb_cfg ); 
 
-    proj = new OpticalDevice( proj_cfg );
     depth = new DepthCamera( depth_cfg );
     rgb = new OpticalDevice( rgb_cfg );
+    proj = new OpticalDevice( proj_cfg );
 
     _tex_width = config.tex_width;
     _tex_height = config.tex_height;
@@ -110,7 +109,7 @@ namespace cml
 
     depth_ftex = depth->get_float_tex_ref();
 
-    _gpu = false;
+    _gpu = true;
     _wire = false;
     _debug = false;
     _render_help = false;

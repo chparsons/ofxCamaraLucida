@@ -81,35 +81,35 @@ namespace cml
 
     // R x axis
     ofVec3f X = ofVec3f(
-        (float)cvGetReal2D( _R, 0, 0 ), //xx
-        (float)cvGetReal2D( _R, 1, 0 ), //xy
-        (float)cvGetReal2D( _R, 2, 0 )  //xz
-        );
+      (float)cvGetReal2D( _R, 0, 0 ),//xx
+      (float)cvGetReal2D( _R, 1, 0 ),//xy
+      (float)cvGetReal2D( _R, 2, 0 ) //xz
+      );
 
     // R y axis	
     ofVec3f Y = ofVec3f(
-        (float)cvGetReal2D( _R, 0, 1 ), //yx
-        (float)cvGetReal2D( _R, 1, 1 ), //yy
-        (float)cvGetReal2D( _R, 2, 1 )  //yz
-        );
+      (float)cvGetReal2D( _R, 0, 1 ),//yx
+      (float)cvGetReal2D( _R, 1, 1 ),//yy
+      (float)cvGetReal2D( _R, 2, 1 ) //yz
+      );
 
     // R z axis	
     ofVec3f Z = ofVec3f(
-        (float)cvGetReal2D( _R, 0, 2 ), //zx
-        (float)cvGetReal2D( _R, 1, 2 ), //zy
-        (float)cvGetReal2D( _R, 2, 2 )  //zz
-        );
+      (float)cvGetReal2D( _R, 0, 2 ),//zx
+      (float)cvGetReal2D( _R, 1, 2 ),//zy
+      (float)cvGetReal2D( _R, 2, 2 ) //zz
+      );
 
     // T
     ofVec3f T = ofVec3f(
-        (float)cvGetReal2D( _T, 0, 0 ), //tx
-        (float)cvGetReal2D( _T, 1, 0 ), //ty
-        (float)cvGetReal2D( _T, 2, 0 )  //tz
-        ); 
+      (float)cvGetReal2D( _T, 0, 0 ),//tx
+      (float)cvGetReal2D( _T, 1, 0 ),//ty
+      (float)cvGetReal2D( _T, 2, 0 ) //tz
+      ); 
 
 
     dev_config.size( w, h );
-    dev_config.intrinsics(cx, cy, fx, fy);
+    dev_config.intrinsics(cx,cy,fx,fy);
     dev_config.extrinsics( X, Y, Z, T ); 
 
 

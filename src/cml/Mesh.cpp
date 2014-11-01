@@ -43,9 +43,9 @@ namespace cml
 
       to_depth( i, &xd, &yd, &idepth );
 
-      // mm to mts
-      float zmts = depth_pix_mm[idepth] * 0.001;
-      zmts = CLAMP( ( zmts == 0. ? 5. : zmts ), 0., 5. );
+      float mm_to_mts = 0.001f; 
+      float zmts = depth_pix_mm[idepth] * mm_to_mts;
+      zmts = CLAMP( ( zmts == 0.0 ? 5.0 : zmts ), 0.0, 5.0 );
 
       float x, y;
       depth->unproject( xd, yd, zmts, &x, &y );

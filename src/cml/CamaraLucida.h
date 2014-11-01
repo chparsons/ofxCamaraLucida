@@ -33,6 +33,11 @@ namespace cml
       bool debug();
       void toggle_debug();
 
+      DepthCamera* depth_camera()
+      {
+        return depth;
+      };
+
       float tex_width()
       {
         return _tex_width; 
@@ -53,29 +58,25 @@ namespace cml
         return _depth_height;
       };
 
-      OpticalDevice::Config depth_config() 
-      {
-        return depth->config;
-      };
+      //OpticalDevice::Config depth_config() 
+      //{
+        //return depth->config;
+      //};
 
-      ofTexture& get_float_tex_ref(
-          uint16_t *depth_pix_mm ) 
-      {
-        return depth->get_float_tex_ref(
-            depth_pix_mm );
-      };
+      //ofTexture& get_float_tex_ref( uint16_t *depth_pix_mm ) 
+      //{
+        //return depth->get_float_tex_ref( depth_pix_mm );
+      //};
 
-      ofTexture& get_hue_tex_ref(
-          uint16_t *mm_depth_pix ) 
-      {
-        return depth->get_hue_tex_ref(
-            mm_depth_pix );
-      };
+      //ofTexture& get_hue_tex_ref( uint16_t *depth_pix_mm ) 
+      //{
+        //return depth->get_hue_tex_ref( depth_pix_mm );
+      //};
 
-      void log()
-      {
+      //void log()
+      //{
         //mesh->log();
-      };
+      //};
 
       ofEvent<ofEventArgs>& render_texture;
       ofEvent<ofEventArgs>& render_3d;
@@ -85,8 +86,8 @@ namespace cml
 
       bool _gpu;
 
-      void update_cpu( uint16_t *mm_depth_pix );
-      void update_gpu( uint16_t *mm_depth_pix );
+      void update_cpu( uint16_t *depth_pix_mm );
+      void update_gpu( uint16_t *depth_pix_mm );
 
       void init( cml::Config config );
 
@@ -95,7 +96,7 @@ namespace cml
       float _depth_width, _depth_height;
 
       cml::Events events;
-      cml::DepthCamera* depth;
+      DepthCamera* depth;
       OpticalDevice* proj;
       OpticalDevice* rgb;
       Renderer* renderer;

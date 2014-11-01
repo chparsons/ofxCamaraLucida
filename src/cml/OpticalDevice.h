@@ -66,11 +66,12 @@ namespace cml
 
       virtual ~OpticalDevice();
 
-      void unproject( 
+      virtual void unproject( 
           int x2d, int y2d, 
           float z, float *x, float *y );
 
-      ofVec2f project(const ofVec3f& p3);
+      virtual ofVec2f project(
+          const ofVec3f& p3 );
 
       int to_idx(int x, int y);
       void to_xy(int idx, int& x, int& y); 
