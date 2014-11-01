@@ -1,6 +1,7 @@
 #pragma once
 
-#include "cmlCalibration.h"
+#include "cml/Calibration.h"
+#include "cml/DepthCamera.h"
 #include "ofVbo.h"
 #include "ofVectorMath.h"
 #include "ofColor.h"
@@ -11,26 +12,23 @@ namespace cml
   {
     public:
 
-      Mesh( int step, 
-          int depth_width, int depth_height,
-          int tex_width, int tex_height );
+      Mesh( int res, 
+          int depth_width, 
+          int depth_height,
+          int tex_width, 
+          int tex_height );
       ~Mesh();
 
       void dispose();
-      void update();
+      void update( uint16_t *depth_pix_mm, DepthCamera* depth );
       void render();
-
-      void set_vertex( int i, 
-          float x, float y, float z );
-
-      int length() { return mesh_len; }; 
 
       void log()
       {
-        for ( int i = 0; i < mesh_len; i++ )
+        for(int i = 0; i < mesh_len; i++)
           cout 
             << "cml mesh 3d vertex "
-            << ((ofVec3f*)pts3d)[i] 
+            << pts3d[i] 
             << endl;
       };
 
@@ -47,27 +45,21 @@ namespace cml
 
       ofVbo vbo;
 
-      void* pts3d;
-      void init_pts();
-      void dispose_pts();
-
-      float* pts0x();
-      int sizeof_pts();
-
-      int step;
+      int res;
       int depth_width;
       int width;
       int height;
       int mesh_len;
       int ibo_len;	
 
+      ofVec3f* pts3d;
       uint* ibo;
-      ofVec2f* vbo_texcoords;
-      ofFloatColor* vbo_color;
+      ofVec2f* texcoords;
+      ofFloatColor* colors;
 
+      void init_pts();
       void init_ibo();
-      void init_texcoords(
-          int tex_width, int tex_height);
+      void init_texcoords( int tex_width, int tex_height );
       void init_colors();
 
       /// conversion utils

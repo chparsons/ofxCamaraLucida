@@ -1,4 +1,4 @@
-#include "cmlCamaraLucida.h"
+#include "cml/CamaraLucida.h"
 
 namespace cml
 {
@@ -37,13 +37,7 @@ namespace cml
 
   void CamaraLucida::render()
   { 
-    renderer->render( 
-        &events, 
-        mesh, 
-        depth_ftex,
-        gpu(),
-        wireframe() );
-
+    renderer->render( &events, mesh, depth_ftex, gpu(), wireframe() );
     render_screenlog();
     render_help();
   };
@@ -55,37 +49,14 @@ namespace cml
     else update_cpu(mm_depth_pix);
   };
 
-  void CamaraLucida::update_gpu(
-      uint16_t *mm_depth_pix )
+  void CamaraLucida::update_gpu( uint16_t *mm_depth_pix )
   {
     depth_ftex = depth->get_float_tex_ref( mm_depth_pix );
   };
 
-  void CamaraLucida::update_cpu(
-      uint16_t *mm_depth_pix )
+  void CamaraLucida::update_cpu( uint16_t *depth_pix_mm )
   {
-
-    int len = mesh->length();
-
-    for ( int i = 0; i < len; i++ )
-    {
-      int xdepth, ydepth, idepth;
-
-      mesh->to_depth( i, &xdepth, &ydepth, &idepth );
-
-      //uint16_t raw_depth = raw_depth_pix[idepth];
-      //float z = depth->z_mts(raw_depth);
-
-      // mm to mts
-      float zmts = mm_depth_pix[idepth] * 0.001;
-      zmts = CLAMP( ( zmts == 0. ? 5. : zmts ), 0., 5. );
-
-      float x, y;
-      depth->unproject( xdepth, ydepth, zmts, &x, &y );
-      mesh->set_vertex( i, x, y, zmts );
-    }
-
-    mesh->update();
+    mesh->update( depth_pix_mm, depth );
   };
 
   void CamaraLucida::toggle_debug()
@@ -104,23 +75,11 @@ namespace cml
     return _debug;
   };
 
-  float CamaraLucida::tex_width() 
-  { 
-    return config.tex_width; 
-  };
-
-  float CamaraLucida::tex_height() 
-  { 
-    return config.tex_height; 
-  };
-
   void CamaraLucida::init( cml::Config config )
   {
     ofLogVerbose("CamaraLucida")<<"init";
 
-    this->config = config;
-
-    _gpu = false;
+    this->config = config; 
 
     init_keys(); 
     init_events();
@@ -132,20 +91,26 @@ namespace cml
     Calibration calib( config, proj_cfg, depth_cfg, rgb_cfg ); 
 
     proj = new OpticalDevice( proj_cfg );
-    depth = new cml::DepthCamera( depth_cfg );
+    depth = new DepthCamera( depth_cfg );
     rgb = new OpticalDevice( rgb_cfg );
 
+    _tex_width = config.tex_width;
+    _tex_height = config.tex_height;
+    _depth_width = depth->width;
+    _depth_height = depth->height;
+
     mesh = new Mesh( 
-      config.mesh_step, 
-      depth->width(), 
-      depth->height(),
-      config.tex_width, 
-      config.tex_height );
+      config.mesh_res, 
+      _depth_width, 
+      _depth_height,
+      _tex_width, 
+      _tex_height );
 
     renderer = new Renderer( config, proj, depth, rgb );
 
     depth_ftex = depth->get_float_tex_ref();
 
+    _gpu = false;
     _wire = false;
     _debug = false;
     _render_help = false;

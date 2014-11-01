@@ -1,13 +1,13 @@
 #pragma once
 
 #include "ofMain.h"
-#include "cmlConfig.h"
-#include "cmlEvents.h"
-#include "cmlOpticalDevice.h"
-#include "cmlDepthCamera.h"
-#include "cmlCalibration.h"
-#include "cmlMesh.h"
-#include "cmlRenderer.h"
+#include "cml/Config.h"
+#include "cml/Events.h"
+#include "cml/OpticalDevice.h"
+#include "cml/DepthCamera.h"
+#include "cml/Calibration.h"
+#include "cml/Mesh.h"
+#include "cml/Renderer.h"
 
 namespace cml
 {
@@ -21,7 +21,7 @@ namespace cml
 
       void dispose();
       void render();
-      void update( uint16_t *mm_depth_pix );
+      void update( uint16_t *depth_pix_mm );
 
       void wireframe(bool v) { _wire = v; };
       bool wireframe() { return _wire; };
@@ -33,29 +33,36 @@ namespace cml
       bool debug();
       void toggle_debug();
 
-      float tex_width();
-      float tex_height();
+      float tex_width()
+      {
+        return _tex_width; 
+      };
+
+      float tex_height()
+      {
+        return _tex_height; 
+      };
 
       float depth_width()
       {
-        return depth->config().width;
+        return _depth_width;
       };
 
       float depth_height()
       {
-        return depth->config().height;
+        return _depth_height;
       };
 
       OpticalDevice::Config depth_config() 
       {
-        return depth->config();
+        return depth->config;
       };
 
       ofTexture& get_float_tex_ref(
-          uint16_t *mm_depth_pix ) 
+          uint16_t *depth_pix_mm ) 
       {
         return depth->get_float_tex_ref(
-            mm_depth_pix );
+            depth_pix_mm );
       };
 
       ofTexture& get_hue_tex_ref(
@@ -84,6 +91,8 @@ namespace cml
       void init( cml::Config config );
 
       ofTexture depth_ftex;
+      float _tex_width, _tex_height;
+      float _depth_width, _depth_height;
 
       cml::Events events;
       cml::DepthCamera* depth;

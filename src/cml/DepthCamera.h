@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cmlOpticalDevice.h"
+#include "cml/OpticalDevice.h"
 #include "ofTexture.h"
 
 namespace cml
@@ -10,8 +10,7 @@ namespace cml
   {
     public:
 
-      DepthCamera(
-        const OpticalDevice::Config& config ); 
+      DepthCamera( const OpticalDevice::Config& config ); 
 
       ~DepthCamera();
 
@@ -26,16 +25,16 @@ namespace cml
       ofTexture& get_hue_tex_ref( 
           uint16_t *mm_depth_pix = NULL );
 
-      const ofVec4f& k() { return _k; };
-
       float z_mts( uint16_t raw_depth );
       float z_mts( 
           uint16_t *raw_depth_pix, 
           int _x, int _y );
 
+      float xoff;
+      ofVec4f k; 
+
     private:
 
-      ofVec4f _k; 
       float *_zlut;
       float z_raw_to_mts( uint16_t raw_depth ); 
 

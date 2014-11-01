@@ -1,13 +1,16 @@
-#include "cmlDepthCamera.h"
+#include "cml/DepthCamera.h"
 
 namespace cml
 {
+  
+  //TODO xoff ???
 
   DepthCamera::DepthCamera(
-      const OpticalDevice::Config& config ) 
+    const OpticalDevice::Config& config ) 
     : OpticalDevice( config )
   {
-    _k = ofVec4f(0.1236, 2842.5, 1.1863, 0.0370);
+    k = ofVec4f( 0.1236, 2842.5, 1.1863, 0.0370 );
+    xoff = -8;
 
     flut = NULL;
     hlut = NULL;
@@ -44,12 +47,11 @@ namespace cml
    * float texture
    */
 
-  ofTexture& DepthCamera::get_float_tex_ref( 
-      uint16_t *mm_depth_pix )
+  ofTexture& DepthCamera::get_float_tex_ref( uint16_t *mm_depth_pix )
   {
 
-    int w = width();
-    int h = height();
+    int w = width;
+    int h = height;
 
     init_float_tex( w, h );
 
@@ -79,8 +81,8 @@ namespace cml
     fpix.allocate( w, h, 1 );
     fpix.set( 0 );
 
-    int near_mm = (int)(near() * 1000);
-    int far_mm = (int)(far() * 1000);
+    int near_mm = (int)(near * 1000);
+    int far_mm = (int)(far * 1000);
 
     flut = new float[ far_mm ];
     flut[0] = 0;
@@ -101,34 +103,34 @@ namespace cml
    * hue texture
    */ 
 
-	ofTexture& DepthCamera::get_hue_tex_ref(
+  ofTexture& DepthCamera::get_hue_tex_ref(
       uint16_t *mm_depth_pix ) 
-	{
-    int w = width();
-    int h = height();
+  {
+    int w = width;
+    int h = height;
 
-	  init_hue_tex(	w, h );
+    init_hue_tex(	w, h );
 
     if ( mm_depth_pix == NULL )
       return htex; 
 
     int len = w * h;
 
-		for (int i = 0; i < len; i++)
-		{
+    for (int i = 0; i < len; i++)
+    {
       uint16_t mm = mm_depth_pix[ i ];
-			ofColor hue = hlut[ mm ];
-			hpix[ i * 3 + 0 ] = hue.r;
-			hpix[ i * 3 + 1 ] = hue.g;
-			hpix[ i * 3 + 2 ] = hue.b;
-		}
+      ofColor hue = hlut[ mm ];
+      hpix[ i * 3 + 0 ] = hue.r;
+      hpix[ i * 3 + 1 ] = hue.g;
+      hpix[ i * 3 + 2 ] = hue.b;
+    }
 
-		htex.loadData( hpix, w, h, GL_RGB );
-		return htex;
-	}
+    htex.loadData( hpix, w, h, GL_RGB );
+    return htex;
+  }
 
   void DepthCamera::init_hue_tex( int w, int h )
-	{
+  {
     if ( htex.isAllocated() )
       return;
 
@@ -159,7 +161,7 @@ namespace cml
       hlut[ i ] = ofColor::fromHsb(
           hue * 255., 255., 255., 255. );
     }
-	}
+  }
 
   float DepthCamera::z_mts( uint16_t raw_depth )
   {
@@ -171,13 +173,13 @@ namespace cml
       int _x, int _y )
   {
     int i = to_idx( _x, _y );
-    uint16_t raw_depth = raw_depth_pix[ i ];
+    uint16_t raw_depth = raw_depth_pix[i];
     return _zlut[ raw_depth ];
   };
 
 
-//http://openkinect.org/wiki/Imaging_Information
-//http://nicolas.burrus.name/index.php/Research/KinectCalibration
+  //http://openkinect.org/wiki/Imaging_Information
+  //http://nicolas.burrus.name/index.php/Research/KinectCalibration
 
   float DepthCamera::z_raw_to_mts(uint16_t raw_depth)
   {

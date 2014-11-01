@@ -1,11 +1,12 @@
 #pragma once
 
 #include "ofMain.h"
-#include "cmlConfig.h"
-#include "cmlEvents.h"
-#include "cmlOpticalDevice.h"
-#include "cmlDepthCamera.h"
-#include "cmlMesh.h"
+#include "cml/Config.h"
+#include "cml/Events.h"
+#include "cml/OpticalDevice.h"
+#include "cml/DepthCamera.h"
+#include "cml/Mesh.h"
+#include "cml/shaders/render.h"
 
 namespace cml
 {
@@ -49,6 +50,7 @@ namespace cml
       OpticalDevice* rgb;
 
       ofShader shader;
+      RenderShader render_shader;
       ofFbo fbo;
 
       // gl

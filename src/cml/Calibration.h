@@ -1,7 +1,7 @@
 #pragma once
 
-#include "cmlConfig.h"
-#include "cmlOpticalDevice.h"
+#include "cml/Config.h"
+#include "cml/OpticalDevice.h"
 #include "cv.h"
 
 namespace cml

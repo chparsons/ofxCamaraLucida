@@ -1,4 +1,4 @@
-#include "cmlRenderer.h"
+#include "cml/Renderer.h"
 
 namespace cml 
 {
@@ -16,15 +16,16 @@ namespace cml
     _viewpoint = V_DEPTH;
 
     ofFbo::Settings s;
-    s.width			    = config.tex_width;
-    s.height		    = config.tex_height;
-    s.numSamples		= config.tex_nsamples;
+    s.width = config.tex_width;
+    s.height = config.tex_height;
+    s.numSamples = config.tex_nsamples;
     s.numColorbuffers	= 1;
-    s.internalformat	= GL_RGBA;
+    s.internalformat = GL_RGBA;
 
     fbo.allocate(s);
 
-    shader.load("camara_lucida/glsl/render");
+    //shader.load("camara_lucida/glsl/render");
+    render_shader.init( shader );
  
     init_gl_scene_control();
   }
@@ -66,7 +67,7 @@ namespace cml
     glLoadIdentity();
     glColor3f(1,1,1);
 
-    ofNotifyEvent(ev->render_texture, ev->void_args);
+    ofNotifyEvent( ev->render_texture, ev->void_args );
 
     fbo.unbind();
     //ofDisableAlphaBlending(); 
@@ -107,39 +108,12 @@ namespace cml
     if ( gpu )
     {
 
-    shader.begin();
-
-    /* shader depth calib */
-    OpticalDevice::Config cfg = depth->config();
-    ofVec4f k = ((cml::DepthCamera*)depth)->k();
-
-    shader.setUniform1f("width", cfg.width);
-    shader.setUniform1f("height", cfg.height);
-    shader.setUniform1f("near", cfg.near);
-    shader.setUniform1f("far", cfg.far);
-    shader.setUniform1f("cx", cfg.cx);
-    shader.setUniform1f("cy", cfg.cy);
-    shader.setUniform1f("fx", cfg.fx);
-    shader.setUniform1f("fy", cfg.fy);
-    shader.setUniform1f("k1", k[0]);
-    shader.setUniform1f("k2", k[1]);
-    shader.setUniform1f("k3", k[2]);
-    shader.setUniform1f("k4", k[3]);
-    /* shader depth calib */
-
-    render_tex.bind();
-
-    shader.setUniformTexture(
-        "render_tex", render_tex, 0 );
-
-    shader.setUniformTexture(
-        "depth_tex", depth_ftex, 1 );
-
-    mesh->render();
-
-    render_tex.unbind();
-
-    shader.end();
+      shader.begin();
+      render_tex.bind();
+      render_shader.update( shader, ((cml::DepthCamera*)depth), render_tex, depth_ftex );
+      mesh->render();
+      render_tex.unbind();
+      shader.end();
 
     } 
     //end of gpu
@@ -154,7 +128,7 @@ namespace cml
 
     //ofDisableAlphaBlending(); 
 
-    ofNotifyEvent(ev->render_3d, ev->void_args);
+    ofNotifyEvent( ev->render_3d, ev->void_args );
 
     // 2d hud
 
@@ -166,7 +140,7 @@ namespace cml
 
     gl_ortho();
 
-    ofNotifyEvent(ev->render_2d, ev->void_args);
+    ofNotifyEvent( ev->render_2d, ev->void_args );
   }
 
   // gl
@@ -202,7 +176,7 @@ namespace cml
         break;
     }
 
-    OpticalDevice::Frustum frustum = dev->gl_frustum();
+    OpticalDevice::Frustum& frustum = dev->gl_frustum();
 
     glFrustum( 
         frustum.left, frustum.right,
@@ -235,9 +209,9 @@ namespace cml
         break;
     }
 
-    ofVec3f loc = dev->loc();
-    ofVec3f trg = dev->trg();
-    ofVec3f up = dev->up();
+    ofVec3f& loc = dev->loc();
+    ofVec3f& trg = dev->trg();
+    ofVec3f& up = dev->up();
 
     gluLookAt(
         loc.x, loc.y, loc.z,
@@ -305,7 +279,7 @@ namespace cml
     float ts = 0.5;
 
     glPushMatrix();
-    glMultMatrixf(proj->gl_modelview_matrix());
+    glMultMatrixf( proj->gl_modelview_matrix() );
 
     glBegin(GL_LINES);
     glVertex3f(0, 0, 0);
@@ -329,7 +303,7 @@ namespace cml
   void Renderer::render_depth_CS()
   {
     glPushMatrix();
-    glMultMatrixf(depth->gl_modelview_matrix());
+    glMultMatrixf( depth->gl_modelview_matrix() );
     render_axis(0.1);
     glPopMatrix();
   }
@@ -337,7 +311,7 @@ namespace cml
   void Renderer::render_proj_CS()
   {
     glPushMatrix();
-    glMultMatrixf(proj->gl_modelview_matrix());
+    glMultMatrixf( proj->gl_modelview_matrix() );
     render_axis(0.1);
     glPopMatrix();
   }

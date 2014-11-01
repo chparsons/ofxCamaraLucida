@@ -1,16 +1,24 @@
-#include "cmlOpticalDevice.h"
+#include "cml/OpticalDevice.h"
 
 namespace cml
 {
-  OpticalDevice::OpticalDevice( 
-      OpticalDevice::Config config )
+  OpticalDevice::OpticalDevice( OpticalDevice::Config config )
   {
-    this->cfg = config;
+    this->config = config;
+
+    width = config.width;
+    height = config.height;
+    near = config.near;
+    far = config.far;
+    cx = config.cx;
+    cy = config.cy;
+    fx = config.fx;
+    fy = config.fy;
 
     cv2gl c;
-    c.frustum( cfg, _frustum );
-    c.KK( cfg, _KK );
-    c.RT( cfg, _RT );
+    c.frustum( config, _frustum );
+    c.KK( config, _KK );
+    c.RT( config, _RT );
 
     // opengl: col-major	
     _loc = ofVec3f( _RT[12], _RT[13], _RT[14] );
@@ -33,38 +41,38 @@ namespace cml
   OpticalDevice::~OpticalDevice(){};
 
   void OpticalDevice::unproject( 
-      int x2d, int y2d, 
-      float z, float *x, float *y)
+      int x2d, int y2d, float z, 
+      float *x, float *y)
   {
-    *x = (x2d - cfg.cx) * z / cfg.fx;
-    *y = (y2d - cfg.cy) * z / cfg.fy;
+    *x = (x2d - cx) * z / fx;
+    *y = (y2d - cy) * z / fy;
   };
 
   ofVec2f OpticalDevice::project( 
       const ofVec3f& p3 )
   {
     ofVec2f p2;
-    p2.x = (p3.x * cfg.fx / p3.z) + cfg.cx;
-    p2.y = (p3.y * cfg.fy / p3.z) + cfg.cy;
+    p2.x = (p3.x * fx / p3.z) + cx;
+    p2.y = (p3.y * fy / p3.z) + cy;
     return p2;
   };  
 
-  int OpticalDevice::to_idx( int x, int y )
+  int OpticalDevice::to_idx(int x, int y)
   {
-    return y * cfg.width + x;
+    return y * width + x;
   };
 
   void OpticalDevice::to_xy( 
       int idx, int& x, int& y )
   {
-    x = idx % cfg.width;
-    y = (idx - x) / cfg.width;
+    x = idx % width;
+    y = (idx - x) / width;
   }; 
 
   void OpticalDevice::printM( float* M, 
       int rows, int cols, bool colmajor)
   {
-    if ( ofGetLogLevel() != OF_LOG_VERBOSE )
+    if (ofGetLogLevel() != OF_LOG_VERBOSE)
       return;
 
     if (colmajor)

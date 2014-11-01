@@ -70,17 +70,11 @@ namespace cml
           int x2d, int y2d, 
           float z, float *x, float *y );
 
-      ofVec2f project( const ofVec3f& p3 );
+      ofVec2f project(const ofVec3f& p3);
 
-      int to_idx( int x, int y );
-      void to_xy( int idx, int& x, int& y );
-
-      ofVec3f loc() { return _loc; };
-      ofVec3f fwd() { return _fwd; };
-      ofVec3f up() { return _up; };
-      ofVec3f trg() { return _trg; };
-
-      Frustum gl_frustum()
+      int to_idx(int x, int y);
+      void to_xy(int idx, int& x, int& y); 
+      Frustum& gl_frustum()
       {
         return _frustum;
       };
@@ -95,21 +89,15 @@ namespace cml
         return _RT; 
       };
 
-      OpticalDevice::Config config() 
-      { 
-        return cfg; 
-      };
+      ofVec3f& loc() { return _loc; };
+      ofVec3f& fwd() { return _fwd; };
+      ofVec3f& up() { return _up; };
+      ofVec3f& trg() { return _trg; };
 
-      int width() { return cfg.width; };
-      int height() { return cfg.height; };
-      int near() { return cfg.near; };
-      int far() { return cfg.far; };
+      int width, height, near, far;
+      int cx, cy, fx, fy;
 
-
-    protected:
-
-      OpticalDevice::Config cfg;
-
+      OpticalDevice::Config config; 
 
     private:
 
@@ -129,8 +117,8 @@ namespace cml
          */
 
           void frustum( 
-              OpticalDevice::Config& _cfg, 
-              OpticalDevice::Frustum& frs )
+            OpticalDevice::Config& _cfg, 
+            OpticalDevice::Frustum& frs )
           {
 
             float w = _cfg.width;
@@ -158,8 +146,8 @@ namespace cml
            */
 
           void KK( 
-              OpticalDevice::Config& _cfg, 
-              float* KK )
+            OpticalDevice::Config& _cfg, 
+            float* KK )
           {
 
             float w = _cfg.width;
@@ -186,8 +174,8 @@ namespace cml
           };
 
           void RT( 
-              OpticalDevice::Config& _cfg, 
-              float* RT )
+            OpticalDevice::Config& _cfg, 
+            float* RT )
           {
             ofVec3f x = _cfg.X; 
             ofVec3f y = _cfg.Y;

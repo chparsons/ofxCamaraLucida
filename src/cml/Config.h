@@ -9,7 +9,7 @@ namespace cml
     string kinect_calib_path = "camara_lucida/kinect_calibration.yml";
     string projector_calib_path = "camara_lucida/projector_calibration.yml";
 
-    int mesh_step = 2;
+    int mesh_res = 2;
     int tex_width = 1024;
     int tex_height = 768;
     int tex_nsamples = 1;
