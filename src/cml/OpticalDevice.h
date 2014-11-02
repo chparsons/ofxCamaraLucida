@@ -16,8 +16,8 @@ namespace cml
           Config() 
           {
             //mts
-            near = 0.1;
-            far = 10.0;
+            near = 0.2;
+            far = 6.0;
           };
 
           void size( int w, int h )
@@ -128,8 +128,8 @@ namespace cml
             float cy = _cfg.cy;
             float fx = _cfg.fx;
             float fy = _cfg.fy;
-            float near = _cfg.near;
             float far = _cfg.far;
+            float near = _cfg.near;
 
             frs.left = near * (-cx) / fx;
             frs.right = near * (w - cx) / fx;

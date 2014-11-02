@@ -22,7 +22,7 @@ namespace cml
     init_colors();        
     init_pts();
 
-    vbo.setVertexData( &(pts3d)[0].x, 3, mesh_len, GL_STATIC_DRAW /*GL_DYNAMIC_DRAW*/, sizeof(ofVec3f) );
+    vbo.setVertexData( &(pts3d)[0].x, 3, mesh_len, /*GL_STATIC_DRAW*/ GL_DYNAMIC_DRAW, sizeof(ofVec3f) );
     //vbo.setNormalData( normals0x(), mesh_len, GL_DYNAMIC_DRAW, sizeof_normals() );
     vbo.setIndexData( ibo, ibo_len, GL_STATIC_DRAW );
     vbo.setColorData( colors, mesh_len, GL_STATIC_DRAW );
