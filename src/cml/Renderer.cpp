@@ -85,7 +85,11 @@ namespace cml
     if ( wireframe )
       glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); 
     else
+    {
+      glCullFace( GL_FRONT );
+      glEnable( GL_CULL_FACE );
       glPolygonMode( GL_FRONT, GL_FILL );
+    }
 
     glColor3f(1,1,1);
 
@@ -133,6 +137,7 @@ namespace cml
     // 2d hud
 
     glPopAttrib();//GL_POLYGON_BIT
+    glDisable( GL_CULL_FACE );
     ofDisableDepthTest();
 
     glPolygonMode( GL_FRONT, GL_FILL );
