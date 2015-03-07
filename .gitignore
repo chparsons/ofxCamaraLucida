@@ -1,6 +1,38 @@
-.DS_Store
+
+.svn/
+obj/
+bin/
+build/
+!data/
+ipch/
+
+# vim
 *.swp
-*/build/
-*/bin/*.app
+
+# openni
 */bin/data/*.oni
 */bin/data/openni/lib
+
+# mac Finder index files
+.DS_*
+
+# mac apps
+*.app*
+
+# xcode user project files
+*.pbxuser
+*.perspectivev3
+xcuserdata
+*.mode1*v3
+
+# codeblocks project files
+*.depend
+*.layout
+*.cbTemp
+
+# visual studio project files
+*.vcxproj.user
+*.suo
+*.sdf
+*.opensdf
+
