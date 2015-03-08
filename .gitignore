@@ -1,7 +1,6 @@
 
 .svn/
 obj/
-bin/
 build/
 !data/
 ipch/
