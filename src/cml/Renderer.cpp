@@ -99,6 +99,7 @@ namespace cml
 
     if ( _debug )
     {
+      //TODO gl_scene_control();
       render_depth_CS();
       render_proj_CS();
       render_rgb_CS();
@@ -111,16 +112,13 @@ namespace cml
 
     if ( gpu )
     {
-
       shader.begin();
       render_tex.bind();
-      render_shader.update( shader, ((cml::DepthCamera*)depth), render_tex, depth_ftex );
+      render_shader.update(shader, ((cml::DepthCamera*)depth), render_tex, depth_ftex);
       mesh->render();
       render_tex.unbind();
       shader.end();
-
     } 
-    //end of gpu
 
     else
     {
@@ -128,7 +126,6 @@ namespace cml
       mesh->render();
       render_tex.unbind();
     } 
-    //end of cpu
 
     //ofDisableAlphaBlending(); 
 
@@ -219,10 +216,10 @@ namespace cml
     ofVec3f& up = dev->up();
 
     gluLookAt(
-        loc.x, loc.y, loc.z,
-        trg.x, trg.y, trg.z,
-        up.x,  up.y,  up.z 
-        );
+      loc.x, loc.y, loc.z,
+      trg.x, trg.y, trg.z,
+      up.x,  up.y,  up.z 
+    );
   }
 
   // scene control

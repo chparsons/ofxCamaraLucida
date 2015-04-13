@@ -42,19 +42,17 @@ namespace cml
 
   void OpticalDevice::unproject( 
       int x2d, int y2d, float z, 
-      float *x, float *y)
+      float *x, float *y )
   {
     *x = (float)(x2d - cx) * z / fx;
     *y = (float)(y2d - cy) * z / fy;
   };
 
-  ofVec2f OpticalDevice::project( 
-      const ofVec3f& p3 )
+  void OpticalDevice::project( 
+      const ofVec3f& p3, ofVec2f& p2 )
   {
-    ofVec2f p2;
     p2.x = (p3.x * fx / p3.z) + cx;
     p2.y = (p3.y * fy / p3.z) + cy;
-    return p2;
   };  
 
   int OpticalDevice::to_idx(int x, int y)

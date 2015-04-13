@@ -19,8 +19,8 @@ void testApp::setup()
 
 
   cml::Config config;
-  cml.tex_width = 1024;
-  cml.tex_height = 768;
+  config.tex_width = 1024;
+  config.tex_height = 768;
   cml = new cml::CamaraLucida(config);
 
   ofAddListener( cml->render_texture, 

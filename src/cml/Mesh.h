@@ -25,7 +25,7 @@ namespace cml
 
       void log()
       {
-        for(int i = 0; i < mesh_len; i++)
+        for (int i = 0; i < mesh_len; i++)
           cout 
             << "cml mesh 3d vertex "
             << pts3d[i] 

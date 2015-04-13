@@ -48,10 +48,21 @@ namespace cml
     else update_cpu(depth_pix_mm);
   };
 
+  void CamaraLucida::update( ofFloatPixels& depth_float_pix_mm )
+  {
+    if ( !_gpu ) return; 
+    update_gpu( depth_float_pix_mm );
+  };
+
+  void CamaraLucida::update_gpu( ofFloatPixels& depth_float_pix_mm )
+  {
+    depth_ftex = depth->get_float_tex_ref( depth_float_pix_mm );
+  };
+
   void CamaraLucida::update_gpu( uint16_t *depth_pix_mm )
   {
     depth_ftex = depth->get_float_tex_ref( depth_pix_mm );
-  };
+  }; 
 
   void CamaraLucida::update_cpu( uint16_t *depth_pix_mm )
   {
@@ -107,7 +118,7 @@ namespace cml
 
     renderer = new Renderer( config, proj, depth, rgb );
 
-    depth_ftex = depth->get_float_tex_ref();
+    depth_ftex = depth->init_float_tex();
 
     _gpu = true;
     _wire = false;

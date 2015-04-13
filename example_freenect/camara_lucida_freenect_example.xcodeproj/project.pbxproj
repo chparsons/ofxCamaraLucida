@@ -24,12 +24,12 @@
 		1203E6D9180722EB0074A5B0 /* registration.c in Sources */ = {isa = PBXBuildFile; fileRef = 1203E6B3180722EB0074A5B0 /* registration.c */; };
 		1203E6DA180722EB0074A5B0 /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = 1203E6B5180722EB0074A5B0 /* tilt.c */; };
 		1203E6DB180722EB0074A5B0 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = 1203E6B6180722EB0074A5B0 /* usb_libusb10.c */; };
-		123E7E39180F25310047B4F7 /* cmlCalibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E2B180F25310047B4F7 /* cmlCalibration.cpp */; };
-		123E7E3A180F25310047B4F7 /* cmlCamaraLucida.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E2D180F25310047B4F7 /* cmlCamaraLucida.cpp */; };
-		123E7E3C180F25310047B4F7 /* cmlMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E33180F25310047B4F7 /* cmlMesh.cpp */; };
-		123E7E3D180F25310047B4F7 /* cmlOpticalDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E35180F25310047B4F7 /* cmlOpticalDevice.cpp */; };
-		123E7E3E180F25310047B4F7 /* cmlRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E37180F25310047B4F7 /* cmlRenderer.cpp */; };
-		123E7E48180F26950047B4F7 /* cmlDepthCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 123E7E46180F26950047B4F7 /* cmlDepthCamera.cpp */; };
+		125E90DB1AA15B0A00C111ED /* Calibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125E90CA1AA15B0A00C111ED /* Calibration.cpp */; };
+		125E90DC1AA15B0A00C111ED /* CamaraLucida.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125E90CC1AA15B0A00C111ED /* CamaraLucida.cpp */; };
+		125E90DD1AA15B0A00C111ED /* DepthCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125E90CF1AA15B0A00C111ED /* DepthCamera.cpp */; };
+		125E90DE1AA15B0A00C111ED /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125E90D21AA15B0A00C111ED /* Mesh.cpp */; };
+		125E90DF1AA15B0A00C111ED /* OpticalDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125E90D41AA15B0A00C111ED /* OpticalDevice.cpp */; };
+		125E90E01AA15B0A00C111ED /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 125E90D61AA15B0A00C111ED /* Renderer.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -205,21 +205,22 @@
 		1203E6B6180722EB0074A5B0 /* usb_libusb10.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = usb_libusb10.c; path = ../../../addons/ofxKinect/libs/libfreenect/src/usb_libusb10.c; sourceTree = SOURCE_ROOT; };
 		1203E6B7180722EB0074A5B0 /* usb_libusb10.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = usb_libusb10.h; path = ../../../addons/ofxKinect/libs/libfreenect/src/usb_libusb10.h; sourceTree = SOURCE_ROOT; };
 		1203E6BA180722EB0074A5B0 /* libusb.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = libusb.h; path = "../../../addons/ofxKinect/libs/libusb-1.0/include/libusb-1.0/libusb.h"; sourceTree = SOURCE_ROOT; };
-		123E7E2B180F25310047B4F7 /* cmlCalibration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlCalibration.cpp; sourceTree = "<group>"; };
-		123E7E2C180F25310047B4F7 /* cmlCalibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlCalibration.h; sourceTree = "<group>"; };
-		123E7E2D180F25310047B4F7 /* cmlCamaraLucida.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlCamaraLucida.cpp; sourceTree = "<group>"; };
-		123E7E2E180F25310047B4F7 /* cmlCamaraLucida.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlCamaraLucida.h; sourceTree = "<group>"; };
-		123E7E2F180F25310047B4F7 /* cmlConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlConfig.h; sourceTree = "<group>"; };
-		123E7E30180F25310047B4F7 /* cmlEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlEvents.h; sourceTree = "<group>"; };
-		123E7E33180F25310047B4F7 /* cmlMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlMesh.cpp; sourceTree = "<group>"; };
-		123E7E34180F25310047B4F7 /* cmlMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlMesh.h; sourceTree = "<group>"; };
-		123E7E35180F25310047B4F7 /* cmlOpticalDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlOpticalDevice.cpp; sourceTree = "<group>"; };
-		123E7E36180F25310047B4F7 /* cmlOpticalDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlOpticalDevice.h; sourceTree = "<group>"; };
-		123E7E37180F25310047B4F7 /* cmlRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlRenderer.cpp; sourceTree = "<group>"; };
-		123E7E38180F25310047B4F7 /* cmlRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlRenderer.h; sourceTree = "<group>"; };
-		123E7E46180F26950047B4F7 /* cmlDepthCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmlDepthCamera.cpp; sourceTree = "<group>"; };
-		123E7E47180F26950047B4F7 /* cmlDepthCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmlDepthCamera.h; sourceTree = "<group>"; };
-		12BBE7F61808A38D001CA384 /* ofxCamaraLucida.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCamaraLucida.h; sourceTree = "<group>"; };
+		125E90CA1AA15B0A00C111ED /* Calibration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Calibration.cpp; sourceTree = "<group>"; };
+		125E90CB1AA15B0A00C111ED /* Calibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calibration.h; sourceTree = "<group>"; };
+		125E90CC1AA15B0A00C111ED /* CamaraLucida.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CamaraLucida.cpp; sourceTree = "<group>"; };
+		125E90CD1AA15B0A00C111ED /* CamaraLucida.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamaraLucida.h; sourceTree = "<group>"; };
+		125E90CE1AA15B0A00C111ED /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		125E90CF1AA15B0A00C111ED /* DepthCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DepthCamera.cpp; sourceTree = "<group>"; };
+		125E90D01AA15B0A00C111ED /* DepthCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthCamera.h; sourceTree = "<group>"; };
+		125E90D11AA15B0A00C111ED /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
+		125E90D21AA15B0A00C111ED /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		125E90D31AA15B0A00C111ED /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
+		125E90D41AA15B0A00C111ED /* OpticalDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpticalDevice.cpp; sourceTree = "<group>"; };
+		125E90D51AA15B0A00C111ED /* OpticalDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpticalDevice.h; sourceTree = "<group>"; };
+		125E90D61AA15B0A00C111ED /* Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
+		125E90D71AA15B0A00C111ED /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		125E90D91AA15B0A00C111ED /* render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render.h; sourceTree = "<group>"; };
+		125E90DA1AA15B0A00C111ED /* ofxCamaraLucida.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCamaraLucida.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -649,36 +650,53 @@
 			name = ofxKinect;
 			sourceTree = "<group>";
 		};
-		12BBE7E01808A37D001CA384 /* ofxCamaraLucida */ = {
+		125E90C51AA15B0A00C111ED /* src */ = {
 			isa = PBXGroup;
 			children = (
-				12BBE7E11808A38D001CA384 /* src */,
-			);
-			name = ofxCamaraLucida;
-			sourceTree = "<group>";
-		};
-		12BBE7E11808A38D001CA384 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				123E7E46180F26950047B4F7 /* cmlDepthCamera.cpp */,
-				123E7E47180F26950047B4F7 /* cmlDepthCamera.h */,
-				123E7E2B180F25310047B4F7 /* cmlCalibration.cpp */,
-				123E7E2C180F25310047B4F7 /* cmlCalibration.h */,
-				123E7E2D180F25310047B4F7 /* cmlCamaraLucida.cpp */,
-				123E7E2E180F25310047B4F7 /* cmlCamaraLucida.h */,
-				123E7E2F180F25310047B4F7 /* cmlConfig.h */,
-				123E7E30180F25310047B4F7 /* cmlEvents.h */,
-				123E7E33180F25310047B4F7 /* cmlMesh.cpp */,
-				123E7E34180F25310047B4F7 /* cmlMesh.h */,
-				123E7E35180F25310047B4F7 /* cmlOpticalDevice.cpp */,
-				123E7E36180F25310047B4F7 /* cmlOpticalDevice.h */,
-				123E7E37180F25310047B4F7 /* cmlRenderer.cpp */,
-				123E7E38180F25310047B4F7 /* cmlRenderer.h */,
-				12BBE7F61808A38D001CA384 /* ofxCamaraLucida.h */,
+				125E90C61AA15B0A00C111ED /* cml */,
+				125E90DA1AA15B0A00C111ED /* ofxCamaraLucida.h */,
 			);
 			name = src;
 			path = ../src;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
+		};
+		125E90C61AA15B0A00C111ED /* cml */ = {
+			isa = PBXGroup;
+			children = (
+				125E90CA1AA15B0A00C111ED /* Calibration.cpp */,
+				125E90CB1AA15B0A00C111ED /* Calibration.h */,
+				125E90CC1AA15B0A00C111ED /* CamaraLucida.cpp */,
+				125E90CD1AA15B0A00C111ED /* CamaraLucida.h */,
+				125E90CE1AA15B0A00C111ED /* Config.h */,
+				125E90CF1AA15B0A00C111ED /* DepthCamera.cpp */,
+				125E90D01AA15B0A00C111ED /* DepthCamera.h */,
+				125E90D11AA15B0A00C111ED /* Events.h */,
+				125E90D21AA15B0A00C111ED /* Mesh.cpp */,
+				125E90D31AA15B0A00C111ED /* Mesh.h */,
+				125E90D41AA15B0A00C111ED /* OpticalDevice.cpp */,
+				125E90D51AA15B0A00C111ED /* OpticalDevice.h */,
+				125E90D61AA15B0A00C111ED /* Renderer.cpp */,
+				125E90D71AA15B0A00C111ED /* Renderer.h */,
+				125E90D81AA15B0A00C111ED /* shaders */,
+			);
+			path = cml;
+			sourceTree = "<group>";
+		};
+		125E90D81AA15B0A00C111ED /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				125E90D91AA15B0A00C111ED /* render.h */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
+		12BBE7E01808A37D001CA384 /* ofxCamaraLucida */ = {
+			isa = PBXGroup;
+			children = (
+				125E90C51AA15B0A00C111ED /* src */,
+			);
+			name = ofxCamaraLucida;
+			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
@@ -862,26 +880,26 @@
 				1203E6C4180722EB0074A5B0 /* ofxCvColorImage.cpp in Sources */,
 				1203E6C5180722EB0074A5B0 /* ofxCvContourFinder.cpp in Sources */,
 				1203E6C6180722EB0074A5B0 /* ofxCvFloatImage.cpp in Sources */,
+				125E90DC1AA15B0A00C111ED /* CamaraLucida.cpp in Sources */,
 				1203E6C7180722EB0074A5B0 /* ofxCvGrayscaleImage.cpp in Sources */,
 				1203E6C8180722EB0074A5B0 /* ofxCvHaarFinder.cpp in Sources */,
 				1203E6C9180722EB0074A5B0 /* ofxCvImage.cpp in Sources */,
+				125E90DB1AA15B0A00C111ED /* Calibration.cpp in Sources */,
 				1203E6CA180722EB0074A5B0 /* ofxCvShortImage.cpp in Sources */,
+				125E90E01AA15B0A00C111ED /* Renderer.cpp in Sources */,
 				1203E6CB180722EB0074A5B0 /* ofxXmlSettings.cpp in Sources */,
 				1203E6CC180722EB0074A5B0 /* tinyxml.cpp in Sources */,
 				1203E6CD180722EB0074A5B0 /* tinyxmlerror.cpp in Sources */,
 				1203E6CE180722EB0074A5B0 /* tinyxmlparser.cpp in Sources */,
 				1203E6D6180722EB0074A5B0 /* ofxKinect.cpp in Sources */,
+				125E90DD1AA15B0A00C111ED /* DepthCamera.cpp in Sources */,
+				125E90DE1AA15B0A00C111ED /* Mesh.cpp in Sources */,
 				1203E6D7180722EB0074A5B0 /* cameras.c in Sources */,
 				1203E6D8180722EB0074A5B0 /* core.c in Sources */,
 				1203E6D9180722EB0074A5B0 /* registration.c in Sources */,
 				1203E6DA180722EB0074A5B0 /* tilt.c in Sources */,
+				125E90DF1AA15B0A00C111ED /* OpticalDevice.cpp in Sources */,
 				1203E6DB180722EB0074A5B0 /* usb_libusb10.c in Sources */,
-				123E7E39180F25310047B4F7 /* cmlCalibration.cpp in Sources */,
-				123E7E3A180F25310047B4F7 /* cmlCamaraLucida.cpp in Sources */,
-				123E7E3C180F25310047B4F7 /* cmlMesh.cpp in Sources */,
-				123E7E3D180F25310047B4F7 /* cmlOpticalDevice.cpp in Sources */,
-				123E7E3E180F25310047B4F7 /* cmlRenderer.cpp in Sources */,
-				123E7E48180F26950047B4F7 /* cmlDepthCamera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

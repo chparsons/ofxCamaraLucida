@@ -70,11 +70,12 @@ namespace cml
           int x2d, int y2d, 
           float z, float *x, float *y );
 
-      virtual ofVec2f project(
-          const ofVec3f& p3 );
+      virtual void project(
+          const ofVec3f& p3, ofVec2f& p2 );
 
       int to_idx(int x, int y);
       void to_xy(int idx, int& x, int& y); 
+
       Frustum& gl_frustum()
       {
         return _frustum;

@@ -11,7 +11,7 @@ class RenderShader
 {
   public: 
 
-  string frag()
+  string fragment()
   {
     return "#version 120\n #extension GL_ARB_texture_rectangle : enable\n " STRINGIFY(
 
@@ -19,19 +19,16 @@ class RenderShader
 
     void main()
     {
-
       vec2 p2 = gl_TexCoord[0].st;
       vec4 color = texture2DRect( render_tex, p2 );
-
       //gl_FragColor = color * gl_Color;
       gl_FragColor = color;
-
     }
 
     ); //shader code
   };
 
-  string vert()
+  string vertex()
   {
     return "#version 120\n #extension GL_EXT_gpu_shader4 : enable\n #extension GL_ARB_texture_rectangle : enable\n " STRINGIFY(
 
@@ -69,10 +66,10 @@ class RenderShader
     }
 
     //cml::DepthCamera::init_float_tex 
-    float z_norm_to_mts( float z_norm ) 
-    {
-      return lerp2d( z_norm, 0.0, 1.0, near, far );
-    }  
+    //float z_norm_to_mts( float z_norm ) 
+    //{
+      //return lerp2d( z_norm, 0.0, 1.0, near, far );
+    //}  
 
     //float z_raw_to_mts( float z_raw ) 
     //{
@@ -82,7 +79,6 @@ class RenderShader
 
     void main()
     {	
-
       vec2 render_tex_size = vec2( textureSize2DRect( render_tex, 0 ) );
 
       gl_TexCoord[0] = gl_MultiTexCoord0;
@@ -97,12 +93,13 @@ class RenderShader
 
       float depth = texture2DRect( depth_tex, d2 ).r;
 
-      float zmts = z_norm_to_mts( depth );
+      //float zmts = z_norm_to_mts(depth);
+
+      //tex depth in mm 
+      float zmts = depth / 1000.0; 
+
       //see cml::Mesh::update
       zmts = clamp( ( zmts == 0.0 ? 5.0 : zmts ), 0.0, 5.0 );
-
-      //TODO 16-bit tex depth in mm 
-      //float zmts = depth / 1000.0; 
 
       vec4 p3 = vec4( unproject( d2, zmts ), 1.);
 
@@ -114,8 +111,8 @@ class RenderShader
       //gl_Position = ftransform();
 
       //Values written to gl_FrontColor are clamped to the range [0,1]
-      gl_FrontColor  = gl_Color;
-      //gl_FrontColor  = vec4( lerp2d(zmts,0.5,5.0,0.,1.) );
+      gl_FrontColor = gl_Color;
+      //gl_FrontColor = vec4( lerp2d(zmts,0.5,5.0,0.,1.) );
     }
 
     ); //shader code
@@ -123,8 +120,8 @@ class RenderShader
 
   void init( ofShader& shader )
   {
-    shader.setupShaderFromSource( GL_FRAGMENT_SHADER, frag() );
-    shader.setupShaderFromSource( GL_VERTEX_SHADER, vert() );
+    shader.setupShaderFromSource( GL_FRAGMENT_SHADER, fragment() );
+    shader.setupShaderFromSource( GL_VERTEX_SHADER, vertex() );
     shader.linkProgram();
   };
 
@@ -147,7 +144,6 @@ class RenderShader
     shader.setUniform1f("k4", k[3]);
 
     shader.setUniformTexture( "render_tex", render_tex, 0 );
-
     shader.setUniformTexture( "depth_tex", depth_ftex, 1 );
 
   };

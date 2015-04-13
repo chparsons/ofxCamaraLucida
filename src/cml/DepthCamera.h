@@ -11,7 +11,6 @@ namespace cml
     public:
 
       DepthCamera( const OpticalDevice::Config& config ); 
-
       ~DepthCamera();
 
       virtual void unproject( 
@@ -22,11 +21,18 @@ namespace cml
           const ofVec3f& p3 );
 
       /*
+       * TODO move to CamaraLucida class
+       * float texture in mm
+       * to use in shaders
+       */
+      ofTexture& get_float_tex_ref( ofFloatPixels& depth_float_pix_mm );
+      /*
        * float texture in range [0,1]
        * mapped from [near_mm,far_mm]
        * to use in shaders
        */
-      ofTexture& get_float_tex_ref( uint16_t *depth_pix_mm = NULL );
+      ofTexture& get_float_tex_ref( uint16_t *depth_pix_mm ); 
+      ofTexture& init_float_tex();
 
       ofTexture& get_hue_tex_ref( uint16_t *depth_pix_mm = NULL );
 
@@ -44,7 +50,6 @@ namespace cml
       ofTexture ftex;
       ofFloatPixels fpix;
       float *flut_mm;
-      void init_float_tex(int w, int h);
 
       ofTexture htex;
       uint8_t *hpix;

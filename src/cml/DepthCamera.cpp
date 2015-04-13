@@ -62,16 +62,17 @@ namespace cml
    * float texture
    */
 
+  ofTexture& DepthCamera::get_float_tex_ref( ofFloatPixels& depth_float_pix_mm )
+  {
+    ftex.loadData( depth_float_pix_mm );
+    return ftex; 
+  };
+
   ofTexture& DepthCamera::get_float_tex_ref( uint16_t *depth_pix_mm )
   {
 
     int w = width;
     int h = height;
-
-    init_float_tex( w, h );
-
-    if ( depth_pix_mm == NULL )
-      return ftex; 
 
     int len = w * h;
 
@@ -87,10 +88,13 @@ namespace cml
     return ftex; 
   };
 
-  void DepthCamera::init_float_tex(int w, int h)
+  ofTexture& DepthCamera::init_float_tex()
   {
     if ( ftex.isAllocated() )
-      return;
+      return ftex; 
+
+    int w = width;
+    int h = height;
 
     ftex.allocate( w, h, GL_LUMINANCE32F_ARB );
     fpix.allocate( w, h, 1 );
@@ -109,6 +113,8 @@ namespace cml
           near_mm, far_mm, 
           0.0, 1.0, true );
     }
+
+    return ftex; 
   };
 
   /*
