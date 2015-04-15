@@ -21,9 +21,7 @@ namespace cml
 
       void dispose();
       void render();
-
       void update( uint16_t *depth_pix_mm );
-      void update( ofFloatPixels& depth_float_pix );
 
       void wireframe(bool v) { _wire = v; };
       bool wireframe() { return _wire; };
@@ -90,7 +88,6 @@ namespace cml
 
       void update_cpu( uint16_t *depth_pix_mm );
       void update_gpu( uint16_t *depth_pix_mm );
-      void update_gpu( ofFloatPixels& depth_float_pix );
 
       void init( cml::Config config );
 

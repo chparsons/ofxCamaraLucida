@@ -22,13 +22,7 @@ namespace cml
 
       /*
        * TODO move to CamaraLucida class
-       * float texture in mm
-       * to use in shaders
-       */
-      ofTexture& get_float_tex_ref( ofFloatPixels& depth_float_pix_mm );
-      /*
-       * float texture in range [0,1]
-       * mapped from [near_mm,far_mm]
+       * float texture
        * to use in shaders
        */
       ofTexture& get_float_tex_ref( uint16_t *depth_pix_mm ); 

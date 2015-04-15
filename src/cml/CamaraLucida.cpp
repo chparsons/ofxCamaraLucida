@@ -44,19 +44,10 @@ namespace cml
 
   void CamaraLucida::update( uint16_t *depth_pix_mm )
   {
-    if ( _gpu ) update_gpu(depth_pix_mm);
-    else update_cpu(depth_pix_mm);
-  };
-
-  void CamaraLucida::update( ofFloatPixels& depth_float_pix_mm )
-  {
-    if ( !_gpu ) return; 
-    update_gpu( depth_float_pix_mm );
-  };
-
-  void CamaraLucida::update_gpu( ofFloatPixels& depth_float_pix_mm )
-  {
-    depth_ftex = depth->get_float_tex_ref( depth_float_pix_mm );
+    if ( _gpu ) 
+      update_gpu(depth_pix_mm);
+    else 
+      update_cpu(depth_pix_mm);
   };
 
   void CamaraLucida::update_gpu( uint16_t *depth_pix_mm )

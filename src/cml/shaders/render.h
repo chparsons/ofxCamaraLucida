@@ -32,10 +32,11 @@ class RenderShader
   {
     return "#version 120\n #extension GL_EXT_gpu_shader4 : enable\n #extension GL_ARB_texture_rectangle : enable\n " STRINGIFY(
 
+    const float epsilon = 1e-30;
+
     uniform sampler2DRect depth_tex;
     uniform sampler2DRect render_tex;
 
-    //depth calib in mts 
     uniform float xoff;
     uniform float near;
     uniform float far;
@@ -50,32 +51,10 @@ class RenderShader
     uniform float k3;
     uniform float k4; 
 
-    float lerp2d( float x, float x1, float x2, float y1, float y2 ) 
-    {
-      return (x-x1) / (x2-x1) * (y2-y1) + y1;
-    }
-
-    float round( float n )
-    {
-      return fract(n) < 0.5 ? floor(n) : ceil(n);
-    }
-
     vec3 unproject( vec2 p2, float z ) 
     {
       return vec3( (p2.x + xoff - cx) * z / fx, (p2.y - cy) * z / fy, z );
     }
-
-    //cml::DepthCamera::init_float_tex 
-    //float z_norm_to_mts( float z_norm ) 
-    //{
-      //return lerp2d( z_norm, 0.0, 1.0, near, far );
-    //}  
-
-    //float z_raw_to_mts( float z_raw ) 
-    //{
-      //return k1 * tan( (z_raw / k2) + k3 ) - k4;
-    //}
-
 
     void main()
     {	
@@ -93,13 +72,9 @@ class RenderShader
 
       float depth = texture2DRect( depth_tex, d2 ).r;
 
-      //float zmts = z_norm_to_mts(depth);
-
-      //tex depth in mm 
+      //depth_tex is in mm 
       float zmts = depth / 1000.0; 
-
-      //see cml::Mesh::update
-      zmts = clamp( ( zmts == 0.0 ? 5.0 : zmts ), 0.0, 5.0 );
+      zmts = clamp( ( zmts < epsilon ? 5.0 : zmts ), 0.0, 5.0 );
 
       vec4 p3 = vec4( unproject( d2, zmts ), 1.);
 

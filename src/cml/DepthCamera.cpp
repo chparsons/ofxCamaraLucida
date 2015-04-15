@@ -61,13 +61,6 @@ namespace cml
   /*
    * float texture
    */
-
-  ofTexture& DepthCamera::get_float_tex_ref( ofFloatPixels& depth_float_pix_mm )
-  {
-    ftex.loadData( depth_float_pix_mm );
-    return ftex; 
-  };
-
   ofTexture& DepthCamera::get_float_tex_ref( uint16_t *depth_pix_mm )
   {
 
@@ -78,8 +71,6 @@ namespace cml
 
     for (int i = 0; i < len; i++)
     {
-      //uint16_t raw_depth = raw_depth_pix[i];
-      //uint16_t mm = raw_depth_to_mts(raw_depth) * 1000.0f;
       uint16_t mm = depth_pix_mm[ i ];
       fpix[ i ] = flut_mm[ mm ]; 
     }
@@ -105,14 +96,9 @@ namespace cml
     float far_mm = far * mts_to_mm;
 
     flut_mm = new float[ (int)far_mm ];
-    flut_mm[0] = 1.0f;
+    flut_mm[0] = far_mm;
     for ( int i = 1; i < far_mm; i++ )
-    {
-      //cml::RenderShader->z_norm_to_mts 
-      flut_mm[ i ] = ofMap( i, 
-          near_mm, far_mm, 
-          0.0, 1.0, true );
-    }
+      flut_mm[i] = i; 
 
     return ftex; 
   };
@@ -198,13 +184,10 @@ namespace cml
 
   //http://openkinect.org/wiki/Imaging_Information
   //http://nicolas.burrus.name/index.php/Research/KinectCalibration
-
   float DepthCamera::z_raw_to_mts(uint16_t raw_depth)
   {
     raw_depth = CLAMP(raw_depth, 0, 1024);//5mts~
-
     return 0.1236 * tanf( ( (float)raw_depth / 2842.5 ) + 1.1863 ) - 0.0370;
-
     //return 1.0 / ( (float)raw_depth * -0.0030711016 + 3.3309495161);
   }; 
 
