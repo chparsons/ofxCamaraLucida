@@ -70,16 +70,12 @@ class RenderShader
         p2.y / render_tex_size.y * height
       );
 
-      float depth = texture2DRect( depth_tex, d2 ).r;
-
-      //depth_tex is in mm 
-      float zmts = depth / 1000.0; 
-      zmts = clamp( ( zmts < epsilon ? 5.0 : zmts ), 0.0, 5.0 );
-
-      vec4 p3 = vec4( unproject( d2, zmts ), 1.);
+      float zmm = texture2DRect( depth_tex, d2 ).r;
+      zmm = clamp( ( zmm < epsilon ? 5000.0 : zmm ), 0.0, 5000.0 );
+      vec4 p3 = vec4( unproject( d2, zmm ), 1.);
 
       //vec4 p3 = vec4( gl_Vertex );
-      //p3.z = zmts;
+      //p3.z = zmm;
 
       gl_Position = gl_ModelViewProjectionMatrix * p3;
 
@@ -87,7 +83,7 @@ class RenderShader
 
       //Values written to gl_FrontColor are clamped to the range [0,1]
       gl_FrontColor = gl_Color;
-      //gl_FrontColor = vec4( lerp2d(zmts,0.5,5.0,0.,1.) );
+      //gl_FrontColor = vec4( lerp2d(zmm,50.0,5000.0,0.,1.) );
     }
 
     ); //shader code

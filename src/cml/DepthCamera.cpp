@@ -91,13 +91,9 @@ namespace cml
     fpix.allocate( w, h, 1 );
     fpix.set( 0 );
 
-    float mts_to_mm = 1000.0f;
-    float near_mm = near * mts_to_mm;
-    float far_mm = far * mts_to_mm;
-
-    flut_mm = new float[ (int)far_mm ];
-    flut_mm[0] = far_mm;
-    for ( int i = 1; i < far_mm; i++ )
+    flut_mm = new float[ (int)far ];
+    flut_mm[0] = far;
+    for ( int i = 1; i < far; i++ )
       flut_mm[i] = i; 
 
     return ftex; 

@@ -15,9 +15,9 @@ namespace cml
 
           Config() 
           {
-            //mts
-            near = 0.2;
-            far = 6.0;
+            //mm
+            near = 200.0;
+            far = 6000.0;
           };
 
           void size( int w, int h )

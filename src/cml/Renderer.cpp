@@ -95,11 +95,11 @@ namespace cml
 
     gl_projection();	
     gl_viewpoint();
-    gl_scene_control();
+    //gl_scene_control();
 
     if ( _debug )
     {
-      //TODO gl_scene_control();
+      gl_scene_control();
       render_depth_CS();
       render_proj_CS();
       render_rgb_CS();
@@ -242,7 +242,7 @@ namespace cml
 
     pmouse = ofVec2f();
 
-    tZ_delta = -0.05;
+    tZ_delta = -50.; //mm
     rot_delta = -0.2;
 
     tZini = 0;

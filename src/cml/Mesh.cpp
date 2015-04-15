@@ -37,22 +37,23 @@ namespace cml
   void Mesh::update( uint16_t *depth_pix_mm, DepthCamera* depth )
   {
 
+    float epsilon = std::numeric_limits<float>::epsilon();
+
     for ( int i = 0; i < mesh_len; i++ )
     {
       int xd, yd, idepth;
 
       to_depth( i, &xd, &yd, &idepth );
 
-      float mm_to_mts = 0.001f; 
-      float zmts = depth_pix_mm[idepth] * mm_to_mts;
-      zmts = CLAMP( ( zmts == 0.0 ? 5.0 : zmts ), 0.0, 5.0 );
+      float zmm = depth_pix_mm[idepth];
+      zmm = CLAMP( ( zmm < epsilon ? 5000.0 : zmm ), 0.0, 5000.0 );
 
       float x, y;
-      depth->unproject( xd, yd, zmts, &x, &y );
+      depth->unproject( xd, yd, zmm, &x, &y );
 
       pts3d[i].x = x;
       pts3d[i].y = y;
-      pts3d[i].z = zmts;
+      pts3d[i].z = zmm;
     }
 
     vbo.updateVertexData( &(pts3d)[0].x, mesh_len );
