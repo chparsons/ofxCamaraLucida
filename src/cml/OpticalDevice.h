@@ -103,106 +103,97 @@ namespace cml
 
     private:
 
-      struct cv2gl
-      {
-        /*
-         * Intrinsics from opencv to opengl
-         *
-         * http://www.songho.ca/opengl/gl_projectionmatrix.html
-         * http://www.songho.ca/opengl/gl_transform.html
-         */
+      /*
+       * Intrinsics from opencv to opengl
+       *
+       * http://www.songho.ca/opengl/gl_projectionmatrix.html
+       * http://www.songho.ca/opengl/gl_transform.html
+       */
+
+      /*
+       * frustum solution from 
+       * https://github.com/kylemcdonald/ofxCv/blob/master/libs/ofxCv/src/Calibration.cpp#l57 
+       * https://www.opengl.org/sdk/docs/man2/xhtml/glFrustum.xml
+       */
+
+        void make_frustum( 
+          OpticalDevice::Config& _cfg, 
+          OpticalDevice::Frustum& frs )
+        {
+
+          float w = _cfg.width;
+          float h = _cfg.height;
+          float cx = _cfg.cx;
+          float cy = _cfg.cy;
+          float fx = _cfg.fx;
+          float fy = _cfg.fy;
+          float far = _cfg.far;
+          float near = _cfg.near;
+
+          frs.left = near * (-cx) / fx;
+          frs.right = near * (w - cx) / fx;
+
+          frs.bottom = near * (cy - h) / fy; 
+          frs.top = near * (cy) / fy;
+
+          frs.near = near;
+          frs.far = far;
+        };  
 
         /*
-         * frustum solution from 
-         * https://github.com/kylemcdonald/ofxCv/blob/master/libs/ofxCv/src/Calibration.cpp#l57 
-         * https://www.opengl.org/sdk/docs/man2/xhtml/glFrustum.xml
+         * projection matrix solution from
+         * http://opencv.willowgarage.com/wiki/Posit
          */
 
-          void frustum( 
-            OpticalDevice::Config& _cfg, 
-            OpticalDevice::Frustum& frs )
-          {
+        void make_projection_matrix( 
+          OpticalDevice::Config& _cfg, 
+          float* KK )
+        {
 
-            float w = _cfg.width;
-            float h = _cfg.height;
-            float cx = _cfg.cx;
-            float cy = _cfg.cy;
-            float fx = _cfg.fx;
-            float fy = _cfg.fy;
-            float far = _cfg.far;
-            float near = _cfg.near;
+          float w = _cfg.width;
+          float h = _cfg.height;
+          float cx = _cfg.cx;
+          float cy = _cfg.cy;
+          float fx = _cfg.fx;
+          float fy = _cfg.fy;
+          float near = _cfg.near;
+          float far = _cfg.far;
 
-            frs.left = near * (-cx) / fx;
-            frs.right = near * (w - cx) / fx;
+          float A = 2. * fx / w;
+          float B = 2. * fy / h;
+          float C = 2. * (cx / w) - 1.;
+          float D = 2. * (cy / h) - 1.;
+          float E = - (far + near) / (far - near);
+          float F = -2. * far * near / (far - near);
 
-            frs.bottom = near * (cy - h) / fy; 
-            frs.top = near * (cy) / fy;
+          // opengl: col-major
+          KK[0]= A; KK[4]= 0.; KK[8]= C; KK[12]= 0.;
+          KK[1]= 0.; KK[5]= B; KK[9]= D; KK[13]= 0.;
+          KK[2]= 0.; KK[6]= 0.; KK[10]= E; KK[14]= F;
+          KK[3]= 0.; KK[7]= 0.;	KK[11]= -1.; KK[15]= 0.;	 
+        };
 
-            frs.near = near;
-            frs.far = far;
-          };  
+        void make_modelview_matrix( 
+          OpticalDevice::Config& _cfg, 
+          float* RT )
+        {
+          ofVec3f& x = _cfg.X; 
+          ofVec3f& y = _cfg.Y;
+          ofVec3f& z = _cfg.Z;
+          ofVec3f& t = _cfg.T; 
 
-          /*
-           * projection matrix solution from
-           * http://opencv.willowgarage.com/wiki/Posit
-           */
-
-          void KK( 
-            OpticalDevice::Config& _cfg, 
-            float* KK )
-          {
-
-            float w = _cfg.width;
-            float h = _cfg.height;
-            float cx = _cfg.cx;
-            float cy = _cfg.cy;
-            float fx = _cfg.fx;
-            float fy = _cfg.fy;
-            float near = _cfg.near;
-            float far = _cfg.far;
-
-            float A = 2. * fx / w;
-            float B = 2. * fy / h;
-            float C = 2. * (cx / w) - 1.;
-            float D = 2. * (cy / h) - 1.;
-            float E = - (far + near) / (far - near);
-            float F = -2. * far * near / (far - near);
-
-            // opengl: col-major
-            KK[0]= A; KK[4]= 0.; KK[8]= C; KK[12]= 0.;
-            KK[1]= 0.; KK[5]= B; KK[9]= D; KK[13]= 0.;
-            KK[2]= 0.; KK[6]= 0.; KK[10]= E; KK[14]= F;
-            KK[3]= 0.; KK[7]= 0.;	KK[11]= -1.; KK[15]= 0.;	 
-          };
-
-          void RT( 
-            OpticalDevice::Config& _cfg, 
-            float* RT )
-          {
-            ofVec3f x = _cfg.X; 
-            ofVec3f y = _cfg.Y;
-            ofVec3f z = _cfg.Z;
-            ofVec3f t = _cfg.T; 
-
-            // opengl: col-major	
-            RT[0]= x.x; RT[4]= y.x; RT[8]= z.x;	RT[12]= t.x;
-            RT[1]= x.y;	RT[5]= y.y;	RT[9]= z.y;	RT[13]= t.y;
-            RT[2]= x.z;	RT[6]= y.z;	RT[10]=z.z; RT[14]= t.z;
-            RT[3]= 0.;	RT[7]= 0.;	RT[11]= 0.;	RT[15]= 1.; 
-          };
-
-      };
+          // opengl: col-major	
+          RT[0]= x.x; RT[4]= y.x; RT[8]= z.x;	RT[12]= t.x;
+          RT[1]= x.y;	RT[5]= y.y;	RT[9]= z.y;	RT[13]= t.y;
+          RT[2]= x.z;	RT[6]= y.z;	RT[10]=z.z; RT[14]= t.z;
+          RT[3]= 0.;	RT[7]= 0.;	RT[11]= 0.;	RT[15]= 1.; 
+        };
 
       Frustum _frustum; //glFrustum( ... )
       float _KK[16]; //glMultMatrixf( KK )
       float _RT[16]; //glMultMatrixf( RT )
 
       ofVec3f _loc, _fwd, _up, _trg;
-
-      void printM( 
-          float* M, int rows, int cols, 
-          bool colmajor = true ); 
-
   }; 
 }; 
 

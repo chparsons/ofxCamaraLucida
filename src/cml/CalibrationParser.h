@@ -143,6 +143,8 @@ namespace cml
             T.at<float>(1,0),  //ty
             T.at<float>(2,0)); //tz
 
+        Tvec *= 1000.0; //mm
+
         device.extrinsics( X, Y, Z, Tvec );
 
         ofLogNotice("cml::CalibrationParser") 

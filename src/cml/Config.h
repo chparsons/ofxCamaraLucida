@@ -19,7 +19,6 @@ namespace cml
     char key_help = 'h';
     char key_scene_zoom = 'z';
     char key_scene_reset = 'x';
-    char key_view_prev = 'c';
     char key_view_next = 'v';
   };
 };

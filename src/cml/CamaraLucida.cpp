@@ -145,10 +145,10 @@ namespace cml
     {
       renderer->next_view();        
     }
-    else if (args.key == config.key_view_prev)
-    {
-      renderer->prev_view(); 
-    }
+    //else if (args.key == config.key_view_prev)
+    //{
+      //renderer->prev_view(); 
+    //}
     else if (args.key == config.key_scene_reset)
     {
       renderer->reset_scene();
@@ -184,7 +184,7 @@ namespace cml
         ofGetWidth(), 25);
     glColor3f(1, 1, 1);
 
-    ofDrawBitmapString( view + " / fps: " + ofToString(fps) + " / gpu " + ofToString(gpu()), 10, ofGetHeight()-10);
+    ofDrawBitmapString( view + " / fps: " + ofToString(fps) + " / gpu: " + (gpu()?"on":"off"), 10, ofGetHeight()-10);
 
     ofDisableAlphaBlending(); 
   };
@@ -193,7 +193,7 @@ namespace cml
   {
     if ( ! _render_help ) return;
 
-    string d = "Camara Lucida \n http://chparsons.com.ar/ \n\n keys: \n\n debug = "+string(1, config.key_debug)+" \n\n next viewpoint = "+string(1, config.key_view_next)+" \n prev viewpoint = "+string(1, config.key_view_prev)+" \n\n drag mouse to rotate \n\t zoom = "+string(1, config.key_scene_zoom)+" + drag \n\t reset = "+string(1, config.key_scene_reset);
+    string d = "Camara Lucida \n http://chparsons.com.ar/ \n\n keys: \n\n debug = "+string(1, config.key_debug)+" \n\n change viewpoint = "+string(1, config.key_view_next)+" \n\n drag mouse to rotate \n\t zoom = "+string(1, config.key_scene_zoom)+" + drag \n\t reset = "+string(1, config.key_scene_reset);
 
     int roff = 200;
     int toff = roff+50;

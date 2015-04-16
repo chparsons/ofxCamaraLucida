@@ -61,7 +61,7 @@ namespace cml
 
       // debug
 
-      void render_proj_ppal_point();
+      void render_proj_ppal_axis();
       void render_world_CS();
       void render_depth_CS();
       void render_proj_CS();

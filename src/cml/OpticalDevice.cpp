@@ -15,10 +15,9 @@ namespace cml
     fx = config.fx;
     fy = config.fy;
 
-    cv2gl c;
-    c.frustum( config, _frustum );
-    c.KK( config, _KK );
-    c.RT( config, _RT );
+    make_frustum( config, _frustum );
+    make_projection_matrix( config, _KK );
+    make_modelview_matrix( config, _RT );
 
     // opengl: col-major	
     _loc = ofVec3f( _RT[12], _RT[13], _RT[14] );
@@ -66,38 +65,6 @@ namespace cml
     x = idx % width;
     y = (idx - x) / width;
   }; 
-
-  void OpticalDevice::printM( float* M, 
-      int rows, int cols, bool colmajor)
-  {
-    if (ofGetLogLevel() != OF_LOG_VERBOSE)
-      return;
-
-    if (colmajor)
-    {
-      for (int j = 0; j < cols; j++)
-      {
-        printf("\n");
-        for (int i = 0; i < rows; i++)
-        {
-          printf("%9.3f ", M[i*cols+j]);
-        }	
-      }
-    }
-    else
-    {
-      for (int i = 0; i < rows; i++)
-      {
-        printf("\n");
-        for (int j = 0; j < cols; j++)
-        {
-          printf("%9.3f ", M[i*cols+j]);
-        }	
-      }
-    }
-    printf("\n\n");
-  };
-
 };
 
 

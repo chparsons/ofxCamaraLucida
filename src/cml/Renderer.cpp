@@ -103,7 +103,7 @@ namespace cml
       render_depth_CS();
       render_proj_CS();
       //render_rgb_CS();
-      render_proj_ppal_point();
+      render_proj_ppal_axis();
     }
 
     //ofEnableAlphaBlending();
@@ -236,9 +236,9 @@ namespace cml
 
   void Renderer::init_gl_scene_control()
   {
-    float *RT = proj->gl_modelview_matrix();
-    rot_pivot = ofVec3f( 
-        RT[12], RT[13], RT[14] );
+    //float *RT = proj->gl_modelview_matrix();
+    float *RT = depth->gl_modelview_matrix();
+    rot_pivot = ofVec3f( RT[12], RT[13], RT[14] );
 
     pmouse = ofVec2f();
 
@@ -273,12 +273,12 @@ namespace cml
     _viewpoint = _viewpoint == -1 ? V_LENGTH-1 : _viewpoint;
   }
 
-  void Renderer::render_proj_ppal_point()
+  void Renderer::render_proj_ppal_axis()
   {
-    glPointSize(3);
+    glPointSize(2);
     glColor3f(1,1,0); //yellow
 
-    float ts = 0.5;
+    float ts = 30;
 
     glPushMatrix();
     glMultMatrixf( proj->gl_modelview_matrix() );
@@ -299,14 +299,14 @@ namespace cml
 
   void Renderer::render_world_CS()
   {
-    render_axis(0.1);
+    render_axis(100);
   }
 
   void Renderer::render_depth_CS()
   {
     glPushMatrix();
     glMultMatrixf( depth->gl_modelview_matrix() );
-    render_axis(0.1);
+    render_axis(50);
     glPopMatrix();
   }
 
@@ -314,7 +314,7 @@ namespace cml
   {
     glPushMatrix();
     glMultMatrixf( proj->gl_modelview_matrix() );
-    render_axis(0.1);
+    render_axis(50);
     glPopMatrix();
   }
 
@@ -322,7 +322,7 @@ namespace cml
   //{
     //glPushMatrix();
     //glMultMatrixf(rgb->gl_modelview_matrix());
-    //render_axis(0.05);
+    //render_axis(50);
     //glPopMatrix();
   //}
 
