@@ -5,7 +5,7 @@
 #include "cml/Events.h"
 #include "cml/OpticalDevice.h"
 #include "cml/DepthCamera.h"
-#include "cml/Calibration.h"
+#include "cml/CalibrationParser.h"
 #include "cml/Mesh.h"
 #include "cml/Renderer.h"
 
@@ -58,11 +58,6 @@ namespace cml
         return _depth_height;
       };
 
-      //OpticalDevice::Config depth_config() 
-      //{
-        //return depth->config;
-      //};
-
       //ofTexture& get_float_tex_ref( uint16_t *depth_pix_mm ) 
       //{
         //return depth->get_float_tex_ref( depth_pix_mm );
@@ -98,7 +93,7 @@ namespace cml
       cml::Events events;
       DepthCamera* depth;
       OpticalDevice* proj;
-      OpticalDevice* rgb;
+      //OpticalDevice* rgb;
       Renderer* renderer;
       Mesh* mesh;
 

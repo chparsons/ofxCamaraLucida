@@ -6,8 +6,9 @@ namespace cml
 {
   struct Config
   {
-    string kinect_calib_path = "camara_lucida/kinect_calibration.yml";
-    string projector_calib_path = "camara_lucida/projector_calibration.yml";
+    string kinect_intrinsics_file = "camara_lucida/kinect_intrinsics.yml";
+    string projector_intrinsics_file = "camara_lucida/projector_intrinsics.yml";
+    string projector_kinect_extrinsics_file = "camara_lucida/projector_kinect_extrinsics.yml";
 
     int mesh_res = 2;
     int tex_width = 1024;

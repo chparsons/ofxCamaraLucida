@@ -17,8 +17,8 @@ namespace cml
       Renderer( 
           cml::Config config,
           OpticalDevice* proj, 
-          OpticalDevice* depth, 
-          OpticalDevice* rgb
+          OpticalDevice* depth
+          //OpticalDevice* rgb
           );
       ~Renderer();
 
@@ -47,7 +47,7 @@ namespace cml
 
       OpticalDevice* proj;
       OpticalDevice* depth;
-      OpticalDevice* rgb;
+      //OpticalDevice* rgb;
 
       ofShader shader;
       RenderShader render_shader;
@@ -65,7 +65,7 @@ namespace cml
       void render_world_CS();
       void render_depth_CS();
       void render_proj_CS();
-      void render_rgb_CS();
+      //void render_rgb_CS();
       void render_axis(float s);
 
       // scene control
@@ -83,7 +83,7 @@ namespace cml
 
       enum ViewpointType
       {
-        V_DEPTH, V_PROJ, V_RGB, V_LENGTH
+        V_DEPTH, V_PROJ, /*V_RGB,*/ V_LENGTH
       };
       int _viewpoint;
   };

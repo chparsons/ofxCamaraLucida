@@ -5,12 +5,12 @@ namespace cml
   Renderer::Renderer( 
       cml::Config config,
       OpticalDevice* proj, 
-      OpticalDevice* depth, 
-      OpticalDevice* rgb )
+      OpticalDevice* depth )
+      //OpticalDevice* rgb )
   {
     this->proj = proj;
     this->depth = depth;
-    this->rgb = rgb;
+    //this->rgb = rgb;
 
     _debug = false;
     _viewpoint = V_DEPTH;
@@ -39,7 +39,7 @@ namespace cml
   {
     proj = NULL;
     depth = NULL;
-    rgb = NULL;
+    //rgb = NULL;
   }
 
   void Renderer::render( 
@@ -102,7 +102,7 @@ namespace cml
       gl_scene_control();
       render_depth_CS();
       render_proj_CS();
-      render_rgb_CS();
+      //render_rgb_CS();
       render_proj_ppal_point();
     }
 
@@ -173,9 +173,9 @@ namespace cml
       case V_DEPTH:
         dev = depth;
         break;
-      case V_RGB:
-        dev = rgb;
-        break;
+      //case V_RGB:
+        //dev = rgb;
+        //break;
     }
 
     OpticalDevice::Frustum& frustum = dev->gl_frustum();
@@ -206,9 +206,9 @@ namespace cml
       case V_DEPTH:
         dev = depth;
         break;
-      case V_RGB:
-        dev = rgb;
-        break;
+      //case V_RGB:
+        //dev = rgb;
+        //break;
     }
 
     ofVec3f& loc = dev->loc();
@@ -318,13 +318,13 @@ namespace cml
     glPopMatrix();
   }
 
-  void Renderer::render_rgb_CS()
-  {
-    glPushMatrix();
-    glMultMatrixf(rgb->gl_modelview_matrix());
-    render_axis(0.05);
-    glPopMatrix();
-  }
+  //void Renderer::render_rgb_CS()
+  //{
+    //glPushMatrix();
+    //glMultMatrixf(rgb->gl_modelview_matrix());
+    //render_axis(0.05);
+    //glPopMatrix();
+  //}
 
   void Renderer::render_axis(float s)
   {
@@ -355,9 +355,9 @@ namespace cml
       case V_DEPTH:
         return "depth camera viewpoint";
         break;
-      case V_RGB:
-        return "rgb camera viewpoint";
-        break;
+      //case V_RGB:
+        //return "rgb camera viewpoint";
+        //break;
       default:
         return "no viewpoint selected";
     }

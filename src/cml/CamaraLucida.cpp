@@ -30,7 +30,7 @@ namespace cml
 
     delete proj; proj = NULL;
     delete depth; depth = NULL;
-    delete rgb; rgb = NULL;
+    //delete rgb; rgb = NULL;
     delete renderer; renderer = NULL;
     delete mesh; mesh = NULL;
   };
@@ -87,12 +87,13 @@ namespace cml
 
     OpticalDevice::Config proj_cfg;
     OpticalDevice::Config depth_cfg;
-    OpticalDevice::Config rgb_cfg;
+    //OpticalDevice::Config rgb_cfg;
 
-    Calibration calib( config, proj_cfg, depth_cfg, rgb_cfg ); 
+    CalibrationParser calib;
+    calib.parse(config, proj_cfg, depth_cfg); //rgb_cfg ); 
 
     depth = new DepthCamera( depth_cfg );
-    rgb = new OpticalDevice( rgb_cfg );
+    //rgb = new OpticalDevice( rgb_cfg );
     proj = new OpticalDevice( proj_cfg );
 
     _tex_width = config.tex_width;
@@ -107,7 +108,7 @@ namespace cml
       _tex_width, 
       _tex_height );
 
-    renderer = new Renderer( config, proj, depth, rgb );
+    renderer = new Renderer( config, proj, depth );//rgb);
 
     depth_ftex = depth->init_float_tex();
 
