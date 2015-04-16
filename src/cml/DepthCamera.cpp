@@ -109,7 +109,7 @@ namespace cml
     int w = width;
     int h = height;
 
-    init_hue_tex(	w, h );
+    init_hue_tex( w, h );
 
     if ( depth_pix_mm == NULL )
       return htex; 
