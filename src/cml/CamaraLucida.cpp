@@ -93,8 +93,8 @@ namespace cml
     calib.parse(config, proj_cfg, depth_cfg); //rgb_cfg ); 
 
     depth = new DepthCamera( depth_cfg );
-    //rgb = new OpticalDevice( rgb_cfg );
     proj = new OpticalDevice( proj_cfg );
+    //rgb = new OpticalDevice( rgb_cfg );
 
     _tex_width = config.tex_width;
     _tex_height = config.tex_height;
