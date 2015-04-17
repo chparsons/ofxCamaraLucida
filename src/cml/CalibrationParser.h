@@ -80,10 +80,10 @@ namespace cml
 
         //TODO wtf ??? 
         //cy => principalPoint.y != cameraMatrix.at<double>(1, 2) 
-        float cx = cameraMatrix.at<double>(0, 2);
-        float cy = cameraMatrix.at<double>(1, 2);
-        //float cx = principalPoint.x;
-        //float cy = principalPoint.y;
+        //float cx = cameraMatrix.at<double>(0, 2);
+        //float cy = cameraMatrix.at<double>(1, 2);
+        float cx = principalPoint.x;
+        float cy = principalPoint.y;
 
         device.size( imageSize.width, imageSize.height );
         device.intrinsics(cx,cy,fx,fy);
@@ -143,7 +143,7 @@ namespace cml
             T.at<float>(1,0),  //ty
             T.at<float>(2,0)); //tz
 
-        Tvec *= 1000.0; //mm
+        Tvec *= 100.0; //cm->mm scale
 
         device.extrinsics( X, Y, Z, Tvec );
 
@@ -155,7 +155,7 @@ namespace cml
           << "\n" << "T vec: " << ofToString(Tvec)
           << "\n" << "R x axis: " << ofToString(X)
           << "\n" << "R y axis: " << ofToString(Y)
-          << "\n" << "R z axis: " << ofToString(X)
+          << "\n" << "R z axis: " << ofToString(Z)
           << "\n";
       };
 
