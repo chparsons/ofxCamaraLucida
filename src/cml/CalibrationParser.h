@@ -77,11 +77,10 @@ namespace cml
 
         float fx = cameraMatrix.at<double>(0, 0);
         float fy = cameraMatrix.at<double>(1, 1);
-
-        //float cx = cameraMatrix.at<double>(0, 2);
-        //float cy = cameraMatrix.at<double>(1, 2);
-        float cx = principalPoint.x;
-        float cy = principalPoint.y;
+        float cx = cameraMatrix.at<double>(0, 2);
+        float cy = cameraMatrix.at<double>(1, 2);
+        //float cx = principalPoint.x;
+        //float cy = principalPoint.y;
 
         device.size( imageSize.width, imageSize.height );
         device.intrinsics(cx,cy,fx,fy);
