@@ -1,7 +1,6 @@
 #pragma once
 
-#include "ofVectorMath.h"
-#include "ofLog.h"
+#include "ofMain.h"
 
 namespace cml
 {
@@ -15,9 +14,16 @@ namespace cml
 
           Config() 
           {
-            //mm
+            //mm units: near far
             near = 200.0;
             far = 6000.0;
+            far_clamp = 5000.0;
+
+            //init at world origin
+            X = ofVec3f( 1.,0.,0. );
+            Y = ofVec3f( 0.,1.,0. );
+            Z = ofVec3f( 0.,0.,1. );
+            T = ofVec3f( 0.,0.,0. );
           };
 
           void size( int w, int h )
@@ -46,13 +52,19 @@ namespace cml
             Y.set( _Y );
             Z.set( _Z );
             T.set( _T );
-          };
+          }; 
 
-          float near, far;
+          float near, far, far_clamp;
           int width, height;
 
           float cx, cy, fx, fy;
           ofVec3f X, Y, Z, T;
+
+          string _name;
+          void name(string n) 
+          { _name = n; };
+          string name() 
+          { return _name; };
       };
 
       struct Frustum
@@ -96,12 +108,44 @@ namespace cml
       ofVec3f& up() { return _up; };
       ofVec3f& trg() { return _trg; };
 
-      int width, height, near, far;
+      int width, height, near, far, far_clamp;
       int cx, cy, fx, fy;
 
       OpticalDevice::Config config; 
 
+      void log( ofLogLevel level )
+      {
+        Frustum& F = _frustum;
+        ofLog(level) 
+          << "cml::OpticalDevice:" << "\n" 
+          << "name: " << config.name() << "\n" 
+          << "\n"
+          << "frustum:" << "\n" 
+          << "L: " << F.left << "\n"
+          << "R: " << F.right << "\n" 
+          << "T: " << F.top << "\n"
+          << "B: " << F.bottom << "\n"
+          << "N: " << F.near << "\n"
+          << "F: " << F.far << "\n"
+          << "\n"
+          << "extrinsics:" << "\n" 
+          << "T: " << config.T << "\n"
+          << "R x axis: " << ofToString(config.X) 
+          << "\n"
+          << "R y axis: " << ofToString(config.Y) 
+          << "\n"
+          << "R z axis: " << ofToString(config.Z) 
+          << "\n"
+          << "\n";
+      };
+
     private:
+
+      Frustum _frustum; //glFrustum( ... )
+      float _KK[16]; //glMultMatrixf( KK )
+      float _RT[16]; //glMultMatrixf( RT )
+
+      ofVec3f _loc, _fwd, _up, _trg;
 
       /*
        * Intrinsics from opencv to opengl
@@ -118,7 +162,7 @@ namespace cml
 
         void make_frustum( 
           OpticalDevice::Config& _cfg, 
-          OpticalDevice::Frustum& frs )
+          OpticalDevice::Frustum& F )
         {
 
           float w = _cfg.width;
@@ -130,14 +174,14 @@ namespace cml
           float far = _cfg.far;
           float near = _cfg.near;
 
-          frs.left = near * (-cx) / fx;
-          frs.right = near * (w - cx) / fx;
+          F.left = near * (-cx) / fx;
+          F.right = near * (w - cx) / fx;
 
-          frs.bottom = near * (cy - h) / fy; 
-          frs.top = near * (cy) / fy;
+          F.bottom = near * (cy - h) / fy; 
+          F.top = near * (cy) / fy;
 
-          frs.near = near;
-          frs.far = far;
+          F.near = near;
+          F.far = far; 
         };  
 
         /*
@@ -187,13 +231,7 @@ namespace cml
           RT[1]= x.y;	RT[5]= y.y;	RT[9]= z.y;	RT[13]= t.y;
           RT[2]= x.z;	RT[6]= y.z;	RT[10]=z.z; RT[14]= t.z;
           RT[3]= 0.;	RT[7]= 0.;	RT[11]= 0.;	RT[15]= 1.; 
-        };
-
-      Frustum _frustum; //glFrustum( ... )
-      float _KK[16]; //glMultMatrixf( KK )
-      float _RT[16]; //glMultMatrixf( RT )
-
-      ofVec3f _loc, _fwd, _up, _trg;
+        }; 
   }; 
 }; 
 

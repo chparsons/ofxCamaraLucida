@@ -61,12 +61,11 @@ namespace cml
 
       // debug
 
-      void render_proj_ppal_axis();
-      void render_world_CS();
       void render_depth_CS();
       void render_proj_CS();
       //void render_rgb_CS();
       void render_axis(float s);
+      void render_frustum( OpticalDevice::Frustum& F );
 
       // scene control
 
@@ -83,7 +82,7 @@ namespace cml
 
       enum ViewpointType
       {
-        V_DEPTH, V_PROJ, /*V_RGB,*/ V_LENGTH
+        V_DEPTH, V_PROJ, /*V_RGB, V_WORLD,*/ V_LENGTH
       };
       int _viewpoint;
   };

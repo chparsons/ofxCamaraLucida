@@ -37,19 +37,20 @@ class RenderShader
     uniform sampler2DRect depth_tex;
     uniform sampler2DRect render_tex;
 
-    uniform float xoff;
     uniform float near;
     uniform float far;
+    uniform float far_clamp;
     uniform float width;
     uniform float height;
     uniform float fx;
     uniform float fy;
     uniform float cx;
     uniform float cy;
-    uniform float k1;
-    uniform float k2;
-    uniform float k3;
-    uniform float k4; 
+    uniform float xoff;
+    //uniform float k1;
+    //uniform float k2;
+    //uniform float k3;
+    //uniform float k4; 
 
     vec3 unproject( vec2 p2, float z ) 
     {
@@ -71,7 +72,7 @@ class RenderShader
       );
 
       float zmm = texture2DRect( depth_tex, d2 ).r;
-      zmm = clamp( ( zmm < epsilon ? 5000.0 : zmm ), 0.0, 5000.0 );
+      zmm = clamp( ( zmm < epsilon ? far_clamp : zmm ), 0.0, far_clamp );
       vec4 p3 = vec4( unproject( d2, zmm ), 1.);
 
       //vec4 p3 = vec4( gl_Vertex );
@@ -83,7 +84,7 @@ class RenderShader
 
       //Values written to gl_FrontColor are clamped to the range [0,1]
       gl_FrontColor = gl_Color;
-      //gl_FrontColor = vec4( lerp2d(zmm,50.0,5000.0,0.,1.) );
+      //gl_FrontColor = vec4( lerp2d(zmm,50.0,far_clamp,0.,1.) );
     }
 
     ); //shader code
@@ -98,21 +99,22 @@ class RenderShader
 
   void update( ofShader& shader, DepthCamera* depth, ofTexture& render_tex, ofTexture& depth_ftex )
   {
-    ofVec4f& k = depth->k;
-
     shader.setUniform1f("width", depth->width);
     shader.setUniform1f("height", depth->height);
     shader.setUniform1f("xoff", depth->xoff);
     shader.setUniform1f("near", depth->near);
     shader.setUniform1f("far", depth->far);
+    shader.setUniform1f("far_clamp", depth->far_clamp);
     shader.setUniform1f("cx", depth->cx);
     shader.setUniform1f("cy", depth->cy);
     shader.setUniform1f("fx", depth->fx);
     shader.setUniform1f("fy", depth->fy);
-    shader.setUniform1f("k1", k[0]);
-    shader.setUniform1f("k2", k[1]);
-    shader.setUniform1f("k3", k[2]);
-    shader.setUniform1f("k4", k[3]);
+
+    //ofVec4f& k = depth->k;
+    //shader.setUniform1f("k1", k[0]);
+    //shader.setUniform1f("k2", k[1]);
+    //shader.setUniform1f("k3", k[2]);
+    //shader.setUniform1f("k4", k[3]);
 
     shader.setUniformTexture( "render_tex", render_tex, 0 );
     shader.setUniformTexture( "depth_tex", depth_ftex, 1 );

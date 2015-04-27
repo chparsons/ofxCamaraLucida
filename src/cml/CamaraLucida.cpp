@@ -96,6 +96,9 @@ namespace cml
     proj = new OpticalDevice( proj_cfg );
     //rgb = new OpticalDevice( rgb_cfg );
 
+    depth->log(OF_LOG_NOTICE);
+    proj->log(OF_LOG_NOTICE);
+
     _tex_width = config.tex_width;
     _tex_height = config.tex_height;
     _depth_width = depth->width;

@@ -46,7 +46,7 @@ namespace cml
       to_depth( i, &xd, &yd, &idepth );
 
       float zmm = depth_pix_mm[idepth];
-      zmm = CLAMP( ( zmm < epsilon ? 5000.0 : zmm ), 0.0, 5000.0 );
+      zmm = CLAMP( ( zmm < epsilon ? depth->far_clamp : zmm ), 0.0, depth->far_clamp );
 
       float x, y;
       depth->unproject( xd, yd, zmm, &x, &y );

@@ -10,6 +10,7 @@ namespace cml
     height = config.height;
     near = config.near;
     far = config.far;
+    far_clamp = config.far_clamp;
     cx = config.cx;
     cy = config.cy;
     fx = config.fx;

@@ -26,7 +26,7 @@ namespace cml
 
     //shader.load("camara_lucida/glsl/render");
     render_shader.init( shader );
- 
+
     init_gl_scene_control();
   }
 
@@ -79,7 +79,6 @@ namespace cml
     // 3d
 
     ofEnableDepthTest();
-    ofViewport();
 
     glPushAttrib( GL_POLYGON_BIT );
     if ( wireframe )
@@ -91,10 +90,13 @@ namespace cml
       glPolygonMode( GL_FRONT, GL_FILL );
     }
 
-    glColor3f(1,1,1);
+    ofPushStyle();
+    ofSetColor( ofColor::white );
 
+    ofViewport();
     gl_projection();	
     gl_viewpoint();
+
     //gl_scene_control();
 
     if ( _debug )
@@ -103,12 +105,15 @@ namespace cml
       render_depth_CS();
       render_proj_CS();
       //render_rgb_CS();
-      render_proj_ppal_axis();
+      //ofDrawGrid( 3000.0f, 8.0f, false, false, true, false );
     }
 
     //ofEnableAlphaBlending();
 
     ofTexture render_tex = fbo.getTextureReference(0);
+
+    ofPushMatrix();
+    ofScale( -1., -1., 1. );	
 
     if ( gpu )
     {
@@ -126,6 +131,7 @@ namespace cml
       mesh->render();
       render_tex.unbind();
     } 
+    ofPopMatrix();
 
     //ofDisableAlphaBlending(); 
 
@@ -135,14 +141,13 @@ namespace cml
 
     glPopAttrib();//GL_POLYGON_BIT
     glDisable( GL_CULL_FACE );
-    ofDisableDepthTest();
-
     glPolygonMode( GL_FRONT, GL_FILL );
-    glColor3f(1,1,1);
-
+    ofDisableDepthTest();
+    ofSetColor( ofColor::white );
     gl_ortho();
-
     ofNotifyEvent( ev->render_2d, ev->void_args );
+
+    ofPopStyle();
   }
 
   // gl
@@ -162,6 +167,15 @@ namespace cml
   {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+
+    //if ( _viewpoint == V_WORLD )
+    //{
+      //glFrustum( 
+          //-100, 100,
+          //-100, 100,
+          //10., 10000. );
+      //return;
+    //}
 
     OpticalDevice* dev; 
 
@@ -194,7 +208,15 @@ namespace cml
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glScalef( -1., -1., 1. );	
+    //if ( _viewpoint == V_WORLD )
+    //{
+      //gluLookAt(
+        //-100.,100.,-100., //loc
+        //0.,  0.,  0., //trg
+        //0.,  1.,  0.  //up 
+      //);
+      //return;
+    //}
 
     OpticalDevice* dev; 
 
@@ -222,6 +244,28 @@ namespace cml
     );
   }
 
+  //void Renderer::gl_world_view()
+  //{
+    //ofViewport();
+    //ofSetMatrixMode(OF_MATRIX_PROJECTION);
+    //ofLoadIdentityMatrix();
+
+    //OpticalDevice::Frustum& frustum = depth->gl_frustum();
+    //ofMatrix4x4 _frustum;
+    //_frustum.makeFrustumMatrix(
+        //frustum.left, frustum.right,
+        //frustum.top, frustum.bottom,
+        //10, 10000);
+    //ofMultMatrix(_frustum);
+
+    //ofSetMatrixMode(OF_MATRIX_MODELVIEW);
+    //ofLoadIdentityMatrix();
+
+    //ofMatrix4x4 lookAt;
+    //lookAt.makeLookAtViewMatrix(ofVec3f(0,0,0), ofVec3f(0,0,1), ofVec3f(0,-1,0));
+    //ofMultMatrix(lookAt);
+  //}
+
   // scene control
 
   void Renderer::gl_scene_control()
@@ -242,7 +286,7 @@ namespace cml
 
     pmouse = ofVec2f();
 
-    tZ_delta = -50.; //mm
+    tZ_delta = -50.; //mm units
     rot_delta = -0.2;
 
     tZini = 0;
@@ -273,40 +317,16 @@ namespace cml
     _viewpoint = _viewpoint == -1 ? V_LENGTH-1 : _viewpoint;
   }
 
-  void Renderer::render_proj_ppal_axis()
-  {
-    glPointSize(2);
-    glColor3f(1,1,0); //yellow
-
-    float ts = 30;
-
-    glPushMatrix();
-    glMultMatrixf( proj->gl_modelview_matrix() );
-
-    glBegin(GL_LINES);
-    glVertex3f(0, 0, 0);
-    glVertex3f(0, 0, ts);
-    glEnd();
-
-    //float amp = 0.5;
-    //float ts = sin( ofGetElapsedTimef() * 0.7 ) * amp + amp;
-    glBegin(GL_POINTS);
-    glVertex3f(0, 0, ts);
-    glEnd();
-
-    glPopMatrix();
-  }
-
-  void Renderer::render_world_CS()
-  {
-    render_axis(100);
-  }
-
   void Renderer::render_depth_CS()
   {
     glPushMatrix();
     glMultMatrixf( depth->gl_modelview_matrix() );
+    ofPushStyle();
+    ofSetColor( ofColor::magenta );
+    ofSetLineWidth(1);
+    render_frustum(depth->gl_frustum());
     render_axis(50);
+    ofPopStyle();
     glPopMatrix();
   }
 
@@ -314,7 +334,23 @@ namespace cml
   {
     glPushMatrix();
     glMultMatrixf( proj->gl_modelview_matrix() );
+
+    ofPushStyle();
+    ofSetLineWidth(1);
+    ofSetColor( ofColor::yellow );
+
+    render_frustum(proj->gl_frustum());
     render_axis(50);
+
+    //ppal point
+    //float len = 100;
+    //ofSetColor( ofColor::yellow );
+    //ofLine( 0,0,0, 0,0, len );
+    //glBegin(GL_POINTS);
+    //glVertex3f(0, 0, len);
+    //glEnd();
+
+    ofPopStyle();
     glPopMatrix();
   }
 
@@ -326,24 +362,55 @@ namespace cml
     //glPopMatrix();
   //}
 
-  void Renderer::render_axis(float s)
+  //see of3dUtils#ofDrawAxis
+  void Renderer::render_axis(float size)
   {
-    glBegin(GL_LINES);
+    ofPushStyle();
+    ofSetLineWidth(2);
 
-    glColor3f(1, 0, 0);
-    glVertex3f(0, 0, 0);
-    glVertex3f(s, 0, 0);
+    // draw x axis
+    ofSetColor(ofColor::red);
+    ofLine(0, 0, 0, size, 0, 0);
 
-    glColor3f(0, 1, 0);
-    glVertex3f(0, 0, 0);
-    glVertex3f(0, s, 0);
+    // draw y axis
+    ofSetColor(ofColor::green);
+    ofLine(0, 0, 0, 0, size, 0);
 
-    glColor3f(0, 0, 1);
-    glVertex3f(0, 0, 0);
-    glVertex3f(0, 0, s);
+    // draw z axis
+    ofSetColor(ofColor::blue);
+    ofLine(0, 0, 0, 0, 0, size);
 
-    glEnd();
+    ofPopStyle();
   }
+
+  void Renderer::render_frustum( OpticalDevice::Frustum& F )
+  {
+    float plane = F.near;
+
+    //pyramid
+    ofLine( 0,0,0, 
+        F.left, F.top, plane );
+    ofLine( 0,0,0, 
+        F.right, F.top, plane );
+    ofLine( 0,0,0, 
+        F.left, F.bottom, plane );
+    ofLine( 0,0,0, 
+        F.right, F.bottom, plane );
+
+    //plane
+    ofLine( 
+        F.left, F.bottom, plane, 
+        F.left, F.top, plane );
+    ofLine( 
+        F.left, F.top, plane, 
+        F.right, F.top, plane );
+    ofLine( 
+        F.right, F.top, plane, 
+        F.right, F.bottom, plane );
+    ofLine( 
+        F.right, F.bottom, plane, 
+        F.left, F.bottom, plane );
+  };
 
   string Renderer::get_viewpoint_info()
   {
@@ -357,6 +424,9 @@ namespace cml
         break;
       //case V_RGB:
         //return "rgb camera viewpoint";
+        //break;
+      //case V_WORLD:
+        //return "world viewpoint";
         //break;
       default:
         return "no viewpoint selected";
@@ -378,8 +448,8 @@ namespace cml
     }
     else
     {
-      rotX -= dist.y * rot_delta;
-      rotY += dist.x * rot_delta;
+      rotX += dist.y * rot_delta;
+      rotY -= dist.x * rot_delta;
     }
 
     pmouse.set( x, y );

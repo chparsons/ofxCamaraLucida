@@ -19,22 +19,13 @@ namespace cml
         OpticalDevice::Config& depth_cfg )
         //OpticalDevice::Config& rgb_cfg )
       {
-        //kinect:
-        //we can use kinect rgb calibration 
-        //for depth camera bc we have registration
-        //which gives the depth map 
-        //as if it were seen by the rgb camera
-        load_intrinsics( config.kinect_intrinsics_file, false, depth_cfg );
-        //set depth extrinsics
-        //to be the world origin
-        depth_cfg.extrinsics( 
-            ofVec3f( 1.,0.,0. ),
-            ofVec3f( 0.,1.,0. ),
-            ofVec3f( 0.,0.,1. ),
-            ofVec3f( 0.,0.,0. ) );
+        depth_cfg.name("depth camera");
+        proj_cfg.name("projector");
 
-        //projector:
-        load_intrinsics( config.projector_intrinsics_file, false, proj_cfg );
+        //use kinect rgb calibration with registration turned on 
+        load_intrinsics( config.kinect_intrinsics_file, true, depth_cfg );
+        load_intrinsics( config.projector_intrinsics_file, true, proj_cfg );
+
         load_extrinsics( config.projector_kinect_extrinsics_file, proj_cfg );
 
       };
@@ -84,19 +75,6 @@ namespace cml
 
         device.size( imageSize.width, imageSize.height );
         device.intrinsics(cx,cy,fx,fy);
-
-        ofLogNotice("cml::CalibrationParser") 
-          << "\n" << "intrinsics loaded"
-          << "\n" << "filename: " << filename
-          << "\n" << "image width: " << imageSize.width
-          << "\n" << "image height: " << imageSize.height
-          << "\n" << "principal point: " << principalPoint
-          << "\n" << "cx: " << cx
-          << "\n" << "cy: " << cy
-          << "\n" << "fx: " << fx
-          << "\n" << "fy: " << fy
-          << "\n" << "camera matrix: \n" << cameraMatrix
-          << "\n";
       };
 
       void load_extrinsics( string filename, OpticalDevice::Config& device  )
@@ -114,6 +92,11 @@ namespace cml
 
         if ( T.type() != CV_32FC1 ) 
           T.convertTo( T, CV_32FC1 );
+
+        T *= 1000.0; //mts->mm units
+        //transpose to get proj->camera
+        T *= -1;
+        cv::transpose(R,R);
 
         // opencv: row-major	
 
@@ -138,22 +121,9 @@ namespace cml
         ofVec3f Tvec = ofVec3f(
             T.at<float>(0,0),  //tx
             T.at<float>(1,0),  //ty
-            T.at<float>(2,0)); //tz
+            T.at<float>(2,0)); //tz 
 
-        Tvec *= 100.0; //cm->mm scale
-
-        device.extrinsics( X, Y, Z, Tvec );
-
-        ofLogNotice("cml::CalibrationParser") 
-          << "\n" << "extrinsics loaded"
-          << "\n" << "filename: " << filename
-          << "\n" << "T: \n" << T
-          << "\n" << "R: \n" << R
-          << "\n" << "T vec: " << ofToString(Tvec)
-          << "\n" << "R x axis: " << ofToString(X)
-          << "\n" << "R y axis: " << ofToString(Y)
-          << "\n" << "R z axis: " << ofToString(Z)
-          << "\n";
+        device.extrinsics( X, Y, Z, Tvec ); 
       };
 
   };
