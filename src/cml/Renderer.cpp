@@ -168,15 +168,6 @@ namespace cml
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    //if ( _viewpoint == V_WORLD )
-    //{
-      //glFrustum( 
-          //-100, 100,
-          //-100, 100,
-          //10., 10000. );
-      //return;
-    //}
-
     OpticalDevice* dev; 
 
     switch( _viewpoint )
@@ -208,16 +199,6 @@ namespace cml
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    //if ( _viewpoint == V_WORLD )
-    //{
-      //gluLookAt(
-        //-100.,100.,-100., //loc
-        //0.,  0.,  0., //trg
-        //0.,  1.,  0.  //up 
-      //);
-      //return;
-    //}
-
     OpticalDevice* dev; 
 
     switch( _viewpoint )
@@ -243,28 +224,6 @@ namespace cml
       up.x,  up.y,  up.z 
     );
   }
-
-  //void Renderer::gl_world_view()
-  //{
-    //ofViewport();
-    //ofSetMatrixMode(OF_MATRIX_PROJECTION);
-    //ofLoadIdentityMatrix();
-
-    //OpticalDevice::Frustum& frustum = depth->gl_frustum();
-    //ofMatrix4x4 _frustum;
-    //_frustum.makeFrustumMatrix(
-        //frustum.left, frustum.right,
-        //frustum.top, frustum.bottom,
-        //10, 10000);
-    //ofMultMatrix(_frustum);
-
-    //ofSetMatrixMode(OF_MATRIX_MODELVIEW);
-    //ofLoadIdentityMatrix();
-
-    //ofMatrix4x4 lookAt;
-    //lookAt.makeLookAtViewMatrix(ofVec3f(0,0,0), ofVec3f(0,0,1), ofVec3f(0,-1,0));
-    //ofMultMatrix(lookAt);
-  //}
 
   // scene control
 
