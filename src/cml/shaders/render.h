@@ -54,7 +54,10 @@ class RenderShader
 
     vec3 unproject( vec2 p2, float z ) 
     {
-      return vec3( (p2.x + xoff - cx) * z / fx, (p2.y - cy) * z / fy, z );
+      return vec3( 
+        (p2.x + xoff - cx) * z / fx, 
+        (p2.y - cy) * z / fy, z 
+      );
     }
 
     void main()

@@ -23,16 +23,15 @@ namespace cml
         proj_cfg.name("projector");
 
         //use kinect rgb calibration with registration turned on 
-        load_intrinsics( config.kinect_intrinsics_file, true, depth_cfg );
-        load_intrinsics( config.projector_intrinsics_file, true, proj_cfg );
+        parse_intrinsics( config.kinect_intrinsics_file, true, depth_cfg );
+        parse_intrinsics( config.projector_intrinsics_file, true, proj_cfg );
 
-        load_extrinsics( config.projector_kinect_extrinsics_file, proj_cfg );
-
+        parse_extrinsics( config.projector_kinect_extrinsics_file, proj_cfg );
       };
 
     private:
 
-      void load_intrinsics( string filename, bool undistorted, OpticalDevice::Config& device )
+      void parse_intrinsics( string filename, bool undistorted, OpticalDevice::Config& device )
       {
         bool absolute = false;
         cv::FileStorage fs(ofToDataPath(filename, absolute), cv::FileStorage::READ);
@@ -77,7 +76,7 @@ namespace cml
         device.intrinsics(cx,cy,fx,fy);
       };
 
-      void load_extrinsics( string filename, OpticalDevice::Config& device  )
+      void parse_extrinsics( string filename, OpticalDevice::Config& device  )
       {
         bool absolute = false;
         cv::FileStorage fs(ofToDataPath(filename, absolute), cv::FileStorage::READ);
