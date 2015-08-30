@@ -19,13 +19,7 @@ namespace cml
     make_frustum( config, _frustum );
     make_projection_matrix( config, _KK );
     make_modelview_matrix( config, _RT );
-
-    // opengl: col-major	
-    _loc = ofVec3f( _RT[12], _RT[13], _RT[14] );
-    _fwd = ofVec3f( _RT[8], _RT[9], _RT[10] );
-    _up = ofVec3f( _RT[4], _RT[5], _RT[6] );
-
-    _trg = _loc + _fwd;
+    make_RT_vecs( _RT ); 
 
     //_T = ofVec3f(RT[12],rgb_RT[13],rgb_RT[14]);
     //_RT = ofMatrix4x4(

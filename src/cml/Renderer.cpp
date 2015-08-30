@@ -97,11 +97,11 @@ namespace cml
     gl_projection();	
     gl_viewpoint();
 
-    //gl_scene_control();
+    gl_scene_control();
 
     if ( _debug )
     {
-      gl_scene_control();
+      //gl_scene_control();
       render_depth_CS();
       render_proj_CS();
       //render_rgb_CS();

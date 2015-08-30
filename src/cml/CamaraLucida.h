@@ -38,6 +38,11 @@ namespace cml
         return depth;
       };
 
+      OpticalDevice* projector()
+      {
+        return proj;
+      };
+
       float tex_width()
       {
         return _tex_width; 

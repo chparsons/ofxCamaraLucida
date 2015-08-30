@@ -103,10 +103,50 @@ namespace cml
         return _RT; 
       };
 
+      //getters RT vecs
       ofVec3f& loc() { return _loc; };
       ofVec3f& fwd() { return _fwd; };
       ofVec3f& up() { return _up; };
       ofVec3f& trg() { return _trg; };
+      ofVec3f& left() { return _left; };
+
+      //setters RT vecs
+      void loc( ofVec3f& loc_ ) 
+      {
+        _RT[12] = loc_.x; 
+        _RT[13] = loc_.y; 
+        _RT[14] = loc_.z;
+        _loc.set( loc_ );
+      };
+
+      void fwd( ofVec3f& fwd_ ) 
+      {
+        _RT[8] = fwd_.x; 
+        _RT[9] = fwd_.y; 
+        _RT[10] = fwd_.z;
+        _fwd.set( fwd_ );
+      };
+
+      void up( ofVec3f& up_ ) 
+      { 
+        _RT[4] = up_.x; 
+        _RT[5] = up_.y; 
+        _RT[6] = up_.z;
+        _up.set( up_ );
+      };
+
+      void left( ofVec3f& left_ ) 
+      { 
+        _RT[0] = left_.x; 
+        _RT[1] = left_.y; 
+        _RT[2] = left_.z;
+        _left.set( left_ );
+      };
+
+      void trg( ofVec3f& trg_ ) 
+      {
+        _trg.set( trg_ );
+      };
 
       int width, height, near, far, far_clamp;
       int cx, cy, fx, fy;
@@ -145,7 +185,18 @@ namespace cml
       float _KK[16]; //glMultMatrixf( KK )
       float _RT[16]; //glMultMatrixf( RT )
 
-      ofVec3f _loc, _fwd, _up, _trg;
+      // RT vecs
+      ofVec3f _loc,_fwd,_up,_trg,_left;
+
+      void make_RT_vecs( float* RT )
+      {
+        // opengl: col-major	
+        _loc = ofVec3f( RT[12], RT[13], RT[14] );
+        _fwd = ofVec3f( RT[8], RT[9], RT[10] );
+        _up = ofVec3f( RT[4], RT[5], RT[6] );
+        _left = ofVec3f( RT[0], RT[1], RT[2] );
+        _trg = _loc + _fwd;
+      };
 
       /*
        * Intrinsics from opencv to opengl
