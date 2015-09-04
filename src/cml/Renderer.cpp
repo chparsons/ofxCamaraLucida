@@ -110,7 +110,7 @@ namespace cml
 
     //ofEnableAlphaBlending();
 
-    ofTexture render_tex = fbo.getTextureReference(0);
+    ofTexture& render_tex = fbo.getTextureReference(0);
 
     ofPushMatrix();
     ofScale( -1., -1., 1. );	
@@ -131,6 +131,7 @@ namespace cml
       mesh->render();
       render_tex.unbind();
     } 
+
     ofPopMatrix();
 
     //ofDisableAlphaBlending(); 
