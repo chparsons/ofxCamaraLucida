@@ -130,37 +130,37 @@ namespace cml
 
   void CamaraLucida::keyPressed(ofKeyEventArgs &args)
   {
-    pressed[args.key] = true;
-
-    if (args.key == config.key_debug)
-    {
-      debug( ! debug() );
-    }
-    else if (args.key == config.key_help)
-    {
-      _render_help = !_render_help;
-    }
-
-    if ( ! _debug ) 
-      return;
-
-    if (args.key == config.key_view_next)
-    {
-      renderer->next_view();        
-    }
-    //else if (args.key == config.key_view_prev)
-    //{
-      //renderer->prev_view(); 
-    //}
-    else if (args.key == config.key_scene_reset)
-    {
-      renderer->reset_scene();
-    }
+    pressed[args.key] = true; 
   };
 
   void CamaraLucida::keyReleased(ofKeyEventArgs &args)
   {
     pressed[args.key] = false;
+
+    if (args.key == config.key_debug)
+    {
+      toggle_debug();
+    }
+
+    else if (args.key == config.key_help)
+    {
+      _render_help = !_render_help;
+    }
+
+    else if (args.key == config.key_view_next)
+    {
+      renderer->next_view();        
+    }
+
+    //else if (args.key == config.key_view_prev)
+    //{
+      //renderer->prev_view(); 
+    //}
+
+    else if ( _debug && args.key == config.key_scene_reset)
+    {
+      renderer->reset_scene();
+    }
   };
 
   void CamaraLucida::mousePressed(ofMouseEventArgs &args)
