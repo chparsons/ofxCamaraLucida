@@ -93,6 +93,14 @@ namespace cml
         return _frustum;
       };
 
+      Frustum& set_frustum( float left, float right, float bottom, float top )
+      {
+        _frustum.left = left;
+        _frustum.right = right;
+        _frustum.bottom = bottom;
+        _frustum.top = top;
+      };
+
       float* gl_projection_matrix() 
       { 
         return _KK; 
