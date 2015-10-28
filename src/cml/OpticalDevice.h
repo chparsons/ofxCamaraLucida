@@ -74,7 +74,7 @@ namespace cml
         float near, far;
       };
 
-      OpticalDevice( OpticalDevice::Config config ); 
+      OpticalDevice( OpticalDevice::Config config );
 
       virtual ~OpticalDevice();
 
@@ -99,6 +99,7 @@ namespace cml
         _frustum.right = right;
         _frustum.bottom = bottom;
         _frustum.top = top;
+        update_projection_matrix( _frustum, _KK );
       };
 
       float* gl_projection_matrix() 
@@ -196,7 +197,7 @@ namespace cml
       // RT vecs
       ofVec3f _loc,_fwd,_up,_trg,_left;
 
-      void make_RT_vecs( float* RT )
+      void update_RT_vecs( float* RT )
       {
         // opengl: col-major	
         _loc = ofVec3f( RT[12], RT[13], RT[14] );
@@ -219,7 +220,7 @@ namespace cml
        * https://www.opengl.org/sdk/docs/man2/xhtml/glFrustum.xml
        */
 
-        void make_frustum( 
+        void update_frustum( 
           OpticalDevice::Config& _cfg, 
           OpticalDevice::Frustum& F )
         {
@@ -244,11 +245,10 @@ namespace cml
         };  
 
         /*
-         * projection matrix solution from
          * http://opencv.willowgarage.com/wiki/Posit
          */
 
-        void make_projection_matrix( 
+        void update_projection_matrix( 
           OpticalDevice::Config& _cfg, 
           float* KK )
         {
@@ -270,13 +270,35 @@ namespace cml
           float F = -2. * far * near / (far - near);
 
           // opengl: col-major
-          KK[0]= A; KK[4]= 0.; KK[8]= C; KK[12]= 0.;
-          KK[1]= 0.; KK[5]= B; KK[9]= D; KK[13]= 0.;
-          KK[2]= 0.; KK[6]= 0.; KK[10]= E; KK[14]= F;
-          KK[3]= 0.; KK[7]= 0.;	KK[11]= -1.; KK[15]= 0.;	 
+          KK[0]= A;  KK[4]= 0.; KK[8]= C;    KK[12]= 0.;
+          KK[1]= 0.; KK[5]= B;  KK[9]= D;    KK[13]= 0.;
+          KK[2]= 0.; KK[6]= 0.; KK[10]= E;   KK[14]= F;
+          KK[3]= 0.; KK[7]= 0.;	KK[11]= -1.; KK[15]= 0.;
         };
 
-        void make_modelview_matrix( 
+        /*
+         * http://docs.unity3d.com/ScriptReference/Camera-projectionMatrix.html
+         */
+        void update_projection_matrix( 
+          OpticalDevice::Frustum& f, 
+          float* KK )
+        {
+
+          float A = 2. * f.near / (f.right - f.left);
+          float B = 2. * f.near / (f.top - f.bottom);
+          float C = (f.right + f.left) / (f.right - f.left);
+          float D = (f.top + f.bottom) / (f.top - f.bottom);
+          float E = -(f.far + f.near) / (f.far - f.near);
+          float F = -(2. * f.far * f.near) / (f.far - f.near);
+
+          // opengl: col-major
+          KK[0]= A;  KK[4]= 0.; KK[8]= C;    KK[12]= 0.;
+          KK[1]= 0.; KK[5]= B;  KK[9]= D;    KK[13]= 0.;
+          KK[2]= 0.; KK[6]= 0.; KK[10]= E;   KK[14]= F;
+          KK[3]= 0.; KK[7]= 0.;	KK[11]= -1.; KK[15]= 0.;
+        };
+
+        void update_modelview_matrix( 
           OpticalDevice::Config& _cfg, 
           float* RT )
         {

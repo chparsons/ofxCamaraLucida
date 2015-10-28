@@ -16,10 +16,10 @@ namespace cml
     fx = config.fx;
     fy = config.fy;
 
-    make_frustum( config, _frustum );
-    make_projection_matrix( config, _KK );
-    make_modelview_matrix( config, _RT );
-    make_RT_vecs( _RT ); 
+    update_frustum( config, _frustum );
+    update_projection_matrix( config, _KK );
+    update_modelview_matrix( config, _RT );
+    update_RT_vecs( _RT ); 
 
     //_T = ofVec3f(RT[12],rgb_RT[13],rgb_RT[14]);
     //_RT = ofMatrix4x4(
