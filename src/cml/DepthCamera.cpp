@@ -61,7 +61,7 @@ namespace cml
   /*
    * float texture
    */
-  ofTexture& DepthCamera::get_float_tex_ref( uint16_t *depth_pix_mm )
+  ofTexture& DepthCamera::update_float_tex_ref( uint16_t *depth_pix_mm )
   {
 
     int w = width;

@@ -37,7 +37,7 @@ namespace cml
 
   void CamaraLucida::render()
   { 
-    renderer->render( &events, mesh, depth_ftex, gpu(), wireframe() );
+    renderer->render( &events, mesh, *depth_ftex_ref, gpu(), wireframe() );
     render_screenlog();
     render_help();
   };
@@ -52,7 +52,7 @@ namespace cml
 
   void CamaraLucida::update_gpu( uint16_t *depth_pix_mm )
   {
-    depth_ftex = depth->get_float_tex_ref( depth_pix_mm );
+    depth_ftex_ref = &(depth->update_float_tex_ref( depth_pix_mm ));
   }; 
 
   void CamaraLucida::update_cpu( uint16_t *depth_pix_mm )
@@ -113,7 +113,7 @@ namespace cml
 
     renderer = new Renderer( config, proj, depth );//rgb);
 
-    depth_ftex = depth->init_float_tex();
+    depth_ftex_ref = &(depth->init_float_tex());
 
     _gpu = true;
     _wire = false;

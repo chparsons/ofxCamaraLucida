@@ -21,12 +21,13 @@ namespace cml
           const ofVec3f& p3 );
 
       /*
-       * TODO move to CamaraLucida class
        * float texture
        * to use in shaders
-       */
-      ofTexture& get_float_tex_ref( uint16_t *depth_pix_mm ); 
+       */ 
+      ofTexture& update_float_tex_ref( uint16_t *depth_pix_mm ); 
       ofTexture& init_float_tex();
+      ofTexture& get_float_tex_ref() 
+      { return ftex; };
 
       ofTexture& get_hue_tex_ref( uint16_t *depth_pix_mm = NULL );
 

@@ -61,12 +61,7 @@ namespace cml
       float depth_height()
       {
         return _depth_height;
-      };
-
-      //ofTexture& get_float_tex_ref( uint16_t *depth_pix_mm ) 
-      //{
-        //return depth->get_float_tex_ref( depth_pix_mm );
-      //};
+      }; 
 
       //ofTexture& get_hue_tex_ref( uint16_t *depth_pix_mm ) 
       //{
@@ -91,7 +86,7 @@ namespace cml
 
       void init( cml::Config config );
 
-      ofTexture depth_ftex;
+      ofTexture* depth_ftex_ref;
       float _tex_width, _tex_height;
       float _depth_width, _depth_height;
 
