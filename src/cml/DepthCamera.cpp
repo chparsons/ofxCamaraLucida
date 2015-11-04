@@ -10,7 +10,8 @@ namespace cml
     k = ofVec4f( 0.1236, 2842.5, 1.1863, 0.0370 );
     xoff = 0.0f; //-8.0f;
 
-    flut_mm = NULL;
+    //flut_mm = NULL;
+    flut_n = NULL;
     hlut = NULL;
     hpix = NULL;
 
@@ -25,10 +26,15 @@ namespace cml
   {
     ofLog(OF_LOG_VERBOSE,"~cml::DepthCamera");
 
-    ftex.clear();
-    fpix.clear();
-    if ( flut_mm != NULL )
-      delete[] flut_mm;
+    ftex_mm.clear();
+    fpix_mm.clear();
+    //if ( flut_mm != NULL )
+      //delete[] flut_mm;
+
+    ftex_n.clear();
+    fpix_n.clear();
+    if ( flut_n != NULL )
+      delete[] flut_n;
 
     htex.clear();
     //hpix.clear();
@@ -61,9 +67,8 @@ namespace cml
   /*
    * float texture
    */
-  ofTexture& DepthCamera::update_float_tex_ref( uint16_t *depth_pix_mm )
+  void DepthCamera::update_float_tex_ref( uint16_t *depth_pix_mm )
   {
-
     int w = width;
     int h = height;
 
@@ -72,31 +77,43 @@ namespace cml
     for (int i = 0; i < len; i++)
     {
       uint16_t mm = depth_pix_mm[ i ];
-      fpix[ i ] = flut_mm[ mm ]; 
+      fpix_mm[ i ] = (float)mm; //flut_mm[ mm ]; 
+      fpix_n[ i ] = flut_n[ mm ]; 
     }
 
-    ftex.loadData( fpix );
-    return ftex; 
+    ftex_mm.loadData( fpix_mm );
+    ftex_n.loadData( fpix_n );
   };
 
-  ofTexture& DepthCamera::init_float_tex()
+  void DepthCamera::init_float_tex()
   {
-    if ( ftex.isAllocated() )
-      return ftex; 
+    if (ftex_mm.isAllocated() || ftex_n.isAllocated())
+      return; 
 
     int w = width;
     int h = height;
 
-    ftex.allocate( w, h, GL_LUMINANCE32F_ARB );
-    fpix.allocate( w, h, 1 );
-    fpix.set( 0 );
+    // mm
 
-    flut_mm = new float[ (int)far ];
-    flut_mm[0] = far;
+    ftex_mm.allocate( w, h, GL_LUMINANCE32F_ARB );
+    fpix_mm.allocate( w, h, 1 );
+    fpix_mm.set( 0 );
+
+    //flut_mm = new float[ (int)far ];
+    //flut_mm[0] = far;
+    //for ( int i = 1; i < far; i++ )
+      //flut_mm[i] = i; 
+
+    // normalized
+
+    ftex_n.allocate( w, h, GL_LUMINANCE32F_ARB );
+    fpix_n.allocate( w, h, 1 );
+    fpix_n.set( 0 );
+
+    flut_n = new float[ (int)far ];
+    flut_n[0] = 1.0;
     for ( int i = 1; i < far; i++ )
-      flut_mm[i] = i; 
-
-    return ftex; 
+      flut_n[i] = CLAMP( ((float)i)/far_clamp, 0.0, 1.0 ); 
   };
 
   /*

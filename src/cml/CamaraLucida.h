@@ -86,7 +86,7 @@ namespace cml
 
       void init( cml::Config config );
 
-      ofTexture* depth_ftex_ref;
+      ofTexture* depth_ftex_mm;
       float _tex_width, _tex_height;
       float _depth_width, _depth_height;
 

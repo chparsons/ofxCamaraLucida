@@ -24,10 +24,12 @@ namespace cml
        * float texture
        * to use in shaders
        */ 
-      ofTexture& update_float_tex_ref( uint16_t *depth_pix_mm ); 
-      ofTexture& init_float_tex();
-      ofTexture& get_float_tex_ref() 
-      { return ftex; };
+      void update_float_tex_ref( uint16_t *depth_pix_mm ); 
+      void init_float_tex();
+      ofTexture& get_float_tex_mm() 
+      { return ftex_mm; };
+      ofTexture& get_float_tex_n() 
+      { return ftex_n; };
 
       ofTexture& get_hue_tex_ref( uint16_t *depth_pix_mm = NULL );
 
@@ -42,9 +44,15 @@ namespace cml
       float *_zlut;
       float z_raw_to_mts( uint16_t raw_depth ); 
 
-      ofTexture ftex;
-      ofFloatPixels fpix;
-      float *flut_mm;
+      //float texture in mm
+      ofTexture ftex_mm;
+      ofFloatPixels fpix_mm;
+      //float *flut_mm;
+
+      //float texture normalized [0,1]
+      ofTexture ftex_n;
+      ofFloatPixels fpix_n;
+      float *flut_n;
 
       ofTexture htex;
       uint8_t *hpix;
