@@ -77,7 +77,7 @@ namespace cml
     for (int i = 0; i < len; i++)
     {
       uint16_t mm = depth_pix_mm[ i ];
-      fpix_mm[ i ] = (float)mm; //flut_mm[ mm ]; 
+      fpix_mm[ i ] = CLAMP( ( (float)mm < FLT_EPSILON ? far_clamp : (float)mm ), 0.0, far_clamp ); //(float)mm; //flut_mm[ mm ]; 
       fpix_n[ i ] = flut_n[ mm ]; 
     }
 
