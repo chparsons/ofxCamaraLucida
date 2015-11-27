@@ -94,8 +94,8 @@ namespace cml
 
         T *= 1000.0; //mts->mm units
         //transpose to get proj->camera
-        T *= -1;
-        cv::transpose(R,R);
+        //T *= -1;
+        //cv::transpose(R,R);
 
         // opencv: row-major	
 

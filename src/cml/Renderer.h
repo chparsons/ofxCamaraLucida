@@ -49,6 +49,19 @@ namespace cml
       OpticalDevice* depth;
       //OpticalDevice* rgb;
 
+      OpticalDevice* device()
+      {
+        switch( _viewpoint )
+        {
+          case V_PROJ:
+            return proj;        
+          case V_DEPTH:
+            return depth;
+          //case V_RGB:
+            //return rgb;
+        }
+      };
+
       ofShader shader;
       RenderShader render_shader;
       ofFbo fbo;

@@ -99,17 +99,17 @@ namespace cml
         _frustum.right = right;
         _frustum.bottom = bottom;
         _frustum.top = top;
-        update_projection_matrix( _frustum, _KK );
+        update_projection_matrix_from_frustum();
       };
 
       float* gl_projection_matrix() 
       { 
-        return _KK; 
+        return KK; 
       };
 
       float* gl_modelview_matrix() 
       { 
-        return _RT; 
+        return RT; 
       };
 
       //getters RT vecs
@@ -122,33 +122,33 @@ namespace cml
       //setters RT vecs
       void loc( ofVec3f& loc_ ) 
       {
-        _RT[12] = loc_.x; 
-        _RT[13] = loc_.y; 
-        _RT[14] = loc_.z;
+        RT[12] = loc_.x; 
+        RT[13] = loc_.y; 
+        RT[14] = loc_.z;
         _loc.set( loc_ );
       };
 
       void fwd( ofVec3f& fwd_ ) 
       {
-        _RT[8] = fwd_.x; 
-        _RT[9] = fwd_.y; 
-        _RT[10] = fwd_.z;
+        RT[8] = fwd_.x; 
+        RT[9] = fwd_.y; 
+        RT[10] = fwd_.z;
         _fwd.set( fwd_ );
       };
 
       void up( ofVec3f& up_ ) 
       { 
-        _RT[4] = up_.x; 
-        _RT[5] = up_.y; 
-        _RT[6] = up_.z;
+        RT[4] = up_.x; 
+        RT[5] = up_.y; 
+        RT[6] = up_.z;
         _up.set( up_ );
       };
 
       void left( ofVec3f& left_ ) 
       { 
-        _RT[0] = left_.x; 
-        _RT[1] = left_.y; 
-        _RT[2] = left_.z;
+        RT[0] = left_.x; 
+        RT[1] = left_.y; 
+        RT[2] = left_.z;
         _left.set( left_ );
       };
 
@@ -191,21 +191,14 @@ namespace cml
     private:
 
       Frustum _frustum; //glFrustum( ... )
-      float _KK[16]; //glMultMatrixf( KK )
-      float _RT[16]; //glMultMatrixf( RT )
+      float KK[16]; //glMultMatrixf( KK )
+      float RT[16]; //glMultMatrixf( RT )
 
       // RT vecs
       ofVec3f _loc,_fwd,_up,_trg,_left;
 
-      void update_RT_vecs( float* RT )
-      {
-        // opengl: col-major	
-        _loc = ofVec3f( RT[12], RT[13], RT[14] );
-        _fwd = ofVec3f( RT[8], RT[9], RT[10] );
-        _up = ofVec3f( RT[4], RT[5], RT[6] );
-        _left = ofVec3f( RT[0], RT[1], RT[2] );
-        _trg = _loc + _fwd;
-      };
+      void update_RT_vecs();
+      void update_modelview_matrix(); 
 
       /*
        * Intrinsics from opencv to opengl
@@ -219,100 +212,17 @@ namespace cml
        * https://github.com/kylemcdonald/ofxCv/blob/master/libs/ofxCv/src/Calibration.cpp#l57 
        * https://www.opengl.org/sdk/docs/man2/xhtml/glFrustum.xml
        */
-
-        void update_frustum( 
-          OpticalDevice::Config& _cfg, 
-          OpticalDevice::Frustum& F )
-        {
-
-          float w = _cfg.width;
-          float h = _cfg.height;
-          float cx = _cfg.cx;
-          float cy = _cfg.cy;
-          float fx = _cfg.fx;
-          float fy = _cfg.fy;
-          float far = _cfg.far;
-          float near = _cfg.near;
-
-          F.left = near * (-cx) / fx;
-          F.right = near * (w - cx) / fx;
-
-          F.bottom = near * (cy - h) / fy; 
-          F.top = near * (cy) / fy;
-
-          F.near = near;
-          F.far = far; 
-        };  
+        void update_frustum();  
 
         /*
          * http://opencv.willowgarage.com/wiki/Posit
          */
-
-        void update_projection_matrix( 
-          OpticalDevice::Config& _cfg, 
-          float* KK )
-        {
-
-          float w = _cfg.width;
-          float h = _cfg.height;
-          float cx = _cfg.cx;
-          float cy = _cfg.cy;
-          float fx = _cfg.fx;
-          float fy = _cfg.fy;
-          float near = _cfg.near;
-          float far = _cfg.far;
-
-          float A = 2. * fx / w;
-          float B = 2. * fy / h;
-          float C = 2. * (cx / w) - 1.;
-          float D = 2. * (cy / h) - 1.;
-          float E = - (far + near) / (far - near);
-          float F = -2. * far * near / (far - near);
-
-          // opengl: col-major
-          KK[0]= A;  KK[4]= 0.; KK[8]= C;    KK[12]= 0.;
-          KK[1]= 0.; KK[5]= B;  KK[9]= D;    KK[13]= 0.;
-          KK[2]= 0.; KK[6]= 0.; KK[10]= E;   KK[14]= F;
-          KK[3]= 0.; KK[7]= 0.;	KK[11]= -1.; KK[15]= 0.;
-        };
+        void update_projection_matrix();
 
         /*
          * http://docs.unity3d.com/ScriptReference/Camera-projectionMatrix.html
          */
-        void update_projection_matrix( 
-          OpticalDevice::Frustum& f, 
-          float* KK )
-        {
-
-          float A = 2. * f.near / (f.right - f.left);
-          float B = 2. * f.near / (f.top - f.bottom);
-          float C = (f.right + f.left) / (f.right - f.left);
-          float D = (f.top + f.bottom) / (f.top - f.bottom);
-          float E = -(f.far + f.near) / (f.far - f.near);
-          float F = -(2. * f.far * f.near) / (f.far - f.near);
-
-          // opengl: col-major
-          KK[0]= A;  KK[4]= 0.; KK[8]= C;    KK[12]= 0.;
-          KK[1]= 0.; KK[5]= B;  KK[9]= D;    KK[13]= 0.;
-          KK[2]= 0.; KK[6]= 0.; KK[10]= E;   KK[14]= F;
-          KK[3]= 0.; KK[7]= 0.;	KK[11]= -1.; KK[15]= 0.;
-        };
-
-        void update_modelview_matrix( 
-          OpticalDevice::Config& _cfg, 
-          float* RT )
-        {
-          ofVec3f& x = _cfg.X; 
-          ofVec3f& y = _cfg.Y;
-          ofVec3f& z = _cfg.Z;
-          ofVec3f& t = _cfg.T; 
-
-          // opengl: col-major	
-          RT[0]= x.x; RT[4]= y.x; RT[8]= z.x;	RT[12]= t.x;
-          RT[1]= x.y;	RT[5]= y.y;	RT[9]= z.y;	RT[13]= t.y;
-          RT[2]= x.z;	RT[6]= y.z;	RT[10]=z.z; RT[14]= t.z;
-          RT[3]= 0.;	RT[7]= 0.;	RT[11]= 0.;	RT[15]= 1.; 
-        }; 
+        void update_projection_matrix_from_frustum();
   }; 
 }; 
 

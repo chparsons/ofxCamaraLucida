@@ -94,26 +94,35 @@ namespace cml
     ofSetColor( ofColor::white );
 
     ofViewport();
-    gl_projection();	
-    gl_viewpoint();
 
-    gl_scene_control();
+    //gl_ortho();	
+    gl_projection();	
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glPushMatrix();
+    glScalef( 1., -1., -1. );	
 
     if ( _debug )
     {
-      //gl_scene_control();
+      glPushMatrix();
+      gl_scene_control();
       render_depth_CS();
       render_proj_CS();
       //render_rgb_CS();
       //ofDrawGrid( 3000.0f, 8.0f, false, false, true, false );
+      glPopMatrix();
     }
+
+    glPushMatrix();
+
+    gl_viewpoint();
+    gl_scene_control(); 
 
     //ofEnableAlphaBlending();
 
     ofTexture& render_tex = fbo.getTextureReference(0);
-
-    ofPushMatrix();
-    ofScale( -1., -1., 1. );	
 
     if ( gpu )
     {
@@ -132,11 +141,13 @@ namespace cml
       render_tex.unbind();
     } 
 
-    ofPopMatrix();
+    glPopMatrix();
 
     //ofDisableAlphaBlending(); 
 
+    //FIXME
     ofNotifyEvent( ev->render_3d, ev->void_args );
+    glPopMatrix();
 
     // 2d hud
 
@@ -169,67 +180,42 @@ namespace cml
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    OpticalDevice* dev; 
-
-    switch( _viewpoint )
-    {
-      case V_PROJ:
-        dev = proj;        
-        break;
-      case V_DEPTH:
-        dev = depth;
-        break;
-      //case V_RGB:
-        //dev = rgb;
-        //break;
-    }
-
-    OpticalDevice::Frustum& frustum = dev->gl_frustum();
+    OpticalDevice::Frustum& frustum = device()->gl_frustum();
 
     glFrustum( 
         frustum.left, frustum.right,
         frustum.bottom, frustum.top,
         frustum.near, frustum.far );
 
-    //float* KK = dev->gl_projection_matrix();
-    //glMultMatrixf( KK );
+    //glMultMatrixf( device()->gl_projection_matrix() );
   }
 
   void Renderer::gl_viewpoint()
   {
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    glMultMatrixf( device()->gl_modelview_matrix() );
 
-    OpticalDevice* dev; 
+    //OpticalDevice* dev = device(); 
+    //ofVec3f& loc = dev->loc();
+    //ofVec3f& trg = dev->trg();
+    //ofVec3f& up = dev->up();
 
-    switch( _viewpoint )
-    {
-      case V_PROJ:
-        dev = proj;        
-        break;
-      case V_DEPTH:
-        dev = depth;
-        break;
-      //case V_RGB:
-        //dev = rgb;
-        //break;
-    }
-
-    ofVec3f& loc = dev->loc();
-    ofVec3f& trg = dev->trg();
-    ofVec3f& up = dev->up();
-
-    gluLookAt(
-      loc.x, loc.y, loc.z,
-      trg.x, trg.y, trg.z,
-      up.x,  up.y,  up.z 
-    );
+    //gluLookAt(
+      //loc.x, loc.y, loc.z,
+      //trg.x, trg.y, trg.z,
+      //up.x,  up.y,  up.z 
+    //);
   }
 
   // scene control
 
   void Renderer::gl_scene_control()
   {
+
+    //float *RT=proj->gl_modelview_matrix();
+    //float *RT=depth->gl_modelview_matrix();
+    float *RT = device()->gl_modelview_matrix();
+    rot_pivot = ofVec3f( RT[12], RT[13], RT[14] );
+
     glTranslatef( 0, 0, tZ );
     glTranslatef( rot_pivot.x, rot_pivot.y, rot_pivot.z );
     glRotatef( rotX, 1, 0, 0);
@@ -239,11 +225,7 @@ namespace cml
   }
 
   void Renderer::init_gl_scene_control()
-  {
-    //float *RT = proj->gl_modelview_matrix();
-    float *RT = depth->gl_modelview_matrix();
-    rot_pivot = ofVec3f( RT[12], RT[13], RT[14] );
-
+  { 
     pmouse = ofVec2f();
 
     tZ_delta = -50.; //mm units
@@ -292,8 +274,11 @@ namespace cml
 
   void Renderer::render_proj_CS()
   {
-    glPushMatrix();
+    glPushMatrix(); 
     glMultMatrixf( proj->gl_modelview_matrix() );
+
+    //glScalef( 1., -1., 1. );	
+    //glRotatef( 180, 0, 0, 1);
 
     ofPushStyle();
     ofSetLineWidth(1);
@@ -408,8 +393,8 @@ namespace cml
     }
     else
     {
-      rotX += dist.y * rot_delta;
-      rotY -= dist.x * rot_delta;
+      rotX -= dist.y * rot_delta;
+      rotY += dist.x * rot_delta;
     }
 
     pmouse.set( x, y );
